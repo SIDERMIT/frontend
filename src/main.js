@@ -8,7 +8,8 @@ import VueBreadcrumbs from 'vue-2-breadcrumbs'
 require('@/assets/css/base.css')
 require('@/assets/css/style.css')
 
-Vue.use(VueBreadcrumbs)
+Vue.use(VueBreadcrumbs);
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -13,7 +13,9 @@
             </a>
         </div>
         <div class="grid">
-            
+            <div v-for="item in items" :key="item">
+                <CityCard city=item></CityCard>
+            </div>
         </div>
     </section>
 
@@ -89,3 +91,19 @@
     </footer>
   </div>
 </template>
+
+<script>
+import CityCard from '@/components/CityCard.vue';
+
+export default {
+  name: 'Dashboard',
+  components: {
+      CityCard,
+  },
+  data() {
+      return {
+          items: [1,2,3]
+      }
+  }
+}
+</script>

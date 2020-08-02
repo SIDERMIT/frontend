@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import MyCities from '../views/MyCities.vue'
 
 Vue.use(VueRouter)
 
   const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home,
+    path: '/my_cities',
+    name: 'MyCities',
+    component: MyCities,
     meta: {
-      breadcrumb: 'Home'
+      breadcrumb: 'My cities'
     }
   },
   {
