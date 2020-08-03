@@ -130,9 +130,6 @@ export default {
   }, 
   mounted() {
       this.init();
-  },
-  upadated() {
-      this.init();
   }
 }
 </script>
