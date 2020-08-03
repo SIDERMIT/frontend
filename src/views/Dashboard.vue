@@ -14,9 +14,7 @@
         </div>
         <div class="grid">
             <template v-if="cities.length > 0">
-                <div v-for="item in cities" :key="item">
-                    <CityCard city=item></CityCard>
-                </div>
+                <CityCard v-for="city in cities" v-bind:key="city.public_id" v-bind:city="city"></CityCard>
             </template>
             <template v-else>
                 <div class="empty-box">

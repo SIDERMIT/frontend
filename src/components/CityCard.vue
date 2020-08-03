@@ -3,7 +3,7 @@
       <div class="grid top-info">
           <div>
               <h3>{{ city.name }}</h3>
-              <span class="p-min">Created at {{ city.created_at }}</span>
+              <span class="p-min">Created at {{ getLocalDate(city.created_at) }}</span>
           </div>
           <div class="grid">
               <button class="btn icon"><span class="material-icons">edit</span></button>
@@ -15,7 +15,7 @@
           <div class="graph-container">
           </div>
           <dl>
-            <div v-for="scene in city.scene_set" :key="scene.public_id">
+            <div v-for="scene in city.scene_set" v-bind:key="scene.public_id">
               <dt><h4>{{ scene.name }}</h4></dt>
               <dd><span class="p-min">{{ scene.transportnetwork_set.length }} networks available</span></dd>
             </div>
@@ -28,10 +28,20 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   name: 'CityCard',
   props: {
-    city: Object
+    city: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    getLocalDate(dateObj) {
+        return moment(dateObj).format("YYYY-MMM-DD");
+    }
   }
 }
 </script>
