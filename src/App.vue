@@ -6,8 +6,8 @@
                 <span>Sidermit</span>
             </div>
             <div class="menu">
-                <router-link to="/dashboard" class="btn active">Dashboard</router-link>
-                <router-link to="/my_cities" class="btn">My Cities</router-link>
+                <router-link :to="{name: 'Dashboard'}" class="btn">Dashboard</router-link>
+                <router-link :to="{name: 'MyCities'}" class="btn">My Cities</router-link>
             </div>
         </div>
     </header>
