@@ -5,28 +5,13 @@ import Dashboard from '../views/Dashboard.vue'
 import CityDetail from '../views/CityDetail.vue'
 import NotFound from '../views/NotFound.vue'
 import NewCity from '../views/NewCity.vue'
+import NewScene from '../views/NewScene.vue'
 
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '', redirect: '/dashboard'
-  },
-  {
-    path: '/my_cities',
-    name: 'MyCities',
-    component: MyCities,
-    meta: {
-      breadcrumb: 'My cities'
-    }
-  },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
-    meta: {
-      breadcrumb: 'Dashboard'
-    }
   },
   {
     path: '/cities/new',
@@ -37,15 +22,47 @@ Vue.use(VueRouter)
     }
   },
   {
-    path: '/cities/:publicId',
-    name: 'CityDetail',
-    component: CityDetail,
+    path: '/my_cities',
+    component: {render(c) { return c('router-view'); }},
     meta: {
-      breadcrumb() {
-        return {
-          label: this.$route.params.publicId,
-        }
-      }
+      breadcrumb: 'My cities'
+    },
+    children: [
+      {
+        path: '',
+        name: 'MyCities',
+        component: MyCities,
+      },
+      {
+        path: ':publicId',
+        name: 'CityDetail',
+        component: CityDetail,
+        meta: {
+          breadcrumb() {
+            return {
+              label: this.$route.params.publicId,
+            }
+          }
+        },
+        children: [
+          {
+            path: 'new_scene',
+            name: 'NewScene',
+            component: NewScene,
+            meta: {
+              breadcrumb: 'New scene'
+            }
+          },
+        ]
+      },
+    ]
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: {
+      breadcrumb: 'Dashboard'
     }
   },
   { path: '/404', component: NotFound },  
