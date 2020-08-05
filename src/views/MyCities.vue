@@ -1,6 +1,8 @@
 <template>
   <div class="MyCities">
-    <header>My cities</header>
+    <div class="header"> 
+      <h1>My cities</h1>
+    </div>
   </div>
 </template>
 
