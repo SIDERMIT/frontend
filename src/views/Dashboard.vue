@@ -7,10 +7,12 @@
     <section class="recent-cities">
         <div class="grid heading">
             <h2>Recently created cities</h2>
-            <a class="btn" v-if="cities.length > 0">
-                <span>View all (10)</span>
-                <span class="material-icons">chevron_right</span>
-            </a>
+            <template v-if="cities.length > 0">
+                <router-link :to="{ name: 'MyCities'}" class="btn">
+                    <span>View all (10)</span>
+                    <span class="material-icons">chevron_right</span>
+                </router-link>
+            </template>
         </div>
         <div class="grid">
             <template v-if="cities.length > 0">
@@ -43,8 +45,8 @@
                             <span class="p-min">{{ optimization.scene_name }} - {{ optimization.city_name }}</span>
                         </div>
                         <div class="text"><span class="p-min">{{ optimization.status }}</span></div>
-                        <a class="btn neuro"><span>View details</span><span class="material-icons">chevron_right</span></a>
-                        <a class="btn neuro"><span>View stages</span><span class="material-icons">chevron_right</span></a>
+                        <router-link :to="{ name: 'MyCities'}" class="btn neuro"><span>View details</span><span class="material-icons">chevron_right</span></router-link>
+                        <router-link :to="{ name: 'MyCities'}" class="btn neuro"><span>View stages</span><span class="material-icons">chevron_right</span></router-link>
                     </li>                  
                 </ul>
             </div>
@@ -56,10 +58,10 @@
             <div class="left-content">
             </div>
             <div class="right-content">
-                <a href="#" class="btn">
+                <router-link :to="{ name: 'NewCity'}" class="btn">
                     <span>Add new city</span>
                     <span class="material-icons">add</span>
-                </a>
+                </router-link>
             </div>
         </div>
     </footer>
