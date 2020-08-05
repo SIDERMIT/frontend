@@ -7,6 +7,8 @@ import NotFound from '../views/NotFound.vue'
 import NewCity from '../views/NewCity.vue'
 import NewScene from '../views/NewScene.vue'
 import SceneDetail from '../views/SceneDetail.vue'
+import NewNetwork from '../views/NewNetwork.vue'
+import NetworkDetail from '../views/NetworkDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -52,13 +54,41 @@ Vue.use(VueRouter)
           },
           {
             path: 'scene/:scenePublicId',
-            name: 'SceneDetail',
-            component: SceneDetail,
+            component: {render(c) { return c('router-view'); }},
             meta: {
-              breadcrumb: {
-                label: ''//this.$route.params.scenePublicId
+              breadcrumb() {
+                return {
+                  label: this.$route.params.scenePublicId
+                }
               }
-            }
+            },
+            children: [
+              {
+                path: '',
+                name: 'SceneDetail',
+                component: SceneDetail
+              },
+              {
+                path: 'new_network',
+                name: 'NewNetwork',
+                component: NewNetwork,
+                neta: {
+                  breadcrumb: 'New transport network'
+                }
+              },
+              {
+                path: 'network/:networkPublicId',
+                name: 'NetworkDetail',
+                component: NetworkDetail,
+                meta: {
+                  breadcrumb() {
+                    return {
+                      label: this.$route.params.scenePublicId
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             path: 'new_scene',
