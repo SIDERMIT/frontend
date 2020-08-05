@@ -6,6 +6,7 @@ import CityDetail from '../views/CityDetail.vue'
 import NotFound from '../views/NotFound.vue'
 import NewCity from '../views/NewCity.vue'
 import NewScene from '../views/NewScene.vue'
+import SceneDetail from '../views/SceneDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -34,17 +35,31 @@ Vue.use(VueRouter)
         component: MyCities,
       },
       {
-        path: ':publicId',
-        name: 'CityDetail',
-        component: CityDetail,
+        path: ':cityPublicId',
+        component: {render(c) { return c('router-view'); }},
         meta: {
           breadcrumb() {
             return {
-              label: this.$route.params.publicId,
+              label: this.$route.params.cityPublicId,
             }
           }
         },
         children: [
+          {
+            path: '',
+            name: 'CityDetail',
+            component: CityDetail
+          },
+          {
+            path: 'scene/:scenePublicId',
+            name: 'SceneDetail',
+            component: SceneDetail,
+            meta: {
+              breadcrumb: {
+                label: ''//this.$route.params.scenePublicId
+              }
+            }
+          },
           {
             path: 'new_scene',
             name: 'NewScene',
