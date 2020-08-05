@@ -6,9 +6,9 @@
               <span class="p-min">Created at {{ getLocalDate(city.created_at) }}</span>
           </div>
           <div class="grid">
-              <button class="btn icon"><span class="material-icons">edit</span></button>
-              <button class="btn icon"><span class="material-icons">file_copy</span></button>
-              <button class="btn icon"><span class="material-icons">delete</span></button>
+              <router-link :to="{ name: 'CityDetail', params: { publicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">edit</span></router-link>
+              <router-link :to="{ name: 'CityDetail', params: { publicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">file_copy</span></router-link>
+              <router-link :to="{ name: 'CityDetail', params: { publicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">delete</span></router-link>
           </div>
       </div>
       <div class="grid mid-info">
@@ -22,27 +22,23 @@
           </dl>
       </div>
       <div class="bot-info">
-          <a href="#" class="btn neuro">View details</a>
+          <router-link :to="{ name: 'CityDetail', params: { publicId: city.public_id }}" class="btn neuro">View details</router-link>
       </div>
   </div>
 </template>
 
 <script>
-import moment from 'moment';
+import dateMixin from '@/mixins/dateMixin.js'
 
 export default {
   name: 'CityCard',
+  mixins: [dateMixin],
   props: {
     city: {
       type: Object,
       required: true
     }
   },
-  methods: {
-    getLocalDate(dateObj) {
-        return moment(dateObj).format("YYYY-MMM-DD");
-    }
-  }
 }
 </script>
 
