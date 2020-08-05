@@ -17,16 +17,23 @@ export default {
   },
   data() {
     return {
-      city: null
+      city: {}
     }
   },
   methods: {
-    init() {
-      cities.getCity(this.$route.params.publicId).then(response => (this.city = response.data))
+    setData(city) {
+      this.city = city;
     }
   },
-  mounted() {
-    this.init()
+  beforeRouteEnter (to, from, next) {
+    cities.getCity(to.params.publicId).then(response => (next(vm => vm.setData(response.data))));
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.city = {};
+    cities.getCity(to.params.publicId).then(response => {
+      this.setData(response.data); 
+      next();
+    });
   }
 }
 </script>
