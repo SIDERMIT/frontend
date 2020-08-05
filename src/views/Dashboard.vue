@@ -71,6 +71,7 @@
 <script>
 import CityCard from '@/components/CityCard.vue';
 import cities from '@/api/cities.api';
+import axios from 'axios'
 
 export default {
   name: 'Dashboard',
@@ -84,9 +85,9 @@ export default {
       }
   },
   methods: {
-      init() {
-          cities.getAllCities(3).then( response => (this.cities = response.data));
-          cities.getRecentOptimizations().then( response => (this.optimizations = response.data));
+      setData(cities, optimizations){
+        this.cities = cities;
+        this.optimizations = optimizations;
       },
       getOptimizationIcon(status) {
           let icon = "";
@@ -104,11 +105,27 @@ export default {
                   icon = "schedule";
                   break;
           }
-          return icon
+          return icon;
       }
-  }, 
-  mounted() {
-      this.init();
+  },
+  beforeRouteEnter (to, from, next) {
+    axios.all([
+        cities.getAllCities(3),
+        cities.getRecentOptimizations()
+    ]).then(axios.spread( (citiesResponse, optimizationsResponse) => {
+        next(vm => vm.setData(citiesResponse.data, optimizationsResponse.data));
+    }));
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.city = [];
+    this.optimizations = [];
+    axios.all([
+          cities.getAllCities(3),
+          cities.getRecentOptimizations()
+    ]).then(axios.spread( (citiesResponse, optimizationsResponse) => {
+        this.setData(optimizationsResponse.data, optimizationsResponse.data);
+        next();
+    }));
   }
 }
 </script>
