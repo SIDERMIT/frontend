@@ -26,11 +26,11 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    cities.getCity(to.params.publicId).then(response => (next(vm => vm.setData(response.data))));
+    cities.getCity(to.params.cityPublicId).then(response => (next(vm => vm.setData(response.data))));
   },
   beforeRouteUpdate(to, from, next) {
     this.city = {};
-    cities.getCity(to.params.publicId).then(response => {
+    cities.getCity(to.params.cityPublicId).then(response => {
       this.setData(response.data); 
       next();
     });
