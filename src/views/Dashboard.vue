@@ -14,7 +14,7 @@
                 </router-link>
             </template>
         </div>
-        <div class="grid">
+        <div class="grid cities">
             <template v-if="cities.length > 0">
                 <CityCard v-for="city in cities" v-bind:key="city.public_id" v-bind:city="city"></CityCard>
             </template>
