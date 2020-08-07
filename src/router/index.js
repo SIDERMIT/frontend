@@ -5,6 +5,7 @@ import Dashboard from '../views/Dashboard.vue'
 import CityDetail from '../views/CityDetail.vue'
 import NotFound from '../views/NotFound.vue'
 import NewCity from '../views/NewCity.vue'
+import NewCityStep2 from '../views/NewCityStep2.vue'
 import NewScene from '../views/NewScene.vue'
 import SceneDetail from '../views/SceneDetail.vue'
 import NewNetwork from '../views/NewNetwork.vue'
@@ -20,6 +21,14 @@ Vue.use(VueRouter)
     path: '/cities/new',
     name: 'NewCity',
     component: NewCity,
+    meta: {
+      breadcrumb: 'New city'
+    }
+  },
+  {
+    path: '/cities/new/step2',
+    name: 'NewCityStep2',
+    component: NewCityStep2,
     meta: {
       breadcrumb: 'New city'
     }
