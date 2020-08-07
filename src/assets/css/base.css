@@ -67,5 +67,6 @@ html {-webkit-font-smoothing: antialiased;}
 .big {font-size: 1.2em;}
 
 /* -- grillas -- */
-.grid {display: grid; grid-gap: 10px; grid-auto-flow: column;}
+.grid {display: grid; grid-gap: 20px; grid-auto-flow: column; justify-content: flex-start;}
 .grid-self-end {align-self: end;}
+.g2 {grid-template-columns: 1fr 1fr;}
