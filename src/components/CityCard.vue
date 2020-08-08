@@ -13,6 +13,7 @@
       </div>
       <div class="grid mid-info">
           <div class="graph-container">
+            <CityGraph></CityGraph>
           </div>
           <dl>
             <div v-for="scene in city.scene_set" v-bind:key="scene.public_id">
@@ -29,10 +30,14 @@
 
 <script>
 import dateMixin from '@/mixins/dateMixin.js'
+import CityGraph from '@/components/CityGraph.vue'
 
 export default {
   name: 'CityCard',
   mixins: [dateMixin],
+  components: {
+    CityGraph
+  },
   props: {
     city: {
       type: Object,
