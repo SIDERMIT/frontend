@@ -12,6 +12,7 @@
 
 <script>
 import ECharts from 'vue-echarts'
+import 'echarts/lib/chart/line'
 import 'echarts/lib/chart/graph'
 
 export default {
@@ -20,6 +21,10 @@ export default {
     'v-chart': ECharts
   },
   props: {
+    city: {
+      type: Object,
+      required: true
+    }
   },
   data() {
     return {
@@ -28,6 +33,7 @@ export default {
   },
   methods: {
     baseChartOption() {
+      console.log(this.city);
       let data = [];
       let links = [];
 
