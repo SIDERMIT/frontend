@@ -7,7 +7,7 @@
           </div>
           <div class="grid">
               <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">edit</span></router-link>
-              <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">file_copy</span></router-link>
+              <button class="btn icon" @click="duplicateCity(city.public_id)" ><span class="material-icons">file_copy</span></button>
               <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">delete</span></router-link>
           </div>
       </div>
@@ -32,6 +32,8 @@
 import dateMixin from '@/mixins/dateMixin.js'
 import CityGraph from '@/components/CityGraph.vue'
 
+import cities from '@/api/cities.api';
+
 export default {
   name: 'CityCard',
   mixins: [dateMixin],
@@ -44,6 +46,14 @@ export default {
       required: true
     }
   },
+  methods: {
+    duplicateCity(publicId) {
+      cities.duplicateCity(publicId).then(response => {
+        // TODO: isertar respuesta en cities del componente padre
+        console.log(response.data)
+      });
+    }
+  }
 }
 </script>
 

@@ -6,6 +6,7 @@
         </div>
         <section class="city-details">
             <div class="graph-container">
+                <CityGraph :city="city"></CityGraph>
             </div>
             <div>
                 <h2>City parameters</h2>
@@ -68,12 +69,13 @@
 <script>
 import cities from '@/api/cities.api';
 import dateMixin from '@/mixins/dateMixin.js'
+import CityGraph from '@/components/CityGraph'
 
 export default {
   name: 'CityDetail',
   mixins: [dateMixin],
   components: {
-    
+    CityGraph
   },
   data() {
     return {
