@@ -12,7 +12,7 @@
             <div class="grid center subtitle">
                 <div class="grid center">
                     <h4>Enter parameters</h4>
-                    <a class="icon-link"><span class="material-icons">help</span></a>
+                    <a class="icon-link" @click="showLegendModal = true"><span class="material-icons">help</span></a>
                 </div>
                 <div>
                     <a href="#" class="btn"><span class="material-icons">publish</span><span>Import pajek file</span></a>
@@ -51,7 +51,7 @@
                 <div>
                     <div class="editor-container"></div>
                 </div>
-                <div class="graph-container"></div>
+                <div class="graph-container"><CityGraph></CityGraph></div>
             </div>
             <div class="checker">
                 <div class="grid checker-body">
@@ -73,77 +73,81 @@
                 </div>
             </div>
         </footer>
-        <div class="modal-container">
-            <div class="modal">
-                <div class="modal-content">
-                    <h2>Terminology</h2>
-                    <p>The parameters 𝑛, 𝑃, 𝐿 and 𝑔 are required to build the city, the asymmetries are optional</p>
-                    <div class="table">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <th><span>Symbol</span></th>
-                                    <th><span>Unit</span></th>
-                                    <th><span>Description</span></th>
-                                </tr>
-                                <tr>
-                                    <td><span>𝑛</span></td>
-                                    <td>&nbsp;</td>
-                                    <td><span>Number of zones</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span>𝑃</span></td>
-                                    <td>[𝑘𝑚]</td>
-                                    <td><span>Total width represented by each arc</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span>𝐿</span></td>
-                                    <td>[𝑘𝑚]</td>
-                                    <td><span>Distance from SC to the geometrical city center C</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span>𝑔</span></td>
-                                    <td>&nbsp;</td>
-                                    <td><span>Ratio between the distances P-SC and SC- CBD</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span>𝜂</span></td>
-                                    <td>&nbsp;</td>
-                                    <td><span>Eccentricity of the CBD</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+        <Modal v-if="showLegendModal" @close="showLegendModal = false" :showBase="false">
+            <template slot="content">
+                <h2>Terminology</h2>
+                <p>The parameters 𝑛, 𝑃, 𝐿 and 𝑔 are required to build the city, the asymmetries are optional</p>
+                <div class="table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th><span>Symbol</span></th>
+                                <th><span>Unit</span></th>
+                                <th><span>Description</span></th>
+                            </tr>
+                            <tr>
+                                <td><span>𝑛</span></td>
+                                <td>&nbsp;</td>
+                                <td><span>Number of zones</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝑃</span></td>
+                                <td>[𝑘𝑚]</td>
+                                <td><span>Total width represented by each arc</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝐿</span></td>
+                                <td>[𝑘𝑚]</td>
+                                <td><span>Distance from SC to the geometrical city center C</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝑔</span></td>
+                                <td>&nbsp;</td>
+                                <td><span>Ratio between the distances P-SC and SC- CBD</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝜂</span></td>
+                                <td>&nbsp;</td>
+                                <td><span>Eccentricity of the CBD</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </div>
-        <div class="modal-container">
-            <div class="modal warning">
-                <div class="modal-title">
-                    <div class="icon">
-                        <span class="material-icons">warning</span>
-                    </div>
-                    <div>
-                        <h4>Warning</h4>
-                    </div>
-                </div>
-                <div class="modal-content">
-                    <p>Editing the parameters of the symmetric demand will alter the changes in the OD Matrix. Do you want to continue?</p>
-                </div>
-                <div class="modal-base">
-                    <button class="btn solo red">Cancel</button>
-                    <button class="btn solo">Save</button>
-                </div>
-            </div>
-        </div>
+            </template>
+        </Modal>
+        <Modal v-if="showWarningModal" @close="showWarningModal = false">
+            <template slot="title">
+                <div class="icon"><span class="material-icons">warning</span></div>
+                <div><h4>Warning</h4></div>
+            </template>
+            <p slot="content" >Editing the parameters of the symmetric demand will alter the changes in the OD Matrix. Do you want to continue?</p>
+            <template slot="close-button-name">Save</template>
+        </Modal>
     </div>
 </template>
 
 <script>
+import Modal from '@/components/Modal.vue'
+import CityGraph from '@/components/CityGraph.vue'
+
 export default {
   name: 'NewCity',
   components: {
-    
+    Modal,
+    CityGraph
+  },
+  data() {
+      return {
+          showWarningModal: false,
+          showLegendModal: false,
+          newcity: {
+              name: null, 
+              n: null,
+              p: null,
+              l: null,
+
+          }
+      }
   }
 }
 </script>
