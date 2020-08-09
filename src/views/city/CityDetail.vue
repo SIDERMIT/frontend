@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import cities from '@/api/cities.api';
+import citiesAPI from '@/api/cities.api';
 import dateMixin from '@/mixins/dateMixin.js'
 import CityGraph from '@/components/CityGraph'
 
@@ -88,11 +88,11 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    cities.getCity(to.params.cityPublicId).then(response => (next(vm => vm.setData(response.data))));
+    citiesAPI.getCity(to.params.cityPublicId).then(response => (next(vm => vm.setData(response.data))));
   },
   beforeRouteUpdate(to, from, next) {
     this.city = {};
-    cities.getCity(to.params.cityPublicId).then(response => {
+    citiesAPI.getCity(to.params.cityPublicId).then(response => {
       this.setData(response.data); 
       next();
     });
