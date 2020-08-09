@@ -23,10 +23,10 @@
                                 <th><span>𝑔</span></th>
                             </tr>
                             <tr>
-                                <td><span>2</span></td>
-                                <td><span>2</span></td>
-                                <td><span>10000</span></td>
-                                <td><span>0.5</span></td>
+                                <td><span>{{ city.n }}</span></td>
+                                <td><span>{{ city.p }}</span></td>
+                                <td><span>{{ city.l }}</span></td>
+                                <td><span>{{ city.g }}</span></td>
                             </tr>
                         </tbody>
                     </table>

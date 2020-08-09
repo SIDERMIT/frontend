@@ -1,15 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import MyCities from '../views/MyCities.vue'
 import Dashboard from '../views/Dashboard.vue'
-import CityDetail from '../views/CityDetail.vue'
+
 import NotFound from '../views/NotFound.vue'
-import NewCity from '../views/NewCity.vue'
-import NewCityStep2 from '../views/NewCityStep2.vue'
-import NewScene from '../views/NewScene.vue'
-import SceneDetail from '../views/SceneDetail.vue'
-import NewNetwork from '../views/NewNetwork.vue'
-import NetworkDetail from '../views/NetworkDetail.vue'
+
+import CityDetail from '../views/city/CityDetail.vue'
+import NewCity from '../views/city/NewCity.vue'
+import NewCityStep2 from '../views/city/NewCityStep2.vue'
+
+import NewScene from '../views/scene/NewScene.vue'
+import SceneDetail from '../views/scene/SceneDetail.vue'
+
+import NewNetwork from '../views/network/NewNetwork.vue'
+import NetworkDetail from '../views/network/NetworkDetail.vue'
 
 Vue.use(VueRouter)
 
