@@ -8,4 +8,34 @@ const httpClient = axios.create({
     }
 });
 
+// interceptor to catch errors
+const errorInterceptor = error => {
+    // all the error responses
+    switch(error.response.status) {
+        case 400:
+            console.error(error.response.status, error.message);
+            break;
+
+        default:
+            console.error(error.response.status, error.message);
+    }
+    return Promise.reject(error);
+}
+
+// Interceptor for responses
+const responseInterceptor = response => {
+    switch(response.status) {
+        case 200: 
+            // yay!
+            break;
+        // any other cases
+        default:
+            // default case
+    }
+
+    return response;
+}
+
+httpClient.interceptors.response.use(responseInterceptor, errorInterceptor);
+
 export default httpClient;
