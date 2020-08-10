@@ -205,11 +205,14 @@ export default {
           .then(response => {
             this.newCity.graph = response.data.pajek;
             this.showEditorAndGraph = true;
+            this.parameterValidator.message = 'Table correctly defined';
+            this.parameterValidator.show = true;
+            this.parameterValidator.icon = 'check';
           }).catch(error => {
               let message = error.response.data.detail;
               this.parameterValidator.message = message;
               this.parameterValidator.show = true;
-              this.parameterValidator.icon = "";
+              this.parameterValidator.icon = '';
           });
       },
       createCity() {
