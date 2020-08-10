@@ -3,14 +3,58 @@
     <div class="header"> 
       <h1>My cities</h1>
     </div>
+    <section class="cities">
+      <div class="grid heading">
+        <h2>{{ cities.length }} Cities available</h2>
+      </div>
+      <div class="grid cities">
+        <template v-if="cities.length > 0">
+          <CityCard v-for="city in cities" v-bind:key="city.public_id" v-bind:city="city"></CityCard>
+        </template>
+        <template v-else>
+          <div class="empty-box">
+            <p>No cities found, start making your first city</p>
+            <router-link :to="{ name: 'NewCity'}" class="btn">
+              <span>Add new city</span>
+              <span class="material-icons">add</span>
+            </router-link>
+          </div>
+        </template>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
+import CityCard from '@/components/CityCard.vue';
+import citiesAPI from '@/api/cities.api';
+
 export default {
   name: 'MyCities',
   components: {
-    
+    CityCard
+  },
+  data() {
+    return {
+      cities: []
+    }
+  },
+  methods: {
+    setData(cities) {
+      this.cities = cities;
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    citiesAPI.getAllCities().then(response => {
+        next(vm => vm.setData(response.data));
+    });
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.cities = [];
+    citiesAPI.getAllCities().then(response => {
+        this.setData(response.data);
+        next();
+    });
   }
 }
 </script>

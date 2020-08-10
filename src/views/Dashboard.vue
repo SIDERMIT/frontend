@@ -21,7 +21,10 @@
             <template v-else>
                 <div class="empty-box">
                     <p>No cities found, start making your first city</p>
-                    <a href="#" class="btn"><span>Add new city</span><span class="material-icons">add</span></a>
+                    <router-link :to="{ name: 'NewCity'}" class="btn">
+                        <span>Add new city</span>
+                        <span class="material-icons">add</span>
+                    </router-link>
                 </div>
             </template>
         </div>
