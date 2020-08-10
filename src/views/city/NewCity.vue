@@ -38,7 +38,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="checker" v-if="parameterValidator.show">
+                <div class="checker" v-if="parameterValidator.show" v-bind:class="[parameterValidator.icon == 'check' ? 'ok': 'error']">
                     <div class="grid checker-body">
                         <span class="material-icons icon ok">{{ parameterValidator.icon }}</span>
                         <span class="text">{{ parameterValidator.message }}</span>
@@ -155,9 +155,6 @@ import citiesAPI from '@/api/cities.api';
 import FileSaver from 'file-saver';
 import FileReader from '@/components/FileReader.vue'
 
-let defaultParameterValidationMessage = 'Table correctly defined';
-let defaultParameterValidationIcon = 'check';
-
 export default {
   name: 'NewCity',
   components: {
@@ -174,8 +171,8 @@ export default {
           showImportModal: false,
           parameterValidator: {
             show: false,
-            message: defaultParameterValidationMessage,
-            icon: defaultParameterValidationIcon
+            message: '',
+            icon: '',
           },
           modalData: {
             showCancelButton: true,
@@ -212,7 +209,7 @@ export default {
               let message = error.response.data.detail;
               this.parameterValidator.message = message;
               this.parameterValidator.show = true;
-              this.parameterValidator.icon = '';
+              this.parameterValidator.icon = 'warning';
           });
       },
       createCity() {
