@@ -6,7 +6,7 @@
         <section class="step1-definition">
             <div class="grid input-name">
                 <h2>Name your city</h2>
-                <input type="text" placeholder="Cant be empty"/>
+                <input v-model="newCity.name" type="text" placeholder="Can't be empty"/>
             </div>
             <h2>Definition of city by parameters</h2>
             <div class="grid center subtitle">
@@ -31,27 +31,31 @@
                             <th><span>𝑔</span></th>
                         </tr>
                         <tr>
-                            <td><input type="text" placeholder="0"/></td>
-                            <td><input type="text" placeholder="0"/></td>
-                            <td><input type="text" placeholder="0"/></td>
-                            <td><input type="text" placeholder="0"/></td>
+                            <td><input v-model="newCity.n" type="text" /></td>
+                            <td><input v-model="newCity.p" type="text" /></td>
+                            <td><input v-model="newCity.l" type="text" /></td>
+                            <td><input v-model="newCity.g" type="text" /></td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="checker" v-if="parameterValidator.show">
+                    <div class="grid checker-body">
+                        <span class="material-icons icon ok">{{ parameterValidator.icon }}</span>
+                        <span class="text">{{ parameterValidator.message }}</span>
+                    </div>
+                </div>
             </div>
-            <div class="flex flex-end">
+            <div class="flex flex-end" v-if="false">
                 <button class="btn"><span class="material-icons">publish</span><span>Edit parameters</span></button>
             </div>
-            <button class="btn full main">Raster graph</button>
+            <button class="btn full main" @click="buildGraph" >Build graph</button>
         </section>
-        <section class="step1-graph-editor">
+        <section class="step1-graph-editor" v-if="showEditorAndGraph">
             <h2>Definition of the city by nodes and arcs</h2>
             <h4>Editor</h4>
             <div class="grid g2">
-                <div>
-                    <div class="editor-container"></div>
-                </div>
-                <div class="graph-container"><CityGraph></CityGraph></div>
+                <div><div class="editor-container">{{ newCity.graph }}</div></div>
+                <div class="graph-container"><CityGraph :city="{}"></CityGraph></div>
             </div>
             <div class="checker">
                 <div class="grid checker-body">
@@ -66,10 +70,10 @@
                 <div class="left-content">
                 </div>
                 <div class="right-content">
-                    <a class="btn">
+                    <button class="btn" @click="createCity">
                         <span>Next</span>
                         <span class="material-icons">chevron_right</span>
-                    </a>
+                    </button>
                 </div>
             </div>
         </footer>
@@ -115,13 +119,13 @@
                 </div>
             </template>
         </Modal>
-        <Modal v-if="showWarningModal" @close="showWarningModal = false">
+        <Modal v-if="showWarningModal" @close="showWarningModal = false" :showCancelButton="modalData.showCancelButton">
             <template slot="title">
                 <div class="icon"><span class="material-icons">warning</span></div>
                 <div><h4>Warning</h4></div>
             </template>
-            <p slot="content" >Editing the parameters of the symmetric demand will alter the changes in the OD Matrix. Do you want to continue?</p>
-            <template slot="close-button-name">Save</template>
+            <p slot="content" v-html="modalData.message"></p>
+            <template slot="close-button-name">{{ modalData.closeButtonName }}</template>
         </Modal>
     </div>
 </template>
@@ -129,6 +133,12 @@
 <script>
 import Modal from '@/components/Modal.vue'
 import CityGraph from '@/components/CityGraph.vue'
+import citiesAPI from '@/api/cities.api';
+
+//let a = "Editing the parameters of the symmetric demand will alter the changes in the OD Matrix. Do you want to continue?";
+let defaultParameterValidationMessage = 'Table correctly defined';
+let defaultParameterValidationIcon = 'check';
+
 
 export default {
   name: 'NewCity',
@@ -140,13 +150,65 @@ export default {
       return {
           showWarningModal: false,
           showLegendModal: false,
-          newcity: {
+          parameterValidator: {
+            show: false,
+            message: defaultParameterValidationMessage,
+            icon: defaultParameterValidationIcon
+          },
+          modalData: {
+            showCancelButton: true,
+            closeButtonName: 'Save',
+            message: ''
+          },
+          showEditorAndGraph: false,
+          newCity: {
               name: null, 
               n: null,
               p: null,
               l: null,
-
+              g: null,
+              graph: ''
           }
+      }
+  },
+  methods: {
+      buildGraph() {
+          let n = this.newCity.n;
+          let p = this.newCity.p;
+          let l = this.newCity.l;
+          let g = this.newCity.g;
+
+          // create graph file from parameters
+          citiesAPI.getPajekFile(n, p, l, g)
+          .then(response => {
+            this.newCity.graph = response.data.pajek;
+            this.showEditorAndGraph = true;
+          }).catch(error => {
+              let message = error.response.data.detail;
+              this.parameterValidator.message = message;
+              this.parameterValidator.show = true;
+              this.parameterValidator.icon = "";
+          });
+      },
+      createCity() {
+        citiesAPI.createCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.buildGraph())
+        .then(response => {
+            this.$router.push({name: 'NewCityStep2', params: {cityPublicId: response.data.public_id}})
+        }).catch(error => {
+            let data = error.response.data;
+            let message = '<b>Please correct the following error(s):</b><br /><br />';
+            for (let key in data) {
+                message += `<b>Field ${key}:</b><ul>`;
+                data[key].forEach(el => {
+                   message += `<li>${el}</li>`; 
+                });
+                message += '</ul>'
+            }
+            this.modalData.message = message;
+            this.modalData.showCancelButton = false
+            this.modalData.closeButtonName = 'OK'
+            this.showWarningModal = true;
+        });
       }
   }
 }
