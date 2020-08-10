@@ -10,7 +10,7 @@
         <div class="modal-base" v-if="showBase">
             <slot name="base">
               <button class="btn solo red" @click="$emit('cancel')" v-if="showCancelButton">Cancel</button>
-              <button class="btn solo" @click="$emit('close');$emit('ok')"><slot name="close-button-name">Close</slot></button>
+              <button class="btn solo" @click="$emit('close');$emit('ok')"><slot name="close-button-name">Ok</slot></button>
             </slot>
         </div>
     </div>
