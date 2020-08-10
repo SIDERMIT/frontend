@@ -1,6 +1,6 @@
 <template>
     <div class="NewCityStep2">
-        <h1>New City - Step 2</h1>
+        <h1>Demand definition</h1>
     </div>
 </template>
 
