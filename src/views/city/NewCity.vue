@@ -15,7 +15,7 @@
                     <a class="icon-link" @click="showLegendModal = true"><span class="material-icons">help</span></a>
                 </div>
                 <div>
-                    <a href="#" class="btn"><span class="material-icons">publish</span><span>Import pajek file</span></a>
+                    <button class="btn" @click="showImportModal = true"><span class="material-icons">publish</span><span>Import pajek file</span></button>
                 </div>
             </div>
             <div class="table">
@@ -31,10 +31,10 @@
                             <th><span>𝑔</span></th>
                         </tr>
                         <tr>
-                            <td><input v-model="newCity.n" type="text" /></td>
-                            <td><input v-model="newCity.p" type="text" /></td>
-                            <td><input v-model="newCity.l" type="text" /></td>
-                            <td><input v-model="newCity.g" type="text" /></td>
+                            <td><input v-model="newCity.n" :disabled="!enableParameters" type="text" /></td>
+                            <td><input v-model="newCity.p" :disabled="!enableParameters" type="text" /></td>
+                            <td><input v-model="newCity.l" :disabled="!enableParameters" type="text" /></td>
+                            <td><input v-model="newCity.g" :disabled="!enableParameters" type="text" /></td>
                         </tr>
                     </tbody>
                 </table>
@@ -45,10 +45,10 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-end" v-if="false">
+            <div class="flex flex-end" v-if="!enableParameters">
                 <button class="btn"><span class="material-icons">publish</span><span>Edit parameters</span></button>
             </div>
-            <button class="btn full main" @click="buildGraph" >Build graph</button>
+            <button class="btn full main" @click="buildGraph" :disabled="!enableParameters" >Build graph</button>
         </section>
         <section class="step1-graph-editor" v-if="showEditorAndGraph">
             <h2>Definition of the city by nodes and arcs</h2>
@@ -127,6 +127,16 @@
             <p slot="content" v-html="modalData.message"></p>
             <template slot="close-button-name">{{ modalData.closeButtonName }}</template>
         </Modal>
+        <Modal v-if="showImportModal" @close="showImportModal = false">
+            <template slot="title">
+                <div class="icon"><span class="material-icons">publish</span></div>
+                <div><h4>Import pajek file</h4></div>
+            </template>
+            <p slot="content">text</p>
+            <template slot="base">                    
+                <FileReader @load="importPajekFile($event)"></FileReader>
+            </template>
+        </Modal>
     </div>
 </template>
 
@@ -135,23 +145,24 @@ import Modal from '@/components/Modal.vue'
 import CityGraph from '@/components/CityGraph.vue'
 import citiesAPI from '@/api/cities.api';
 import FileSaver from 'file-saver';
+import FileReader from '@/components/FileReader.vue'
 
-
-//let a = "Editing the parameters of the symmetric demand will alter the changes in the OD Matrix. Do you want to continue?";
 let defaultParameterValidationMessage = 'Table correctly defined';
 let defaultParameterValidationIcon = 'check';
-
 
 export default {
   name: 'NewCity',
   components: {
     Modal,
+    FileReader,
     CityGraph
   },
   data() {
       return {
+          enableParameters: true,
           showWarningModal: false,
           showLegendModal: false,
+          showImportModal: false,
           parameterValidator: {
             show: false,
             message: defaultParameterValidationMessage,
@@ -215,6 +226,25 @@ export default {
       downloadPajekFile() {
         let blob = new Blob([this.newCity.graph], {type: "text/plain;charset=utf-8"});
         FileSaver.saveAs(blob, "city-graph.net");
+      },
+      importPajekFile(fileContent) {
+        this.newCity.n = null;
+        this.newCity.p = null;
+        this.newCity.l = null;
+        this.newCity.g = null;
+        this.newCity.graph = fileContent;
+        this.showImportModal = false
+        this.showEditorAndGraph = true;
+        this.enableParameters = false;
+      },
+      showEditParametersWarningModal() {
+        this.modalData.closeButtonName = 'asd';
+        this.modalData.message = '';
+        this.showWarningModal = true;
+      },
+      editParameterAction() {
+        let a = 'Editing city parameters will delete previous data. Do you want to continue?';
+        console.log(a);
       }
   }
 }
