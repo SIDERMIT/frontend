@@ -6,7 +6,7 @@
         <section class="step1-definition">
             <div class="grid input-name">
                 <h2>Name your city</h2>
-                <input v-model="newCity.name" type="text" placeholder="Can't be empty"/>
+                <input v-model="newCity.name" class="error" type="text" placeholder="Can't be empty"/>
             </div>
             <h2>Definition of city by parameters</h2>
             <div class="grid center subtitle">
