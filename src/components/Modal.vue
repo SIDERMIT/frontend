@@ -7,8 +7,8 @@
         <div class="modal-content">
             <slot name="content"></slot>
         </div>
-        <div class="modal-base" v-if="showBase" >
-            <button class="btn solo red" @click="$emit('cancel')">Cancel</button>
+        <div class="modal-base" v-if="showBase">
+            <button class="btn solo red" @click="$emit('cancel')" v-if="showCancelButton">Cancel</button>
             <button class="btn solo" @click="$emit('close')"><slot name="close-button-name">Close</slot></button>
         </div>
     </div>
@@ -22,7 +22,11 @@ export default {
     showBase: {
       type: Boolean,
       default: true
-    }
+    },
+    showCancelButton: {
+      type: Boolean,
+      default: false
+    },
   }
 }
 </script>
