@@ -8,8 +8,10 @@
             <slot name="content"></slot>
         </div>
         <div class="modal-base" v-if="showBase">
-            <button class="btn solo red" @click="$emit('cancel')" v-if="showCancelButton">Cancel</button>
-            <button class="btn solo" @click="$emit('close')"><slot name="close-button-name">Close</slot></button>
+            <slot name="base">
+              <button class="btn solo red" @click="$emit('cancel')" v-if="showCancelButton">Cancel</button>
+              <button class="btn solo" @click="$emit('close');$emit('ok')"><slot name="close-button-name">Close</slot></button>
+            </slot>
         </div>
     </div>
   </div>
