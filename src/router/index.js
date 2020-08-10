@@ -31,14 +31,6 @@ Vue.use(VueRouter)
     }
   },
   {
-    path: '/cities/new/step2',
-    name: 'NewCityStep2',
-    component: NewCityStep2,
-    meta: {
-      breadcrumb: 'New city'
-    }
-  },
-  {
     path: '/my_cities',
     component: {render(c) { return c('router-view'); }},
     meta: {
@@ -65,6 +57,14 @@ Vue.use(VueRouter)
             path: '',
             name: 'CityDetail',
             component: CityDetail
+          },
+          {
+            path: 'demand',
+            name: 'NewCityStep2',
+            component: NewCityStep2,
+            meta: {
+              breadcrumb: 'demand'
+            }
           },
           {
             path: 'scene/:scenePublicId',
