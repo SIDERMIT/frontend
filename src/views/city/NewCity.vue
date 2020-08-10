@@ -31,7 +31,7 @@
                             <th><span>𝑔</span></th>
                         </tr>
                         <tr>
-                            <td><input v-model="newCity.n" :disabled="!enableParameters" type="text" /></td>
+                            <td><input v-model="newCity.n" :disabled="!enableParameters" type="text" ref="nInput" /></td>
                             <td><input v-model="newCity.p" :disabled="!enableParameters" type="text" /></td>
                             <td><input v-model="newCity.l" :disabled="!enableParameters" type="text" /></td>
                             <td><input v-model="newCity.g" :disabled="!enableParameters" type="text" /></td>
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="flex flex-end" v-if="!enableParameters">
-                <button class="btn"><span class="material-icons">publish</span><span>Edit parameters</span></button>
+                <button class="btn" @click="showEditParameterModal = true"><span class="material-icons">publish</span><span>Edit parameters</span></button>
             </div>
             <button class="btn full main" @click="buildGraph" :disabled="!enableParameters" >Build graph</button>
         </section>
@@ -127,6 +127,14 @@
             <p slot="content" v-html="modalData.message"></p>
             <template slot="close-button-name">{{ modalData.closeButtonName }}</template>
         </Modal>
+        <Modal v-if="showEditParameterModal" @cancel="showEditParameterModal = false" @close="showEditParameterModal = false" @ok="editParameterAction" :showCancelButton="true">
+            <template slot="title">
+                <div class="icon"><span class="material-icons">warning</span></div>
+                <div><h4>Warning</h4></div>
+            </template>
+            <p slot="content">Editing city parameters will delete previous data. Do you want to continue?</p>
+            <template slot="close-button-name">Proceed</template>
+        </Modal>
         <Modal v-if="showImportModal" @close="showImportModal = false">
             <template slot="title">
                 <div class="icon"><span class="material-icons">publish</span></div>
@@ -160,6 +168,7 @@ export default {
   data() {
       return {
           enableParameters: true,
+          showEditParameterModal: false,
           showWarningModal: false,
           showLegendModal: false,
           showImportModal: false,
@@ -237,14 +246,14 @@ export default {
         this.showEditorAndGraph = true;
         this.enableParameters = false;
       },
-      showEditParametersWarningModal() {
-        this.modalData.closeButtonName = 'asd';
-        this.modalData.message = '';
-        this.showWarningModal = true;
-      },
       editParameterAction() {
-        let a = 'Editing city parameters will delete previous data. Do you want to continue?';
-        console.log(a);
+        this.enableParameters = true
+        this.showEditorAndGraph = false;
+        this.newCity.graph = null;
+        this.showEditParameterModal = false;
+        this.$nextTick(() => {
+            this.$refs.nInput.focus();
+        });
       }
   }
 }
