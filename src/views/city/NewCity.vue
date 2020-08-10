@@ -167,7 +167,7 @@ export default {
               p: null,
               l: null,
               g: null,
-              graph: ''
+              graph: null
           }
       }
   },
@@ -191,14 +191,14 @@ export default {
           });
       },
       createCity() {
-        citiesAPI.createCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.buildGraph())
+        citiesAPI.createCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.newCity.graph)
         .then(response => {
             this.$router.push({name: 'NewCityStep2', params: {cityPublicId: response.data.public_id}})
         }).catch(error => {
             let data = error.response.data;
             let message = '<b>Please correct the following error(s):</b><br /><br />';
             for (let key in data) {
-                message += `<b>Field ${key}:</b><ul>`;
+                message += `<b>${key}:</b><ul>`;
                 data[key].forEach(el => {
                    message += `<li>${el}</li>`; 
                 });
