@@ -62,7 +62,7 @@
                     <span class="material-icons icon ok">check</span>
                     <span class="text">Table correctly defined</span>
                 </div>
-                <a href="#" class="btn"><span class="material-icons">get_app</span><span>Download pajek</span></a>
+                <button class="btn" @click="downloadPajekFile"><span class="material-icons">get_app</span><span>Download pajek</span></button>
             </div>
         </section>
         <footer>
@@ -134,6 +134,8 @@
 import Modal from '@/components/Modal.vue'
 import CityGraph from '@/components/CityGraph.vue'
 import citiesAPI from '@/api/cities.api';
+import FileSaver from 'file-saver';
+
 
 //let a = "Editing the parameters of the symmetric demand will alter the changes in the OD Matrix. Do you want to continue?";
 let defaultParameterValidationMessage = 'Table correctly defined';
@@ -209,6 +211,10 @@ export default {
             this.modalData.closeButtonName = 'OK'
             this.showWarningModal = true;
         });
+      },
+      downloadPajekFile() {
+        let blob = new Blob([this.newCity.graph], {type: "text/plain;charset=utf-8"});
+        FileSaver.saveAs(blob, "city-graph.net");
       }
   }
 }
