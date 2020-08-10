@@ -135,7 +135,7 @@
             <p slot="content">Editing city parameters will delete previous data. Do you want to continue?</p>
             <template slot="close-button-name">Proceed</template>
         </Modal>
-        <Modal v-if="showImportModal" @close="showImportModal = false">
+        <Modal v-if="showImportModal" @close="showImportModal = false" :isWarning="true">
             <template slot="title">
                 <div class="icon"><span class="material-icons">publish</span></div>
                 <div><h4>Import pajek file</h4></div>

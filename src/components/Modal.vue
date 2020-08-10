@@ -1,6 +1,6 @@
 <template>
   <div class="modal-container" @click="$emit('close')">
-    <div class="modal" @click.stop>
+    <div class="modal" @click.stop v-bind:class="{'warning': isWarning}">
         <div class="modal-title">
             <slot name="title"></slot>
         </div>
@@ -29,6 +29,10 @@ export default {
       type: Boolean,
       default: false
     },
+    isWarning: {
+      type: Boolean,
+      default: false
+    }
   }
 }
 </script>
