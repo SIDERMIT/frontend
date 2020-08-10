@@ -9,7 +9,7 @@
             <h2>Recently created cities</h2>
             <template v-if="cities.length > 0">
                 <router-link :to="{ name: 'MyCities'}" class="btn">
-                    <span>View all (10)</span>
+                    <span>View all</span>
                     <span class="material-icons">chevron_right</span>
                 </router-link>
             </template>
