@@ -3,7 +3,7 @@ import httpClient from './httpClient';
 const BASE_END_POINT = '/api'
 const END_POINT = `${BASE_END_POINT}/cities/`;
 
-const getAllCities = (limit) => httpClient.get(END_POINT, {limit});
+const getAllCities = (limit) => httpClient.get(END_POINT, {params:{limit}});
 const getCity = (publicId) => httpClient.get(`${END_POINT}${publicId}`);
 const deleteCity = (publicId) => httpClient.delete(`${END_POINT}${publicId}`);
 const updateCity = (publicId) => httpClient.patch(`${END_POINT}${publicId}`);
