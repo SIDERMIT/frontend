@@ -5,7 +5,7 @@
               <h3>{{ city.name }}</h3>
               <span class="p-min">Created at {{ getLocalDate(city.created_at) }}</span>
           </div>
-          <div class="grid">
+          <div class="grid min">
               <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">edit</span></router-link>
               <button class="btn icon" @click="duplicateCity(city.public_id)" ><span class="material-icons">file_copy</span></button>
               <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">delete</span></router-link>

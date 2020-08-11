@@ -31,10 +31,10 @@
                             <th><span>𝑔</span></th>
                         </tr>
                         <tr>
-                            <td><input v-model="newCity.n" :disabled="!enableParameters" type="text" ref="nInput" /></td>
-                            <td><input v-model="newCity.p" :disabled="!enableParameters" type="text" /></td>
-                            <td><input v-model="newCity.l" :disabled="!enableParameters" type="text" /></td>
-                            <td><input v-model="newCity.g" :disabled="!enableParameters" type="text" /></td>
+                            <td><input v-model="newCity.n" :disabled="!enableParameters" type="text" ref="nInput" placeholder="-" /></td>
+                            <td><input v-model="newCity.p" :disabled="!enableParameters" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.l" :disabled="!enableParameters" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.g" :disabled="!enableParameters" type="text"  placeholder="-"/></td>
                         </tr>
                     </tbody>
                 </table>
@@ -54,10 +54,10 @@
             <h2>Definition of the city by nodes and arcs</h2>
             <h4>Editor</h4>
             <div class="grid g2">
-                <div><div class="editor-container">{{ newCity.graph }}</div></div>
+                <div><pre class="editor-container">{{ newCity.graph }}</pre></div>
                 <div class="graph-container"><CityGraph :city="{}"></CityGraph></div>
             </div>
-            <div class="checker">
+            <div class="checker ok">
                 <div class="grid checker-body">
                     <span class="material-icons icon ok">check</span>
                     <span class="text">Table correctly defined</span>
@@ -78,8 +78,10 @@
             </div>
         </footer>
         <Modal v-if="showLegendModal" @close="showLegendModal = false" :showBase="false">
-            <template slot="content">
+            <template slot="title">
                 <h2>Terminology</h2>
+            </template>
+            <template slot="content">
                 <p>The parameters 𝑛, 𝑃, 𝐿 and 𝑔 are required to build the city, the asymmetries are optional</p>
                 <div class="table">
                     <table>
@@ -119,7 +121,7 @@
                 </div>
             </template>
         </Modal>
-        <Modal v-if="showWarningModal" @close="showWarningModal = false" :showCancelButton="modalData.showCancelButton">
+        <Modal v-if="showWarningModal" @close="showWarningModal = false" :showCancelButton="modalData.showCancelButton" :isWarning="true">
             <template slot="title">
                 <div class="icon"><span class="material-icons">warning</span></div>
                 <div><h4>Warning</h4></div>
@@ -135,12 +137,17 @@
             <p slot="content">Editing city parameters will delete previous data. Do you want to continue?</p>
             <template slot="close-button-name">Proceed</template>
         </Modal>
-        <Modal v-if="showImportModal" @close="showImportModal = false" :isWarning="true">
+        <Modal v-if="showImportModal" @close="showImportModal = false">
             <template slot="title">
-                <div class="icon"><span class="material-icons">publish</span></div>
-                <div><h4>Import pajek file</h4></div>
+                <h2>Import pajek file</h2>
             </template>
-            <p slot="content">text</p>
+            <template slot="content">
+                <p>The file must have this setup:</p>
+                <code>*nodes n_of_nodes</code>
+                <p>Then, after each row must have the next fields, separate by space:</p>
+                <code>[id] [name] [x] [y] [type] [zone_id] [width]</code>
+            </template>
+
             <template slot="base">                    
                 <FileReader @load="importPajekFile($event)"></FileReader>
             </template>
