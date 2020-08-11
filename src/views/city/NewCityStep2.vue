@@ -25,11 +25,11 @@
                                 <th><span>𝛽</span></th>
                             </tr>
                             <tr>
-                                <td><input type="text" placeholder="0"/></td>
-                                <td><input type="text" placeholder="0"/></td>
-                                <td><input type="text" placeholder="0"/></td>
-                                <td><input type="text" placeholder="0"/></td>
-                                <td><input type="text" placeholder="0"/></td>
+                                <td><input v-model="city.n" :disabled="true" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.y" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.a" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.alpha" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.beta" type="text" placeholder="-"/></td>
                             </tr>
                         </tbody>
                     </table>
@@ -45,7 +45,7 @@
                 </div>
                 <button class="btn full main">Render OD matrix</button>
             </div>
-            <div class="graph-container"></div>
+            <div class="graph-container"><CityGraph :city="city"></CityGraph></div>
         </section>
         <section>
             <h2>OD Matrix</h2>
@@ -53,7 +53,7 @@
                 <h4>Transport modes and users settings for the city</h4>
             </div>
             <div class="empty-box">
-                <p>You have not generated your matrix yet, you can import the data from a csv file.</p>
+                <p>You have not generated your matrix yet, you can import data from csv file.</p>
                 <a href="#" class="btn">
                     <span class="material-icons">publish</span>
                     <span>Import CSV file</span>
@@ -69,7 +69,7 @@
                         <span class="material-icons">chevron_left</span>
                         <span>Back</span>
                     </a>
-                    <a class="btn">
+                    <a class="btn" @click="updateCity">
                         <span>Next</span>
                         <span class="material-icons">chevron_right</span>
                     </a>
@@ -80,10 +80,60 @@
 </template>
 
 <script>
+import CityGraph from '@/components/CityGraph.vue';
+import citiesAPI from '@/api/cities.api';
+
 export default {
   name: 'NewCityStep2',
   components: {
-    
+    CityGraph,
+  },
+  data() {
+    return {
+        city: {
+            n: null,
+            y: null,
+            a: null,
+            alpha: null,
+            beta: null,
+        }
+    }
+  },
+  methods: {
+    setData(city) {
+      this.city = city;
+    },
+    updateCity() {
+        // TODO: fixed this
+        citiesAPI.updateCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.newCity.graph)
+        .then(response => {
+            this.$router.push({name: 'NewCityStep2', params: {cityPublicId: response.data.public_id}})
+        }).catch(error => {
+            let data = error.response.data;
+            let message = '<b>Please correct the following error(s):</b><br /><br />';
+            for (let key in data) {
+                message += `<b>${key}:</b><ul>`;
+                data[key].forEach(el => {
+                   message += `<li>${el}</li>`; 
+                });
+                message += '</ul>'
+            }
+            this.modalData.message = message;
+            this.modalData.showCancelButton = false
+            this.modalData.closeButtonName = 'OK'
+            this.showWarningModal = true;
+        });
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    citiesAPI.getCity(to.params.cityPublicId).then(response => (next(vm => vm.setData(response.data))));
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.city = {};
+    citiesAPI.getCity(to.params.cityPublicId).then(response => {
+      this.setData(response.data); 
+      next();
+    });
   }
 }
 </script>
