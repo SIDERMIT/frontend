@@ -31,21 +31,40 @@
                         </tbody>
                     </table>
                 </div>
-                <button class="btn"><span class="material-icons">chevron_right</span><span>View matrix</span></button>
+                <button class="btn" @click="showMatrixModal = true"><span class="material-icons">chevron_right</span><span>View matrix</span></button>
             </div>
         </section>
         <section>
             <h2>Stages</h2>
             <div class="subtitle">
-                <h4>Transport modes and users settings for the city</h4>
+                <h4>Transport modes and users settings for city</h4>
             </div>
-            <div class="empty-box">
-                <p>There is no defined stages for this project. start by creating a new one</p>
-                <a href="#" class="btn">
-                    <span>Add new stage</span>
-                    <span class="material-icons">add</span>
-                </a>
-            </div>
+            <template v-if="city.scene_set.length == 0">
+                <div class="empty-box">
+                    <p>There is no defined stages for this project. start by creating a new one</p>
+                    <router-link :to="{ name: 'NewScene'}" class="btn">
+                        <span>Add new stage</span>
+                        <span class="material-icons">add</span>
+                    </router-link>
+                </div>
+            </template>
+            <template v-else>
+                <div class="table">
+                    <ul class="scenes">
+                        <li v-for="scene in city.scene_set" v-bind:key="scene.public_id">
+                            <div class="name">
+                                <h4>{{ scene.name }}</h4>
+                                <span class="p-min">{{ scene.transportmode_set.length }} transport modes, {{ scene.transportnetwork_set.length }} transport networks </span>
+                            </div>
+                            <div class="grid">
+                                <router-link :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id }}" class="btn icon" tag="button"><span class="material-icons">edit</span></router-link>
+                                <button class="btn icon" @click="duplicateScene(scene.public_id)" ><span class="material-icons">file_copy</span></button>
+                                <button class="btn icon" @click="confirmSceneDelete(scene)"><span class="material-icons">delete</span></button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </template>
         </section>
         <footer>
             <div class="container full grid">
@@ -56,35 +75,80 @@
                         <span class="material-icons">edit</span>
                         <span>Edit city</span>
                     </a>
-                    <a class="btn">
+                    <router-link :to="{ name: 'NewScene'}" class="btn">
                         <span>Add new stage</span>
                         <span class="material-icons">add</span>
-                    </a>
+                    </router-link>
                 </div>
             </div>
         </footer>
+        <Modal v-if="showMatrixModal" @close="showMatrixModal = false" :showBase="false">
+            <template slot="title">
+                <div><h4>OD Matrix</h4></div>
+            </template>
+            <template slot="content">
+                {{ city.demand_matrix }}
+            </template>
+        </Modal>
+        <Modal v-if="deleteModal.showModal" @close="deleteModal.showModal = false" @cancel="deleteModal.showModal = false" @ok="deleteScene" :isWarning="true" :showCancelButton="true">
+            <template slot="title">
+                <div><h4>Delete Scene</h4></div>
+            </template>
+            <template slot="content">{{ deleteModal.content }}</template>
+        </Modal>
     </div>
 </template>
 
 <script>
 import citiesAPI from '@/api/cities.api';
+import scenesAPI from '@/api/scenes.api';
 import dateMixin from '@/mixins/dateMixin.js'
 import CityGraph from '@/components/CityGraph'
+import Modal from '@/components/Modal.vue'
 
 export default {
   name: 'CityDetail',
   mixins: [dateMixin],
   components: {
+    Modal,
     CityGraph
   },
   data() {
     return {
-      city: {}
+      showMatrixModal: false,
+      deleteModal: {
+        showModal: false,
+        content: '',
+        scene: null
+      },
+      city: {
+          scene_set: []
+      }
     }
   },
   methods: {
     setData(city) {
       this.city = city;
+    },
+    confirmSceneDelete(scene) {
+        this.deleteModal.content = `Are you sure you want to delete scene "${scene.name}"?`;
+        this.deleteModal.showModal = true;
+        this.deleteModal.scene = scene;
+    },
+    deleteScene() {
+        console.log(this.deleteModal.scene.name);
+
+        scenesAPI.deleteScene(this.deleteModal.scene.public_id).then(response => {
+            console.log(response);
+            this.city.scene_set = this.city.scene_set.filter(scene => {
+                return scene.public_id != this.deleteModal.scene.public_id;
+            });
+        });
+    },
+    duplicateScene(publicId) {
+        scenesAPI.duplicateScene(publicId).then(response => {
+            this.city.scene_set.push(response.data)
+        });
     }
   },
   beforeRouteEnter (to, from, next) {
