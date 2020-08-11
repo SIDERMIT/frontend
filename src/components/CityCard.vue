@@ -5,7 +5,7 @@
               <h3>{{ city.name }}</h3>
               <span class="p-min">Created at {{ getLocalDate(city.created_at) }}</span>
           </div>
-          <div class="grid min">
+          <div class="grid">
               <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">edit</span></router-link>
               <button class="btn icon" @click="duplicateCity(city.public_id)" ><span class="material-icons">file_copy</span></button>
               <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">delete</span></router-link>
@@ -32,7 +32,7 @@
 import dateMixin from '@/mixins/dateMixin.js'
 import CityGraph from '@/components/CityGraph.vue'
 
-import cities from '@/api/cities.api';
+import citiesAPI from '@/api/cities.api';
 
 export default {
   name: 'CityCard',
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     duplicateCity(publicId) {
-      cities.duplicateCity(publicId).then(response => {
+      citiesAPI.duplicateCity(publicId).then(response => {
         // TODO: isertar respuesta en cities del componente padre
         console.log(response.data)
       });
