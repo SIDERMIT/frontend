@@ -136,8 +136,6 @@ export default {
         this.deleteModal.scene = scene;
     },
     deleteScene() {
-        console.log(this.deleteModal.scene.name);
-
         scenesAPI.deleteScene(this.deleteModal.scene.public_id).then(response => {
             console.log(response);
             this.city.scene_set = this.city.scene_set.filter(scene => {
