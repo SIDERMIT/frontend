@@ -91,13 +91,13 @@ Vue.use(VueRouter)
                 }
               },
               {
-                path: 'network/:networkPublicId',
+                path: 'network/:transportNetworkPublicId',
                 name: 'NetworkDetail',
                 component: NetworkDetail,
                 meta: {
                   breadcrumb() {
                     return {
-                      label: this.$route.params.scenePublicId
+                      label: this.$route.params.transportNetworkPublicId
                     }
                   }
                 }
