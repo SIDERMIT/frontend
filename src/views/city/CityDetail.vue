@@ -37,7 +37,7 @@
         <section>
             <h2>Stages</h2>
             <div class="subtitle">
-                <h4>Transport modes and users settings for city</h4>
+                <h4>Transport modes and users settings for the city</h4>
             </div>
             <template v-if="city.scene_set.length == 0">
                 <div class="empty-box">
@@ -50,16 +50,16 @@
             </template>
             <template v-else>
                 <div class="table">
-                    <ul class="scenes">
+                    <ul class="stages-list">
                         <li v-for="scene in city.scene_set" v-bind:key="scene.public_id">
-                            <div class="name">
+                            <a class="name" href="#link-to-stage-detail">
                                 <h4>{{ scene.name }}</h4>
                                 <span class="p-min">{{ scene.transportmode_set.length }} transport modes, {{ scene.transportnetwork_set.length }} transport networks </span>
-                            </div>
-                            <div class="grid">
-                                <router-link :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id }}" class="btn icon" tag="button"><span class="material-icons">edit</span></router-link>
-                                <button class="btn icon" @click="duplicateScene(scene.public_id)" ><span class="material-icons">file_copy</span></button>
-                                <button class="btn icon" @click="confirmSceneDelete(scene)"><span class="material-icons">delete</span></button>
+                            </a>
+                            <div class="grid min">
+                                <router-link :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id }}" class="btn icon" tag="button" alt="Edit"><span class="material-icons">edit</span></router-link>
+                                <button class="btn icon" alt="Duplicate" @click="duplicateScene(scene.public_id)" disabled><span class="material-icons">file_copy</span></button>
+                                <button class="btn icon" alt="Delete" @click="confirmSceneDelete(scene)"><span class="material-icons">delete</span></button>
                             </div>
                         </li>
                     </ul>
