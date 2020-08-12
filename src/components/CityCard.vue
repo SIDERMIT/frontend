@@ -13,7 +13,7 @@
       </div>
       <div class="grid mid-info">
           <div class="graph-container">
-            <CityGraph :city="city"></CityGraph>
+            <CityGraph :network="city.network_descriptor"></CityGraph>
           </div>
           <dl>
             <div v-for="scene in city.scene_set" v-bind:key="scene.public_id">

@@ -55,7 +55,7 @@
             <h4>Editor</h4>
             <div class="grid g2">
                 <div><pre class="editor-container">{{ newCity.graph }}</pre></div>
-                <div class="graph-container"><CityGraph :city="{}"></CityGraph></div>
+                <div class="graph-container"><CityGraph :network="newCity.network"></CityGraph></div>
             </div>
             <div class="checker ok">
                 <div class="grid checker-body">
@@ -193,7 +193,11 @@ export default {
               p: null,
               l: null,
               g: null,
-              graph: null
+              graph: null,
+              network: {
+                  nodes: [],
+                  edges: []
+              }
           }
       }
   },
@@ -208,6 +212,7 @@ export default {
           citiesAPI.getPajekFile(n, p, l, g)
           .then(response => {
             this.newCity.graph = response.data.pajek;
+            this.newCity.network = response.data.network;
             this.showEditorAndGraph = true;
             this.parameterValidator.message = 'Table correctly defined';
             this.parameterValidator.show = true;

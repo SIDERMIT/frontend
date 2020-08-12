@@ -21,7 +21,7 @@ export default {
     'v-chart': ECharts
   },
   props: {
-    city: {
+    network: {
       type: Object,
       required: true
     }
@@ -33,11 +33,11 @@ export default {
   },
   methods: {
     baseChartOption() {
-      console.log(this.city);
+      let nodes = this.network.nodes;
+      let edges = this.network.edges;
       let data = [];
-      let links = [];
 
-      for (let i = 0; i <= 10; i++) {
+      nodes.forEach(node => {
           data.push({
             label: {
               show: true,
@@ -52,20 +52,17 @@ export default {
               color: 'black'
             },
             symbolSize: 8,
-            name: i,
-            value: i,
-            x: i,
-            y: i
+            name: node.name,
+            value: [node.x, node.y, node.name, node.id],
           });
-      }
+      });
 
-      links = data.map(function(item, idx){
+      let links = edges.map(function(edge){
         return {
-          source: idx,
-          target: idx+1
+          source: edge.source,
+          target: edge.target,
         }
       });
-      links.pop();
 
       let options = {
         visualMap: {
@@ -75,11 +72,11 @@ export default {
           dimension: 1
         },
         grid: {
-          left: 15,
-          bottom: 15,
-          containLabel: false,
-          top: 15,
-          right: 15
+          left: 0,
+          bottom: 10,
+          containLabel: true,
+          top: 10,
+          right: 10
         },
         xAxis: {
           type: 'value',
@@ -94,28 +91,27 @@ export default {
       }
 
       options.series.push({
-        name: '',
+        name: 'serie1',
         type: 'graph',
         coordinateSystem: 'cartesian2d',
         data: data,
         links: links,
-        edgeSymbol: ['none', 'none'],
+        edgeSymbol: ['none', 'arrow'],
         edgeSymbolSize: 5,
         legendHoverLink: false,
         lineStyle: {
             color: 'red'
         },
         itemStyle: {
-            borderWidth: 1,
-            borderColor: 'yellow'
+            borderWidth: 3,
+            borderColor: 'green'
         },
         label: {
             color: '#333',
-            position: 'right'
         },
-        symbolSize: 2,
+        symbolSize: 10,
         animationDelay: function (idx) {
-            return idx * 100;
+            return idx * 10;
         }
       });
       return options;
