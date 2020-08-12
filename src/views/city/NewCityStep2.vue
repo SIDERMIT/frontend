@@ -48,9 +48,9 @@
             <div class="graph-container"><CityGraph :network="city.network_descriptor"></CityGraph></div>
         </section>
         <section>
-            <h2>OD Matrix</h2>
-            <div class="subtitle">
-                <h4>Transport modes and users settings for the city</h4>
+            <div class="subtitle grid">
+                <h2>OD Matrix</h2>
+                <button class="btn"><span class="material-icons">publish</span><span>Import CSV file</span></button>
             </div>
             <div class="empty-box">
                 <p>You have not generated your matrix yet, you can import data from csv file.</p>
@@ -58,6 +58,192 @@
                     <span class="material-icons">publish</span>
                     <span>Import CSV file</span>
                 </a>
+            </div>
+            <div class="table">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th><span>CBD</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                            <th><span>P1</span></th>
+                            <th><span>SC1</span></th>
+                        </tr>
+                        <tr>
+                            <th><span>CBD</span></th>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                        </tr>
+                        <tr>
+                            <th><span>P1</span></th>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                        </tr>
+                        <tr>
+                            <th><span>SC1</span></th>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                        </tr>
+                        <tr>
+                            <th><span>P1</span></th>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                        </tr>
+                        <tr>
+                            <th><span>SC1</span></th>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                            <td><input type="text" placeholder="0"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
         <footer>
@@ -70,8 +256,8 @@
                         <span>Back</span>
                     </a>
                     <a class="btn" @click="updateCity">
-                        <span>Next</span>
-                        <span class="material-icons">chevron_right</span>
+                        <span>Save city</span>
+                        <span class="material-icons">check</span>
                     </a>
                 </div>
             </div>
