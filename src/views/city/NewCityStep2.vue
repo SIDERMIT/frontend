@@ -45,7 +45,7 @@
                 </div>
                 <button class="btn full main">Render OD matrix</button>
             </div>
-            <div class="graph-container"><CityGraph :city="city"></CityGraph></div>
+            <div class="graph-container"><CityGraph :network="city.network_descriptor"></CityGraph></div>
         </section>
         <section>
             <h2>OD Matrix</h2>
@@ -96,6 +96,10 @@ export default {
             a: null,
             alpha: null,
             beta: null,
+            network_descriptor: {
+                nodes: [],
+                edges: []
+            }
         }
     }
   },

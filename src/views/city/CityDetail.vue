@@ -6,7 +6,7 @@
         </div>
         <section class="city-details">
             <div class="graph-container">
-                <CityGraph :city="city"></CityGraph>
+                <CityGraph :network="city.network_descriptor"></CityGraph>
             </div>
             <div>
                 <h2>City parameters</h2>
@@ -122,7 +122,11 @@ export default {
         scene: null
       },
       city: {
-          scene_set: []
+          scene_set: [],
+          network_descriptor: {
+              nodes: [],
+              edges: []
+          }
       }
     }
   },
