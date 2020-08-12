@@ -48,7 +48,7 @@
                             <span class="p-min">{{ optimization.scene_name }} - {{ optimization.city_name }}</span>
                         </div>
                         <div class="text"><span class="p-min">{{ optimization.status }}</span></div>
-                        <router-link :to="{ name: 'MyCities'}" class="btn neuro"><span>View details</span><span class="material-icons">chevron_right</span></router-link>
+                        <router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id, transportNetworkPublicId: optimization.network_public_id }}" class="btn neuro"><span>View details</span><span class="material-icons">chevron_right</span></router-link>
                         <router-link :to="{ name: 'SceneDetail', params: { cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id }}" class="btn neuro"><span>View stages</span><span class="material-icons">chevron_right</span></router-link>
                     </li>
                 </ul>
