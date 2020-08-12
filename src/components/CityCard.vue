@@ -8,7 +8,7 @@
           <div class="grid min">
               <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">edit</span></router-link>
               <button class="btn icon" @click="duplicateCity(city.public_id)" ><span class="material-icons">file_copy</span></button>
-              <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button"><span class="material-icons">delete</span></router-link>
+              <button class="btn icon" @click="showConfirmDeleteModal = true" ><span class="material-icons">delete</span></button>
           </div>
       </div>
       <div class="grid mid-info">
@@ -25,10 +25,19 @@
       <div class="bot-info">
           <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn neuro">View details</router-link>
       </div>
+      <Modal v-if="showConfirmDeleteModal" @cancel="showConfirmDeleteModal = false" @close="showConfirmDeleteModal = false" @ok="deleteCity(city.public_id)" :showCancelButton="true" :isWarning="true">
+          <template slot="title">
+              <div class="icon"><span class="material-icons">warning</span></div>
+              <div><h4>Warning</h4></div>
+          </template>
+          <p slot="content">Are you sure you want to delete city "{{ city.name }}"?</p>
+          <template slot="close-button-name">Proceed</template>
+      </Modal>
   </div>
 </template>
 
 <script>
+import Modal from '@/components/Modal.vue'
 import dateMixin from '@/mixins/dateMixin.js'
 import CityGraph from '@/components/CityGraph.vue'
 
@@ -38,7 +47,8 @@ export default {
   name: 'CityCard',
   mixins: [dateMixin],
   components: {
-    CityGraph
+    CityGraph,
+    Modal,
   },
   props: {
     city: {
@@ -46,10 +56,21 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      showConfirmDeleteModal: false
+    }
+  },
   methods: {
     duplicateCity(publicId) {
       citiesAPI.duplicateCity(publicId).then(response => {
         // TODO: isertar respuesta en cities del componente padre
+        console.log(response.data)
+      });
+    },
+    deleteCity(publicId) {
+      citiesAPI.deleteCity(publicId).then(response => {
+        // TODO: isertar respuesta en cities del componente padre, hay que usar vuex
         console.log(response.data)
       });
     }
