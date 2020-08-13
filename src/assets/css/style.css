@@ -342,7 +342,7 @@ text-align: center;
     margin: 0;
     font-size: 16px;
 }
-.checker {padding: 10px 0; display: grid; grid-template-columns: 1fr auto; grid-gap: 20px;}
+.checker {padding: 10px; display: grid; grid-template-columns: 1fr auto; grid-gap: 20px;}
 .checker-body {background: rgba(255, 255, 255, 0.4); border-radius: 100px; align-items: center; padding: 10px;}
 .checker .icon {font-size: 24px;}
 .checker.ok .icon {color: var(--ok);}

@@ -128,6 +128,10 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="checker">
+                <div></div>
+                <button class="btn"><span class="material-icons">add</span><span>Add mode</span></button>
+            </div>
         </div>
     </section>
     <footer>
