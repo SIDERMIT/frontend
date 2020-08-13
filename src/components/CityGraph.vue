@@ -100,6 +100,7 @@ export default {
         name: 'serie1',
         type: 'graph',
         coordinateSystem: 'cartesian2d',
+        focusNodeAdjacency: true,
         data: data,
         links: links,
         edgeSymbol:'none',
