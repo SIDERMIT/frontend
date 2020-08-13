@@ -1,6 +1,6 @@
 <template>
     <div class="CityDetail">
-        <div class="header">            
+        <div class="header">
             <h1>{{ city.name }}</h1>
             <span class="p-min">Created at {{ getLocalDate(city.created_at) }}</span>
         </div>
