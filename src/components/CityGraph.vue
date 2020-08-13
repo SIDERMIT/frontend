@@ -44,9 +44,10 @@ export default {
               }
             },
             itemStyle: {
-              color: 'black'
+              color: '#D6951B',
+              borderWidth: 0,
             },
-            symbolSize: 8,
+            symbolSize: 15,
             name: node.name,
             value: [node.x, node.y, node.name, node.id],
           });
@@ -91,18 +92,19 @@ export default {
         coordinateSystem: 'cartesian2d',
         data: data,
         links: links,
-        edgeSymbol: ['none', 'arrow'],
-        edgeSymbolSize: 5,
+        edgeSymbol:'none',
         legendHoverLink: false,
         lineStyle: {
-            color: 'red'
+            color: '#CACECE',
+            width:2,
         },
         itemStyle: {
-            borderWidth: 3,
-            borderColor: 'green'
+            borderWidth: 0,
+            color:'#D06318',
         },
         label: {
-            color: '#333',
+            color: '#151C24',
+            fontWeight:'bold',
         },
         symbolSize: 10,
         animationDelay: function (idx) {
