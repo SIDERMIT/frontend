@@ -33,7 +33,7 @@ export default {
       let data = [];
 
       nodes.forEach(node => {
-          data.push({
+          let nodeAttributes = {
             label: {
               show: true,
               position: 'bottom'
@@ -50,7 +50,17 @@ export default {
             symbolSize: 15,
             name: node.name,
             value: [node.x, node.y, node.name, node.id],
-          });
+          };
+
+          if (node.type == 'cbd') {
+            nodeAttributes.itemStyle.color = '#fff200';
+          } else if (node.type == 'periphery') {
+            nodeAttributes.itemStyle.color = '#4bd63b';
+          } else if (node.type == 'subcenter') {
+            nodeAttributes.itemStyle.color = '#ff0505';
+          } 
+
+          data.push(nodeAttributes);
       });
 
       let links = edges.map(function(edge){
