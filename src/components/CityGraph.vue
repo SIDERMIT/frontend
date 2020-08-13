@@ -1,5 +1,5 @@
 <template>
-  <v-chart :options="graphOptions" />
+  <v-chart :options="getOptions()" />
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -26,13 +26,8 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      graphOptions: this.baseChartOption()
-    }
-  },
   methods: {
-    baseChartOption() {
+    getOptions() {
       let nodes = this.network.nodes;
       let edges = this.network.edges;
       let data = [];
@@ -114,6 +109,7 @@ export default {
             return idx * 10;
         }
       });
+
       return options;
     }
   }
