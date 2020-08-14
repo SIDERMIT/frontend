@@ -63,8 +63,9 @@ input.error {background: #FFF6EF;
     box-shadow: inset 2px 2px 2px 0 rgba(184,64,89,0.11), inset -2px -2px 4px 0 rgba(255,255,255,0.94), inset 2px 2px 8px 0 rgba(212,5,5,0.15);
 }
 input.error:focus {background-color: white;}
-input:disabled {background: transparent; box-shadow: none;}
+input:disabled {background: transparent; box-shadow: none; border: none;}
 input[type="checkbox"]{background: none; box-shadow: none;}
+.switch input[type="checkbox"]:disabled ~ .switch-body {opacity: .3;}
 .switch input[type="checkbox"] {display: none;}
 .switch .switch-body span {padding: 0; width: 100%; display:inline-block;}
 .switch input[type="checkbox"] ~ .switch-body .text-off {display: none;}
@@ -270,6 +271,7 @@ box-shadow: inset 2px 0px 1px 0 rgba(0, 0, 0, 0.15), inset -2px -2px 0px 0 rgba(
     box-shadow: 1px 1px 1px 0 rgba(255,255,255,0.75), -1px -1px 1px 0 rgba(0,0,0,.15), inset -1px -1px 1px 0 rgba(255,255,255,0.75), inset 1px 1px 1px 0 rgba(0,0,0,0.10);
     border-radius: 20px;
     margin-bottom: 10px;
+    padding: 1px;
 }
 .optimizations {padding: 0;}
 .optimizations li {
@@ -373,7 +375,7 @@ background: rgba(93, 78, 57, 0.5);
 .city-details {display: grid; grid-gap: 20px; grid-template-columns: 340px auto;}
 .city-details .table {max-width: 600px;}
 
-/** ============== CITY DETAILS ============== **/
+/** ============== ADD NEW SCENE ============== **/
 
 .stages-list li {display: grid; grid-template-columns: 1fr auto;
     box-shadow: inset 0 1px 0 0 #FFFFFF, inset 0 -1px 0 0 rgba(0,0,0,0.10);
@@ -393,3 +395,91 @@ background: rgba(93, 78, 57, 0.5);
 .stages-list .name h4 {margin-bottom: 0; color: var(--link2); font-weight: 600;}
 .stages-list .name:hover h4 {color: var(--link);}
 .stages-list .btn.icon {width: 50px; height: 50px;}
+
+
+/** ============== SCENE DETAILS ============== **/
+
+.title {margin-bottom: 20px;}
+.title h2 {margin: 0;}
+.network-list li {
+    display: grid; grid-template-columns: 30px 1fr auto 160px auto; grid-gap: 20px;padding: 10px; align-items: center;
+    box-shadow: inset 0 1px 0 0 white, inset 0 -1px 0 0 rgba(0,0,0,0.10);
+}
+.network-list li:first-child {box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.10);}
+.network-list li:last-child {box-shadow: inset 0 1px 0 0 white}
+.network-list .icon {color: var(--soft-gray); text-align: center;}
+.network-list h4 {margin-bottom: 5px;}
+.network-list .status {color: var(--mid-gray);}
+.network-list p {color: var(--soft-gray); font-size: 14px;}
+.network-list p b {color: var(--mid-gray);}
+.network-list .ok .icon:not(.btn),.network-list .ok h4 {color: var(--ok);}
+.network-list .queued .icon:not(.btn),.network-list .queued h4, .network-list .procesing .icon:not(.btn),.network-list .procesing h4 {color: var(--soft-gray);}
+.network-list .error .icon:not(.btn),.network-list .error h4 {color: var(--error);}
+
+
+
+
+/** LOADER **/
+.loader {
+  font-size: 10px;
+  text-indent: -9999em;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin: 0 auto;
+  background: #ffffff;
+  background: -moz-linear-gradient(left, var(--soft-gray) 10%, rgba(84,101,115, 0) 42%);
+  background: -webkit-linear-gradient(left, var(--soft-gray) 10%, rgba(84,101,115, 0) 42%);
+  background: -o-linear-gradient(left, var(--soft-gray) 10%, rgba(84,101,115, 0) 42%);
+  background: -ms-linear-gradient(left, var(--soft-gray) 10%, rgba(84,101,115, 0) 42%);
+  background: linear-gradient(to right, var(--soft-gray) 10%, rgba(84,101,115, 0) 42%);
+  position: relative;
+  -webkit-animation: load3 1.4s infinite linear;
+  animation: load3 1.4s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.loader:before {
+  width: 50%;
+  height: 50%;
+  background: var(--soft-gray);
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+.loader:after {
+  background: var(--bg-base);
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
