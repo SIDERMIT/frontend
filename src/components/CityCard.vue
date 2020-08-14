@@ -7,7 +7,7 @@
           </div>
           <div class="grid min">
               <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button" alt="Edit"><span class="material-icons">edit</span></router-link>
-              <button class="btn icon" @click="duplicateCity(city.public_id)"  alt="Duplicate"><span class="material-icons">file_copy</span></button>
+              <button class="btn icon" @click="showConfirmDuplicateModal = true"  alt="Duplicate"><span class="material-icons">file_copy</span></button>
               <button class="btn icon" @click="showConfirmDeleteModal = true"  alt="Delete"><span class="material-icons">delete</span></button>
           </div>
       </div>
@@ -31,6 +31,14 @@
               <div><h4>Warning</h4></div>
           </template>
           <p slot="content">Are you sure you want to delete city "{{ city.name }}"?</p>
+          <template slot="close-button-name">Proceed</template>
+      </Modal>
+      <Modal v-if="showConfirmDuplicateModal" @cancel="showConfirmDuplicateModal = false" @close="showConfirmDuplicateModal = false" @ok="duplicateCity(city.public_id)" :showCancelButton="true" :isWarning="true">
+          <template slot="title">
+              <div class="icon"><span class="material-icons">warning</span></div>
+              <div><h4>Warning</h4></div>
+          </template>
+          <p slot="content">Are you sure you want to duplicate city "{{ city.name }}"?</p>
           <template slot="close-button-name">Proceed</template>
       </Modal>
   </div>
@@ -58,7 +66,8 @@ export default {
   },
   data() {
     return {
-      showConfirmDeleteModal: false
+      showConfirmDeleteModal: false,
+      showConfirmDuplicateModal: false
     }
   },
   methods: {
