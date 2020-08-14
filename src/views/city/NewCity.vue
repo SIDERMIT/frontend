@@ -1,7 +1,7 @@
 <template>
     <div class="NewCity step1">
         <div class="header">          
-            <h1>Add new city</h1>
+            <h1>{{ pageTitle }}</h1>
         </div>
         <section class="step1-definition">
             <div class="grid input-name">
@@ -55,7 +55,7 @@
             <h4>Editor</h4>
             <div class="grid g2">
                 <div><pre class="editor-container">{{ newCity.graph }}</pre></div>
-                <div class="graph-container"><CityGraph :network="newCity.network"></CityGraph></div>
+                <div class="graph-container"><CityGraph :network="newCity.network_descriptor"></CityGraph></div>
             </div>
             <div class="checker ok">
                 <div class="grid checker-body">
@@ -70,8 +70,8 @@
                 <div class="left-content">
                 </div>
                 <div class="right-content">
-                    <button class="btn" @click="createCity">
-                        <span>Next</span>
+                    <button class="btn" @click="updateCity">
+                        <span>{{ nextButtonName }}</span>
                         <span class="material-icons">chevron_right</span>
                     </button>
                 </div>
@@ -171,6 +171,9 @@ export default {
   },
   data() {
       return {
+          pageTitle: 'Add new city',
+          nextButtonName: 'Next',
+          isNew: true,
           enableParameters: true,
           showEditParameterModal: false,
           showWarningModal: false,
@@ -194,7 +197,7 @@ export default {
               l: null,
               g: null,
               graph: null,
-              network: {
+              network_descriptor: {
                   nodes: [],
                   edges: []
               }
@@ -212,7 +215,7 @@ export default {
           citiesAPI.getPajekFile(n, p, l, g)
           .then(response => {
             this.newCity.graph = response.data.pajek;
-            this.newCity.network = response.data.network;
+            this.newCity.network_descriptor = response.data.network;
             this.showEditorAndGraph = true;
             this.parameterValidator.message = 'Table correctly defined';
             this.parameterValidator.show = true;
@@ -224,9 +227,16 @@ export default {
               this.parameterValidator.icon = 'warning';
           });
       },
-      createCity() {
-        citiesAPI.createCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.newCity.graph)
-        .then(response => {
+      updateCity() {
+        let request = null;
+        if (this.isNew) {
+            request = citiesAPI.createCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.newCity.graph);
+        } else {
+            let data = {name: this.newCity.name, n: this.newCity.n, p: this.newCity.p, l: this.newCity.l, g: this.newCity.g, graph: this.newCity.graph}
+            request = citiesAPI.updateCity(this.newCity.public_id, data);
+        }
+        
+        request.then(response => {
             this.$router.push({name: 'NewCityStep2', params: {cityPublicId: response.data.public_id}})
         }).catch(error => {
             let data = error.response.data;
@@ -266,7 +276,35 @@ export default {
         this.$nextTick(() => {
             this.$refs.nInput.focus();
         });
+      },
+      setData(city) {
+        this.pageTitle = 'Edit city';
+        this.nextButtonName = 'Save and continue';
+        this.isNew = false;
+        this.newCity = city;
+        if (this.newCity.n === null) {
+            this.enableParameters = false
+        }
+        this.showEditorAndGraph = true;
       }
+  }, 
+  beforeRouteEnter (to, from, next) {
+    if (to.params.cityPublicId) {
+      citiesAPI.getCity(to.params.cityPublicId).then(response => (next(vm => vm.setData(response.data))));
+    } else {
+        next();
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.params.cityPublicId) {
+      this.newCity = {};
+      citiesAPI.getCity(to.params.cityPublicId).then(response => {
+        this.setData(response.data); 
+        next();
+      });
+    } else {
+        next();
+    }
   }
 }
 </script>

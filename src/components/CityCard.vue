@@ -6,7 +6,7 @@
               <span class="p-min">Created at {{ getLocalDate(city.created_at) }}</span>
           </div>
           <div class="grid min">
-              <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button" alt="Edit"><span class="material-icons">edit</span></router-link>
+              <router-link :to="{ name: 'EditCity', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button" alt="Edit"><span class="material-icons">edit</span></router-link>
               <button class="btn icon" @click="showConfirmDuplicateModal = true"  alt="Duplicate"><span class="material-icons">file_copy</span></button>
               <button class="btn icon" @click="showConfirmDeleteModal = true"  alt="Delete"><span class="material-icons">delete</span></button>
           </div>

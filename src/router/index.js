@@ -67,6 +67,14 @@ Vue.use(VueRouter)
             }
           },
           {
+            path: 'edit',
+            name: 'EditCity',
+            component: NewCity,
+            meta: {
+              breadcrumb: 'edit'
+            }
+          },
+          {
             path: 'scene/:scenePublicId',
             component: {render(c) { return c('router-view'); }},
             meta: {
