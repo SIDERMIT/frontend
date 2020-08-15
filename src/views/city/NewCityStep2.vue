@@ -11,7 +11,7 @@
                 <div class="subtitle">
                     <div class="grid center">
                         <h4>Enter parameters (pick hour model)</h4>
-                        <a class="icon-link"><span class="material-icons">help</span></a>
+                        <a class="icon-link" @click="showLegendModal = true"><span class="material-icons">help</span></a>
                     </div>
                 </div>
                 <div class="table">
@@ -26,40 +26,40 @@
                             </tr>
                             <tr>
                                 <td><input v-model="city.n" :disabled="true" type="text" placeholder="-"/></td>
-                                <td><input v-model="city.y" type="text" placeholder="-"/></td>
-                                <td><input v-model="city.a" type="text" placeholder="-"/></td>
-                                <td><input v-model="city.alpha" type="text" placeholder="-"/></td>
-                                <td><input v-model="city.beta" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.y" :disabled="!enableParameters" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.a" :disabled="!enableParameters" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.alpha" :disabled="!enableParameters" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.beta" :disabled="!enableParameters" type="text" placeholder="-"/></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="checker">
+                <div class="checker" v-if="parameterValidator.show" v-bind:class="[parameterValidator.icon == 'check' ? 'ok': 'error']">
                     <div class="grid checker-body">
-                        <span class="material-icons icon ok">check</span>
-                        <span class="text">Table correctly defined</span>
+                        <span class="material-icons icon ok">{{ parameterValidator.icon }}</span>
+                        <span class="text">{{ parameterValidator.message }}</span>
                     </div>
                 </div>
-                <div class="flex flex-end">
+                <div class="flex flex-end" v-if="!enableParameters">
                     <button class="btn"><span class="material-icons">edit</span><span>Edit parameters</span></button>
                 </div>
-                <button class="btn full main">Render OD matrix</button>
+                <button class="btn full main" @click="buildMatrix" :disabled="!enableParameters">Render OD matrix</button>
             </div>
             <div class="graph-container"><CityGraph :network="city.network_descriptor"></CityGraph></div>
         </section>
         <section>
             <div class="subtitle grid">
                 <h2>OD Matrix</h2>
-                <button class="btn"><span class="material-icons">publish</span><span>Import CSV file</span></button>
+                <button class="btn" @click="showImportModal = true"><span class="material-icons">publish</span><span>Import CSV file</span></button>
             </div>
-            <div class="empty-box">
+            <div class="empty-box" v-if="city.demand_matrix === null">
                 <p>You have not generated your matrix yet, you can import data from csv file.</p>
-                <a href="#" class="btn">
+                <button class="btn" @click="showImportModal = true">
                     <span class="material-icons">publish</span>
                     <span>Import CSV file</span>
-                </a>
+                </button>
             </div>
-            <div class="table">
+            <div class="table" v-else>
                 <table>
                     <tbody>
                         <tr>
@@ -251,10 +251,10 @@
                 <div class="left-content">
                 </div>
                 <div class="right-content">
-                    <a class="btn">
+                    <router-link :to="{name: 'EditCity', params: {cityPublicId: city.public_id}}" class="btn">
                         <span class="material-icons">chevron_left</span>
                         <span>Back</span>
-                    </a>
+                    </router-link>
                     <a class="btn" @click="updateCity">
                         <span>Save city</span>
                         <span class="material-icons">check</span>
@@ -262,26 +262,112 @@
                 </div>
             </div>
         </footer>
+        <Modal v-if="showLegendModal" @close="showLegendModal = false" :showBase="false">
+            <template slot="title">
+                <h2>Terminology</h2>
+            </template>
+            <template slot="content">
+                <p>The parameters 𝑛, 𝑃, 𝐿 and 𝑔 are required to build the city, the asymmetries are optional</p>
+                <div class="table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th><span>Symbol</span></th>
+                                <th><span>Unit</span></th>
+                                <th><span>Description</span></th>
+                            </tr>
+                            <tr>
+                                <td><span>𝑛</span></td>
+                                <td>&nbsp;</td>
+                                <td><span>Number of zones</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝑃</span></td>
+                                <td>[𝑘𝑚]</td>
+                                <td><span>Total width represented by each arc</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝐿</span></td>
+                                <td>[𝑘𝑚]</td>
+                                <td><span>Distance from SC to the geometrical city center C</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝑔</span></td>
+                                <td>&nbsp;</td>
+                                <td><span>Ratio between the distances P-SC and SC- CBD</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝜂</span></td>
+                                <td>&nbsp;</td>
+                                <td><span>Eccentricity of the CBD</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+        </Modal>
+        <Modal v-if="showWarningModal" @close="showWarningModal = false" :showCancelButton="modalData.showCancelButton" :isWarning="true">
+            <template slot="title">
+                <div class="icon"><span class="material-icons">warning</span></div>
+                <div><h4>Warning</h4></div>
+            </template>
+            <p slot="content" v-html="modalData.message"></p>
+            <template slot="close-button-name">{{ modalData.closeButtonName }}</template>
+        </Modal>
+        <Modal v-if="showImportModal" @close="showImportModal = false">
+            <template slot="title">
+                <h2>Import demand matrix file</h2>
+            </template>
+            <template slot="content">
+                <p>The file must have this setup:</p>
+                <code>*nodes n_of_nodes</code>
+                <p>Then, after each row must have the next fields, separate by space:</p>
+                <code>[id] [name] [x] [y] [type] [zone_id] [width]</code>
+            </template>
+
+            <template slot="base">                    
+                <FileReader @load="importMatrixFile($event)"></FileReader>
+            </template>
+        </Modal>
     </div>
 </template>
 
 <script>
+import Modal from '@/components/Modal.vue'
 import CityGraph from '@/components/CityGraph.vue';
 import citiesAPI from '@/api/cities.api';
+import FileReader from '@/components/FileReader.vue'
 
 export default {
   name: 'NewCityStep2',
   components: {
+    Modal,
+    FileReader,
     CityGraph,
   },
   data() {
     return {
+        showImportModal: false,
+        showWarningModal: false,
+        showLegendModal: false,
+        enableParameters: true,
+        parameterValidator: {
+            show: false,
+            message: '',
+            icon: '',
+        },
+        modalData: {
+            showCancelButton: true,
+            closeButtonName: 'Save',
+            message: ''
+        },
         city: {
             n: null,
             y: null,
             a: null,
             alpha: null,
             beta: null,
+            demand_matrix: null,
             network_descriptor: {
                 nodes: [],
                 edges: []
@@ -295,9 +381,16 @@ export default {
     },
     updateCity() {
         // TODO: fixed this
-        citiesAPI.updateCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.newCity.graph)
+        let data = {
+            y: this.city.y,
+            a: this.city.a,
+            alpha: this.city.alpha,
+            beta: this.city.beta,
+            demand_matrix: this.city.demand_matrix,
+        }
+        citiesAPI.updateCity(this.city.public_id, data)
         .then(response => {
-            this.$router.push({name: 'NewCityStep2', params: {cityPublicId: response.data.public_id}})
+            this.$router.push({name: 'CityDetail', params: {cityPublicId: response.data.public_id}})
         }).catch(error => {
             let data = error.response.data;
             let message = '<b>Please correct the following error(s):</b><br /><br />';
@@ -313,6 +406,19 @@ export default {
             this.modalData.closeButtonName = 'OK'
             this.showWarningModal = true;
         });
+    },
+    buildMatrix(){
+
+    },
+    importMatrixFile(fileContent) {
+        this.city.y = null;
+        this.city.a = null;
+        this.city.alpha = null;
+        this.city.beta = null;
+        this.city.demand_matrix = fileContent;
+        this.showImportModal = false
+        this.showEditorAndGraph = true;
+        this.enableParameters = false;
     }
   },
   beforeRouteEnter (to, from, next) {
