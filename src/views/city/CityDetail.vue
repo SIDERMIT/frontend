@@ -154,7 +154,14 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    citiesAPI.getCity(to.params.cityPublicId).then(response => (next(vm => vm.setData(response.data))));
+    citiesAPI.getCity(to.params.cityPublicId).then(response => {
+        let city = response.data;
+        if (city.demand_matrix === null) {
+            next({name:'NewCityStep2', params: {cityPublicId: city.public_id}});
+        } else {
+            next(vm => vm.setData(city));
+        }
+    });
   },
   beforeRouteUpdate(to, from, next) {
     this.city = {};
