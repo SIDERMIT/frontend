@@ -71,10 +71,10 @@
                 <div class="left-content">
                 </div>
                 <div class="right-content">
-                    <a class="btn red">
+                    <router-link :to="{ name: 'EditCity', params: { cityPublicId: city.public_id }}" class="btn red">
                         <span class="material-icons">edit</span>
                         <span>Edit city</span>
-                    </a>
+                    </router-link>
                     <router-link :to="{ name: 'NewScene'}" class="btn">
                         <span>Add new stage</span>
                         <span class="material-icons">add</span>
@@ -87,7 +87,7 @@
                 <div><h4>OD Matrix</h4></div>
             </template>
             <template slot="content">
-                {{ city.demand_matrix }}
+                <CityDemand :matrixData="city.demand_matrix" :header="city.demand_matrix_header"></CityDemand>
             </template>
         </Modal>
         <Modal v-if="deleteModal.showModal" @close="deleteModal.showModal = false" @cancel="deleteModal.showModal = false" @ok="deleteScene" :isWarning="true" :showCancelButton="true">
@@ -104,6 +104,7 @@ import citiesAPI from '@/api/cities.api';
 import scenesAPI from '@/api/scenes.api';
 import dateMixin from '@/mixins/dateMixin.js'
 import CityGraph from '@/components/CityGraph'
+import CityDemand from '@/components/CityDemand'
 import Modal from '@/components/Modal.vue'
 
 export default {
@@ -111,7 +112,8 @@ export default {
   mixins: [dateMixin],
   components: {
     Modal,
-    CityGraph
+    CityGraph,
+    CityDemand
   },
   data() {
     return {
@@ -126,7 +128,9 @@ export default {
           network_descriptor: {
               nodes: [],
               edges: []
-          }
+          },
+          demand_matrix_header: [],
+          demand_matrix: []
       }
     }
   },

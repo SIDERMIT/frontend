@@ -64,183 +64,13 @@
                     <tbody>
                         <tr>
                             <th>&nbsp;</th>
-                            <th><span>CBD</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
-                            <th><span>P1</span></th>
-                            <th><span>SC1</span></th>
+                            <th v-for="header in city.demand_matrix_header" v-bind:key="header"><span>{{ header}}</span></th>
                         </tr>
-                        <tr>
-                            <th><span>CBD</span></th>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <th><span>P1</span></th>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <th><span>SC1</span></th>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <th><span>P1</span></th>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <th><span>SC1</span></th>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
-                            <td><input type="text" placeholder="0"></td>
+                        <tr v-for="(row, i) in city.demand_matrix" v-bind:key="i">
+                            <th><span>{{ city.demand_matrix_header[i] }}</span></th>
+                            <td v-for="(col, j) in row" v-bind:key="`${i}-${j}`" >
+                                <input type="number" v-model="city.demand_matrix[i][j]" placeholder="-">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -372,7 +202,8 @@ export default {
                 nodes: [],
                 edges: []
             },
-            public_id: null
+            public_id: null,
+            demand_matrix_header: []
         }
     }
   },
@@ -417,8 +248,8 @@ export default {
         // create matrix file from parameters
         citiesAPI.getMatrixFile(this.city.public_id, y, a, alpha, beta)
         .then(response => {
-            this.city.demand_matrix = response.data.matrix;
-            this.city.network_descriptor = response.data.network;
+            this.city.demand_matrix = response.data.demand_matrix;
+            this.city.demand_matrix_header = response.data.demand_matrix_header;
             this.parameterValidator.message = 'Matrix correctly defined';
             this.parameterValidator.show = true;
             this.parameterValidator.icon = 'check';
