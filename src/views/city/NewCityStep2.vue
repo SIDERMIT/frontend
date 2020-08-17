@@ -250,8 +250,8 @@
             <div class="container full grid">
                 <div class="left-content">
                 </div>
-                <div class="right-content">
-                    <router-link :to="{name: 'EditCity', params: {cityPublicId: city.public_id}}" class="btn">
+                <div class="right-content" v-if="city.public_id !== null">
+                    <router-link :to="{ name: 'EditCity', params: {cityPublicId: city.public_id}}" class="btn">
                         <span class="material-icons">chevron_left</span>
                         <span>Back</span>
                     </router-link>
@@ -371,7 +371,8 @@ export default {
             network_descriptor: {
                 nodes: [],
                 edges: []
-            }
+            },
+            public_id: null
         }
     }
   },
