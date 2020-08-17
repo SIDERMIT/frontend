@@ -26,10 +26,10 @@
                             </tr>
                             <tr>
                                 <td><input v-model="city.n" :disabled="true" type="text" placeholder="-"/></td>
-                                <td><input v-model="city.y" :disabled="!enableParameters" type="text" placeholder="-"/></td>
-                                <td><input v-model="city.a" :disabled="!enableParameters" type="text" placeholder="-"/></td>
-                                <td><input v-model="city.alpha" :disabled="!enableParameters" type="text" placeholder="-"/></td>
-                                <td><input v-model="city.beta" :disabled="!enableParameters" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.y" :disabled="!enableParameters" v-bind:class="{ error: (city.y === null || city.y === '') && enableParameters }" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.a" :disabled="!enableParameters" v-bind:class="{ error: (city.a === null || city.a === '') && enableParameters }" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.alpha" :disabled="!enableParameters" v-bind:class="{ error: (city.alpha === null || city.alpha === '') && enableParameters }" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.beta" :disabled="!enableParameters" v-bind:class="{ error: (city.beta === null || city.beta === '') && enableParameters }" type="text" placeholder="-"/></td>
                             </tr>
                         </tbody>
                     </table>
@@ -380,13 +380,13 @@ export default {
       this.city = city;
     },
     updateCity() {
-        // TODO: fixed this
         let data = {
             y: this.city.y,
             a: this.city.a,
             alpha: this.city.alpha,
             beta: this.city.beta,
             demand_matrix: this.city.demand_matrix,
+            step: 'step2'
         }
         citiesAPI.updateCity(this.city.public_id, data)
         .then(response => {
@@ -408,7 +408,25 @@ export default {
         });
     },
     buildMatrix(){
+        let y = this.city.y;
+        let a = this.city.a;
+        let alpha = this.city.alpha;
+        let beta = this.city.beta;
 
+        // create matrix file from parameters
+        citiesAPI.getMatrixFile(this.city.public_id, y, a, alpha, beta)
+        .then(response => {
+            this.city.demand_matrix = response.data.matrix;
+            this.city.network_descriptor = response.data.network;
+            this.parameterValidator.message = 'Matrix correctly defined';
+            this.parameterValidator.show = true;
+            this.parameterValidator.icon = 'check';
+        }).catch(error => {
+            let message = error.response.data.detail;
+            this.parameterValidator.message = message;
+            this.parameterValidator.show = true;
+            this.parameterValidator.icon = 'warning';
+        });
     },
     importMatrixFile(fileContent) {
         this.city.y = null;

@@ -6,7 +6,7 @@
         <section class="step1-definition">
             <div class="grid input-name">
                 <h2>Name your city</h2>
-                <input v-model="newCity.name" class="error" type="text" placeholder="Can't be empty"/>
+                <input v-model="newCity.name" v-bind:class="{ error: newCity.name === null || newCity.name === '' }" type="text" placeholder="Can't be empty"/>
             </div>
             <h2>Definition of city by parameters</h2>
             <div class="grid center subtitle">
@@ -31,10 +31,10 @@
                             <th><span>𝑔</span></th>
                         </tr>
                         <tr>
-                            <td><input v-model="newCity.n" :disabled="!enableParameters" type="text" ref="nInput" placeholder="-" /></td>
-                            <td><input v-model="newCity.p" :disabled="!enableParameters" type="text"  placeholder="-"/></td>
-                            <td><input v-model="newCity.l" :disabled="!enableParameters" type="text"  placeholder="-"/></td>
-                            <td><input v-model="newCity.g" :disabled="!enableParameters" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.n" :disabled="!enableParameters" v-bind:class="{ error: (newCity.n === null || newCity.n === '') && enableParameters }" type="text" ref="nInput" placeholder="-" /></td>
+                            <td><input v-model="newCity.p" :disabled="!enableParameters" v-bind:class="{ error: (newCity.p === null || newCity.p === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.l" :disabled="!enableParameters" v-bind:class="{ error: (newCity.l === null || newCity.l === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.g" :disabled="!enableParameters" v-bind:class="{ error: (newCity.g === null || newCity.g === '') && enableParameters }" type="text"  placeholder="-"/></td>
                         </tr>
                     </tbody>
                 </table>
@@ -232,7 +232,7 @@ export default {
         if (this.isNew) {
             request = citiesAPI.createCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.newCity.graph);
         } else {
-            let data = {name: this.newCity.name, n: this.newCity.n, p: this.newCity.p, l: this.newCity.l, g: this.newCity.g, graph: this.newCity.graph}
+            let data = {name: this.newCity.name, n: this.newCity.n, p: this.newCity.p, l: this.newCity.l, g: this.newCity.g, graph: this.newCity.graph, step: 'step1'}
             request = citiesAPI.updateCity(this.newCity.public_id, data);
         }
         

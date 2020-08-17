@@ -10,6 +10,7 @@ const updateCity = (publicId, data) => httpClient.patch(`${END_POINT}${publicId}
 const createCity = (name, n, p, l, g, graph) => httpClient.post(END_POINT, {name, n, p, l, g, graph});
 const duplicateCity = (publicId) => httpClient.post(`${END_POINT}${publicId}/duplicate/`);
 const getPajekFile = (n,p,l,g) => httpClient.get(`${END_POINT}build_graph_file`, {params:{n,p,l,g}});
+const getMatrixFile = (publicId, y, a, alpha, beta) => httpClient.get(`${END_POINT}${publicId}/build_matrix_file/`, {params:{y, a, alpha, beta}});
 
 const getRecentOptimizations = () => httpClient.get(`${BASE_END_POINT}/recent_optimizations`, {});
 
@@ -21,5 +22,6 @@ export default {
     deleteCity,
     getRecentOptimizations,
     duplicateCity,
-    getPajekFile
+    getPajekFile,
+    getMatrixFile
 }
