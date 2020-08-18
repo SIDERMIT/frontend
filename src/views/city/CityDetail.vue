@@ -52,10 +52,10 @@
                 <div class="table">
                     <ul class="stages-list">
                         <li v-for="scene in city.scene_set" v-bind:key="scene.public_id">
-                            <a class="name" href="#link-to-stage-detail">
+                            <router-link class="name" :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id } }">
                                 <h4>{{ scene.name }}</h4>
                                 <span class="p-min">{{ scene.transportmode_set.length }} transport modes, {{ scene.transportnetwork_set.length }} transport networks </span>
-                            </a>
+                            </router-link>
                             <div class="grid min">
                                 <router-link :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id }}" class="btn icon" tag="button" alt="Edit"><span class="material-icons">edit</span></router-link>
                                 <button class="btn icon" alt="Duplicate" @click="duplicateScene(scene.public_id)" disabled><span class="material-icons">file_copy</span></button>
