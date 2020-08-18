@@ -3,7 +3,7 @@
         <div class="header">
             <h1>Demand definition</h1>
         </div>
-        <section class="grid step2-definition">
+        <section class="definitions">
             <div>
                 <div class="subtitle">
                     <h2>Define symmetric demand by parameters</h2>
@@ -97,7 +97,6 @@
                 <h2>Terminology</h2>
             </template>
             <template slot="content">
-                <p>The parameters 𝑛, 𝑃, 𝐿 and 𝑔 are required to build the city, the asymmetries are optional</p>
                 <div class="table">
                     <table>
                         <tbody>
@@ -112,24 +111,24 @@
                                 <td><span>Number of zones</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝑃</span></td>
-                                <td>[𝑘𝑚]</td>
-                                <td><span>Total width represented by each arc</span></td>
+                                <td><span>𝑌</span></td>
+                                <td>[𝑝𝑎𝑥/h]</td>
+                                <td><span>Total patronage</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝐿</span></td>
-                                <td>[𝑘𝑚]</td>
-                                <td><span>Distance from SC to the geometrical city center C</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝑔</span></td>
+                                <td><span>a</span></td>
                                 <td>&nbsp;</td>
-                                <td><span>Ratio between the distances P-SC and SC- CBD</span></td>
+                                <td><span>Trips proportion that depart from the peripheries</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝜂</span></td>
+                                <td><span>𝛼</span></td>
                                 <td>&nbsp;</td>
-                                <td><span>Eccentricity of the CBD</span></td>
+                                <td><span>Trips proportion from P that go to the CBD</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝛽</span></td>
+                                <td>&nbsp;</td>
+                                <td><span>Trips proportion from P to own SC</span></td>
                             </tr>
                         </tbody>
                     </table>

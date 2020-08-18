@@ -4,7 +4,7 @@
         <h1>Add new scene</h1>
         <p class="min">City 1</p>
     </div>
-    <section class="scene-definition">
+    <section class="definitions">
         <div>
             <div class="def-box">
                 <h2>Name your scene</h2>
