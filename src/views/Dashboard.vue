@@ -14,20 +14,20 @@
                 </router-link>
             </template>
         </div>
-        <div class="grid cities">
-            <template v-if="cities.length > 0">
+        <template v-if="cities.length > 0">
+            <div class="grid cities">
                 <CityCard v-for="city in cities" v-bind:key="city.public_id" v-bind:city="city"></CityCard>
-            </template>
-            <template v-else>
-                <div class="empty-box">
-                    <p>No cities found, start making your first city</p>
-                    <router-link :to="{ name: 'NewCity'}" class="btn">
-                        <span>Add new city</span>
-                        <span class="material-icons">add</span>
-                    </router-link>
-                </div>
-            </template>
-        </div>
+            </div>
+        </template>
+        <template v-else>
+            <div class="empty-box">
+                <p>No cities found, start making your first city</p>
+                <router-link :to="{ name: 'NewCity'}" class="btn">
+                    <span>Add new city</span>
+                    <span class="material-icons">add</span>
+                </router-link>
+            </div>
+        </template>
     </section>
 
     <section class="last-optimization">
