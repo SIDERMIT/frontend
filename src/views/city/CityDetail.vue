@@ -58,7 +58,7 @@
                             </router-link>
                             <div class="grid min">
                                 <router-link :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id }}" class="btn icon" tag="button" alt="Edit"><span class="material-icons">edit</span></router-link>
-                                <button class="btn icon" alt="Duplicate" @click="duplicateScene(scene.public_id)" disabled><span class="material-icons">file_copy</span></button>
+                                <button class="btn icon" alt="Duplicate" @click="confirmSceneDuplicate(scene)"><span class="material-icons">file_copy</span></button>
                                 <button class="btn icon" alt="Delete" @click="confirmSceneDelete(scene)"><span class="material-icons">delete</span></button>
                             </div>
                         </li>
@@ -70,7 +70,7 @@
             <div class="container full grid">
                 <div class="left-content">
                 </div>
-                <div class="right-content">
+                <div class="right-content" v-if="city.public_id !== null">
                     <router-link :to="{ name: 'EditCity', params: { cityPublicId: city.public_id }}" class="btn red">
                         <span class="material-icons">edit</span>
                         <span>Edit city</span>
@@ -90,11 +90,11 @@
                 <CityDemand :matrixData="city.demand_matrix" :header="city.demand_matrix_header"></CityDemand>
             </template>
         </Modal>
-        <Modal v-if="deleteModal.showModal" @close="deleteModal.showModal = false" @cancel="deleteModal.showModal = false" @ok="deleteScene" :isWarning="true" :showCancelButton="true">
+        <Modal v-if="modalData.showModal" @close="modalData.showModal = false" @cancel="modalData.showModal = false" @ok="processSceneAction" :isWarning="true" :showCancelButton="true">
             <template slot="title">
-                <div><h4>Delete Scene</h4></div>
+                <div><h4>{{ modalData.title }}</h4></div>
             </template>
-            <template slot="content">{{ deleteModal.content }}</template>
+            <template slot="content">{{ modalData.content }}</template>
         </Modal>
     </div>
 </template>
@@ -118,10 +118,12 @@ export default {
   data() {
     return {
       showMatrixModal: false,
-      deleteModal: {
+      modalData: {
+        title: '',
         showModal: false,
         content: '',
-        scene: null
+        scene: null,
+        action: ''
       },
       city: {
           scene_set: [],
@@ -130,7 +132,8 @@ export default {
               edges: []
           },
           demand_matrix_header: [],
-          demand_matrix: []
+          demand_matrix: [],
+          public_id: null
       }
     }
   },
@@ -139,22 +142,35 @@ export default {
       this.city = city;
     },
     confirmSceneDelete(scene) {
-        this.deleteModal.content = `Are you sure you want to delete scene "${scene.name}"?`;
-        this.deleteModal.showModal = true;
-        this.deleteModal.scene = scene;
+        this.modalData.title = 'Delete Scene';
+        this.modalData.content = `Are you sure you want to delete scene "${scene.name}"?`;
+        this.modalData.showModal = true;
+        this.modalData.scene = scene;
+        this.modalData.action = 'delete';
     },
-    deleteScene() {
-        scenesAPI.deleteScene(this.deleteModal.scene.public_id).then(response => {
-            console.log(response);
-            this.city.scene_set = this.city.scene_set.filter(scene => {
-                return scene.public_id != this.deleteModal.scene.public_id;
-            });
-        });
+    confirmSceneDuplicate(scene) {
+        this.modalData.title = 'Duplicate Scene';
+        this.modalData.content = `Are you sure you want to duplicate scene "${scene.name}"?`;
+        this.modalData.showModal = true;
+        this.modalData.scene = scene;
+        this.modalData.action = 'duplicate';
     },
-    duplicateScene(publicId) {
-        scenesAPI.duplicateScene(publicId).then(response => {
-            this.city.scene_set.push(response.data)
-        });
+    processSceneAction() {
+        switch(this.modalData.action) {
+            case 'delete':
+                scenesAPI.deleteScene(this.modalData.scene.public_id).then(response => {
+                    console.log(response.data);
+                    this.city.scene_set = this.city.scene_set.filter(scene => {
+                        return scene.public_id != this.modalData.scene.public_id;
+                    });
+                });
+                break;
+            case 'duplicate':
+                scenesAPI.duplicateScene(this.modalData.scene.public_id).then(response => {
+                    this.city.scene_set.push(response.data)
+                });
+                break;
+        }        
     }
   },
   beforeRouteEnter (to, from, next) {
