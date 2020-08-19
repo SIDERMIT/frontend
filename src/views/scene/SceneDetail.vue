@@ -1,8 +1,8 @@
 <template>
   <div class="SceneDetail">
     <div class="header">          
-        <h1>Scene detail</h1>
-        <span class="p-min">Created at</span>
+        <h1>{{ scene.name }}</h1>
+        <span class="p-min">Created at {{ getLocalDate(scene.created_at) }}</span>
     </div>
     <section class="city-details">
         <div class="graph-container">
@@ -266,7 +266,7 @@
                     <span>View global results</span>
                     <span class="material-icons">chevron_right</span>
                 </a>
-                <router-link :to="{ name: 'NewScene'}" class="btn">
+                <router-link :to="{ name: 'NewNetwork', params: {cityPublicId: scene.public_id, scenePublicId: scene.public_id }}" class="btn">
                     <span>Add new network</span>
                     <span class="material-icons">add</span>
                 </router-link>
@@ -277,10 +277,40 @@
 </template>
 
 <script>
+import scenesAPI from '@/api/scenes.api';
+import dateMixin from '@/mixins/dateMixin.js'
+
 export default {
   name: 'SceneDetail',
+  mixins: [dateMixin],
   components: {
     
+  },
+  data(){
+      return {
+          scene: {
+              name: ''
+          }
+      }
+  },
+  methods: {
+      setData(scene) {
+          this.scene = scene
+          console.log(scene);
+      }
+  },
+  beforeRouteEnter (to, from, next) {
+    scenesAPI.getScene(to.params.scenePublicId).then(response => {
+        let scene = response.data;
+        next(vm => vm.setData(scene));
+    });
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.scene = {};
+    scenesAPI.getCity(to.params.cityPublicId).then(response => {
+      this.setData(response.data); 
+      next();
+    });
   }
 }
 </script>
