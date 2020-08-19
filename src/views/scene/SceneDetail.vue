@@ -19,7 +19,7 @@
             <div>
                 <div class="grid title">
                     <h2>User definition</h2>
-                    <a class="link-icon"><span class="material-icons">help</span></a>
+                    <a class="link-icon" @click="showUserLegendModal = true"><span class="material-icons">help</span></a>
                 </div>
                 <div class="table">
                     <table>
@@ -55,7 +55,7 @@
     <section class="transportation-mode">
         <div class="grid title">
             <h2>Transportation mode</h2>
-            <a class="link-icon"><span class="material-icons">help</span></a>
+            <a class="link-icon" @click="showTransportModeLegendModal = true"><span class="material-icons">help</span></a>
         </div>
         <div class="table">
             <table>
@@ -274,6 +274,8 @@
             </div>
         </div>
     </footer>
+    <UserLegend :show="showUserLegendModal" @close="showUserLegendModal = false"></UserLegend>
+    <TransportModeLegend :show="showTransportModeLegendModal" @close="showTransportModeLegendModal = false"></TransportModeLegend>
     <Modal v-if="showMatrixModal" @close="showMatrixModal = false" :showBase="false">
         <template slot="title">
             <div><h2>OD Matrix</h2></div>
@@ -313,6 +315,8 @@ import scenesAPI from '@/api/scenes.api';
 import dateMixin from '@/mixins/dateMixin.js'
 import CityGraph from '@/components/CityGraph'
 import CityDemand from '@/components/CityDemand'
+import UserLegend from '@/components/UserLegend.vue'
+import TransportModeLegend from '@/components/TransportModeLegend.vue'
 import Modal from '@/components/Modal.vue'
 
 export default {
@@ -321,10 +325,14 @@ export default {
   components: {
     CityGraph,
     CityDemand,
-    Modal
+    Modal,
+    UserLegend,
+    TransportModeLegend
   },
   data(){
     return {
+        showUserLegendModal: false,
+        showTransportModeLegendModal: false,
         showMatrixModal: false,
         scene: {
             name: null,

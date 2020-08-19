@@ -120,14 +120,8 @@
             </div>
         </div>
     </footer>
-    <Modal v-if="showUserLegendModal" @close="showUserLegendModal = false" :showBase="false">
-        <template slot="title">user legend</template>
-        <template slot="content"></template>
-    </Modal>
-    <Modal v-if="showTransportModeLegendModal" @close="showTransportModeLegendModal = false" :showBase="false">
-        <template slot="title">transport mode legend</template>
-        <template slot="content"></template>
-    </Modal>
+    <UserLegend :show="showUserLegendModal" @close="showUserLegendModal = false"></UserLegend>
+    <TransportModeLegend :show="showTransportModeLegendModal" @close="showTransportModeLegendModal = false"></TransportModeLegend>
     <Modal v-if="showDeleteConfirmationModal" @cancel="showDeleteConfirmationModal = false" @close="showDeleteConfirmationModal = false" @ok="deleteTransportMode" :showCancelButton="true">
         <template slot="title">
             <div class="icon"><span class="material-icons">warning</span></div>
@@ -149,12 +143,16 @@
 
 <script>
 import Modal from '@/components/Modal.vue'
+import UserLegend from '@/components/UserLegend.vue'
+import TransportModeLegend from '@/components/TransportModeLegend.vue'
 import scenesAPI from '@/api/scenes.api';
 
 export default {
   name: 'NewScene',
   components: {
-    Modal
+    Modal,
+    UserLegend,
+    TransportModeLegend
   },
   data() {
       return {
