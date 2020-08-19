@@ -6,13 +6,14 @@
     </div>
     <section class="city-details">
         <div class="graph-container">
+            <CityGraph :network="scene.city.network_descriptor"></CityGraph>
         </div>
         <div>
             <div class="def-box">
                 <h2>City parameters</h2>
                 <div class="grid min">
-                    <button class="btn"><span class="material-icons">chevron_right</span><span>View matrix parameters</span></button>
-                    <button class="btn"><span class="material-icons">chevron_right</span><span>View matrix</span></button>
+                    <button class="btn" @click="showMatrixModal = true"><span class="material-icons">chevron_right</span><span>View matrix parameters</span></button>
+                    <button class="btn" @click="showMatrixModal = true"><span class="material-icons">chevron_right</span><span>View matrix</span></button>
                 </div>
             </div>
             <div>
@@ -35,15 +36,15 @@
                                 <th><span>𝑠𝑝𝑡<br>[𝐸𝐼𝑉]</span></th>
                             </tr>
                             <tr>
-                                <td><input type="text" placeholder="0" value="0" disabled></td>
-                                <td><input type="text" placeholder="0" value="0" disabled></td>
-                                <td><input type="text" placeholder="0" value="0" disabled></td>
-                                <td><input type="text" placeholder="0" value="0" disabled></td>
-                                <td><input type="text" placeholder="0" value="0" disabled></td>
-                                <td><input type="text" placeholder="0" value="0" disabled></td>
-                                <td><input type="text" placeholder="0" value="0" disabled></td>
-                                <td><input type="text" placeholder="0" value="0" disabled></td>
-                                <td><input type="text" placeholder="0" value="0" disabled></td>
+                                <td><input type="text" :value="scene.passenger.va" disabled></td>
+                                <td><input type="text" :value="scene.passenger.pv" disabled></td>
+                                <td><input type="text" :value="scene.passenger.pw" disabled></td>
+                                <td><input type="text" :value="scene.passenger.pa" disabled></td>
+                                <td><input type="text" :value="scene.passenger.pt" disabled></td>
+                                <td><input type="text" :value="scene.passenger.spv" disabled></td>
+                                <td><input type="text" :value="scene.passenger.spw" disabled></td>
+                                <td><input type="text" :value="scene.passenger.spa" disabled></td>
+                                <td><input type="text" :value="scene.passenger.spt" disabled></td>
                             </tr>
                         </tbody>
                     </table>
@@ -76,11 +77,11 @@
                         <th><span>𝑣𝑎<br>[𝑘𝑚/h]</span></th>
                     </tr>
                     <tr>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
                         <td>
                             <label class="switch">
                                 <input type="checkbox" checked disabled>
@@ -88,14 +89,14 @@
                                 </div>
                             </label>
                         </td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
+                        <td><input type="text" value="0" disabled></td>
                     </tr>
                     <tr>
                         <td><input type="text" placeholder="0" value="0" disabled></td>
@@ -266,32 +267,93 @@
                     <span>View global results</span>
                     <span class="material-icons">chevron_right</span>
                 </a>
-                <router-link :to="{ name: 'NewNetwork', params: {cityPublicId: scene.public_id, scenePublicId: scene.public_id }}" class="btn">
+                <router-link v-if="scene.city.public_id !== null" :to="{ name: 'NewNetwork', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" class="btn">
                     <span>Add new network</span>
                     <span class="material-icons">add</span>
                 </router-link>
             </div>
         </div>
     </footer>
+    <Modal v-if="showMatrixModal" @close="showMatrixModal = false" :showBase="false">
+        <template slot="title">
+            <div><h2>OD Matrix</h2></div>
+        </template>
+        <template slot="content">
+            <div class="parameters-container">
+                <h4>Matrix parameters</h4>
+                <div class="table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th><span>𝑛</span></th>
+                                <th><span>𝑌[𝑝𝑎𝑥/h]</span></th>
+                                <th><span>a</span></th>
+                                <th><span>𝛼</span></th>
+                                <th><span>𝛽</span></th>
+                            </tr>
+                            <tr>
+                                <td><input disabled="true" type="text" :value="scene.city.n"/></td>
+                                <td><input disabled="true" type="text" :value="scene.city.y"/></td>
+                                <td><input disabled="true" type="text" :value="scene.city.a"/></td>
+                                <td><input disabled="true" type="text" :value="scene.city.alpha"/></td>
+                                <td><input disabled="true" type="text" :value="scene.city.beta"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <CityDemand :matrixData="scene.city.demand_matrix" :header="scene.city.demand_matrix_header"></CityDemand>
+        </template>
+    </Modal>
   </div>
 </template>
 
 <script>
 import scenesAPI from '@/api/scenes.api';
 import dateMixin from '@/mixins/dateMixin.js'
+import CityGraph from '@/components/CityGraph'
+import CityDemand from '@/components/CityDemand'
+import Modal from '@/components/Modal.vue'
 
 export default {
   name: 'SceneDetail',
   mixins: [dateMixin],
   components: {
-    
+    CityGraph,
+    CityDemand,
+    Modal
   },
   data(){
-      return {
-          scene: {
-              name: ''
-          }
-      }
+    return {
+        showMatrixModal: false,
+        scene: {
+            name: null,
+            created_at: null,
+            passenger: {
+                𝑣𝑎: null,
+                𝑝𝑣: null,
+                𝑝𝑤: null,
+                𝑝𝑎: null,
+                𝑝𝑡: null,
+                𝑠𝑝𝑣: null,
+                𝑠𝑝𝑤: null,
+                𝑠𝑝𝑎: null,
+                𝑠𝑝𝑡: null,
+            },
+            city: {
+                n: null,
+                y: null,
+                a: null,
+                alpha: null,
+                beta: null,
+                network_descriptor: {
+                    nodes: [],
+                    edges: []
+                },
+                public_id: null
+            }
+        }
+    }
   },
   methods: {
       setData(scene) {
