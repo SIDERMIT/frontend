@@ -263,10 +263,10 @@
             <div class="left-content">
             </div>
             <div class="right-content">
-                <a class="btn">
+                <router-link class="btn" v-if="scene.city.public_id !== null" :to="{ name: 'GlobalResults', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" >
                     <span>View global results</span>
                     <span class="material-icons">chevron_right</span>
-                </a>
+                </router-link>
                 <router-link v-if="scene.city.public_id !== null" :to="{ name: 'NewNetwork', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" class="btn">
                     <span>Add new network</span>
                     <span class="material-icons">add</span>

@@ -12,9 +12,11 @@ import NewCityStep2 from '../views/city/NewCityStep2.vue'
 
 import NewScene from '../views/scene/NewScene.vue'
 import SceneDetail from '../views/scene/SceneDetail.vue'
+import GlobalResults from '../views/scene/GlobalResults.vue'
 
 import NewNetwork from '../views/network/NewNetwork.vue'
 import NetworkDetail from '../views/network/NetworkDetail.vue'
+import NetworkResults from '../views/network/NetworkResults.vue'
 
 Vue.use(VueRouter)
 
@@ -94,21 +96,47 @@ Vue.use(VueRouter)
                 path: 'new_network',
                 name: 'NewNetwork',
                 component: NewNetwork,
-                neta: {
+                meta: {
                   breadcrumb: 'New transport network'
                 }
               },
               {
+                path: 'global_results',
+                name: 'GlobalResults',
+                component: GlobalResults,
+                meta: {
+                  breadcrumb: 'Global results'
+                }
+              },
+              {
                 path: 'network/:transportNetworkPublicId',
-                name: 'NetworkDetail',
-                component: NetworkDetail,
+                component: {render(c) { return c('router-view'); }},
                 meta: {
                   breadcrumb() {
                     return {
                       label: this.$route.params.transportNetworkPublicId
                     }
                   }
-                }
+                },
+                children: [
+                  {
+                    path: '',
+                    name: 'NetworkDetail',
+                    component: NetworkDetail
+                  },
+                  {
+                    path: 'results',
+                    name: 'NetworkResults',
+                    component: NetworkResults,
+                    meta: {
+                      breadcrumb() {
+                        return {
+                          label: 'Results'
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             ]
           },
