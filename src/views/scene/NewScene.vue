@@ -3,7 +3,7 @@
     <div class="header">          
         <h1>Add new scene</h1>
     </div>
-    <section class="scene-definition">
+    <section class="definitions">
         <div>
             <div class="def-box">
                 <h2>Name your scene</h2>

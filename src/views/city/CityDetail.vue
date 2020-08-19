@@ -84,9 +84,32 @@
         </footer>
         <Modal v-if="showMatrixModal" @close="showMatrixModal = false" :showBase="false">
             <template slot="title">
-                <div><h4>OD Matrix</h4></div>
+                <div><h2>OD Matrix</h2></div>
             </template>
             <template slot="content">
+                <div class="parameters-container">
+                    <h4>Matrix parameters</h4>
+                    <div class="table">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th><span>𝑛</span></th>
+                                    <th><span>𝑌[𝑝𝑎𝑥/h]</span></th>
+                                    <th><span>a</span></th>
+                                    <th><span>𝛼</span></th>
+                                    <th><span>𝛽</span></th>
+                                </tr>
+                                <tr>
+                                    <td><input disabled="true" type="text" value="2"/></td>
+                                    <td><input disabled="true" type="text" value="2"/></td>
+                                    <td><input disabled="true" type="text" value="2"/></td>
+                                    <td><input disabled="true" type="text" value="2"/></td>
+                                    <td><input disabled="true" type="text" value="2"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <CityDemand :matrixData="city.demand_matrix" :header="city.demand_matrix_header"></CityDemand>
             </template>
         </Modal>
