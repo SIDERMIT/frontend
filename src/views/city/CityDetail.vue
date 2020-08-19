@@ -100,11 +100,11 @@
                                     <th><span>𝛽</span></th>
                                 </tr>
                                 <tr>
-                                    <td><input disabled="true" type="text" value="2"/></td>
-                                    <td><input disabled="true" type="text" value="2"/></td>
-                                    <td><input disabled="true" type="text" value="2"/></td>
-                                    <td><input disabled="true" type="text" value="2"/></td>
-                                    <td><input disabled="true" type="text" value="2"/></td>
+                                    <td><input disabled="true" type="text" :value="city.n"/></td>
+                                    <td><input disabled="true" type="text" :value="city.y"/></td>
+                                    <td><input disabled="true" type="text" :value="city.a"/></td>
+                                    <td><input disabled="true" type="text" :value="city.alpha"/></td>
+                                    <td><input disabled="true" type="text" :value="city.beta"/></td>
                                 </tr>
                             </tbody>
                         </table>
