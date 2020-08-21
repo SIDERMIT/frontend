@@ -28,15 +28,15 @@
             <td><input v-model="tm.v" v-bind:class="{ error: (tm.v === null || tm.v === '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
             <td>
               <label class="switch">
-                <input v-model="tm.b_a" type="checkbox" :disabled="tm.disabled">
+                <input v-model="tm.bya" type="checkbox" :disabled="tm.disabled">
                 <div class="switch-body">
                 </div>
               </label>
             </td>
             <td><input v-model="tm.t" v-bind:class="{ error: (tm.t === null || tm.t === '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
-            <td><input v-model="tm.f_ini" v-bind:class="{ error: (tm.f_ini === null || tm.f_ini === '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
-            <td><input v-model="tm.f_max" v-bind:class="{ error: (tm.f_max === null || tm.f_max === '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
-            <td><input v-model="tm.k_max" v-bind:class="{ error: (tm.k_max === null || tm.k_max === '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
+            <td><input v-model="tm.fini" v-bind:class="{ error: (tm.fini === null || tm.fini === '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
+            <td><input v-model="tm.fmax" v-bind:class="{ error: (tm.fmax === null || tm.fmax === '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
+            <td><input v-model="tm.kmax" v-bind:class="{ error: (tm.kmax === null || tm.kmax === '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
             <td><input v-model="tm.theta" v-bind:class="{ error: (tm.theta === null || tm.theta === '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
             <td><input v-model="tm.tat" v-bind:class="{ error: (tm.tat === null || tm.tat === '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
             <td><input v-model="tm.d" v-bind:class="{ error: (tm.d === null || tm.d=== '') }" type="text" placeholder="-" :disabled="tm.disabled"></td>
@@ -119,11 +119,11 @@ export default {
         c1 : null,
         c2 : null,
         v: null,
-        b_a: false,
+        bya: false,
         t: null,
-        f_ini: null,
-        f_max: null,
-        k_max: null,
+        fini: null,
+        fmax: null,
+        kmax: null,
         theta: null,
         tat: null,
         d: null,
@@ -136,8 +136,8 @@ export default {
     saveRow(row) {
       let copyRow = JSON.parse(JSON.stringify(row));
       delete copyRow.disabled;
-      copyRow.b_a = copyRow.b_a ? 1 : 0;
-      
+      copyRow.bya = copyRow.bya ? 1 : 0;
+
       console.log(copyRow);
       scenesAPI.checkTransportMode(copyRow).
       then(response => {
@@ -149,7 +149,12 @@ export default {
         this.isAddingRow = false;
         this.$emit('transportModeCreated', copyRow)
       }).catch(error => {
-        let message = error.response.data.detail;
+        let data = error.response.data;
+        let fieldName = Object.getOwnPropertyNames(data)[0]
+        let message = data[fieldName][0];
+        if (message === 'This field is required.') {
+          message = 'Fields can not be empty';
+        }
         this.checker.isError = true;
         this.checker.message = message;
       });

@@ -8,7 +8,7 @@ const deleteScene = (publicId) => httpClient.delete(`${END_POINT}${publicId}`);
 const updateScene = (publicId) => httpClient.patch(`${END_POINT}${publicId}`);
 const createScene = (data) => httpClient.post(END_POINT, data);
 const duplicateScene = (publicId) => httpClient.post(`${END_POINT}${publicId}/duplicate/`);
-const checkTransportMode = (data) => httpClient.get(`${BASE_END_POINT}/validation/transport_mode`, data);
+const checkTransportMode = (data) => httpClient.get(`${BASE_END_POINT}/validation/transport_mode`, {params: data});
 
 export default {
     getScene,
