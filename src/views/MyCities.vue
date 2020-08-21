@@ -8,20 +8,20 @@
       <div class="grid heading">
         <h2>{{ cities.length }} Cities available</h2>
       </div>
-      <div class="grid cities">
-        <template v-if="cities.length > 0">
-          <CityCard v-for="city in cities" v-bind:key="city.public_id" v-bind:city="city"></CityCard>
-        </template>
-        <template v-else>
-          <div class="empty-box">
-            <p>No cities found, start making your first city</p>
-            <router-link :to="{ name: 'NewCity'}" class="btn">
-              <span>Add new city</span>
-              <span class="material-icons">add</span>
-            </router-link>
-          </div>
-        </template>
-      </div>
+      <template v-if="cities.length > 0">
+        <div class="grid cities">
+          <CityCard v-for="city in cities" v-bind:key="city.public_id" v-bind:city="city" v-on:new-city="updateCityList" v-on:erase-city="eraseCityList"></CityCard>
+        </div>
+      </template>
+      <template v-else>
+        <div class="empty-box">
+          <p>No cities found, start making your first city</p>
+          <router-link :to="{ name: 'NewCity'}" class="btn">
+            <span>Add new city</span>
+            <span class="material-icons">add</span>
+          </router-link>
+        </div>
+      </template>
     </section>
     
     <footer>
@@ -56,6 +56,14 @@ export default {
   methods: {
     setData(cities) {
       this.cities = cities;
+    },
+    updateCityList(city) {
+      this.cities.unshift(city);
+    },
+    eraseCityList(deletedCityPublicId) {
+      this.cities = this.cities.filter(city => {
+          return city.public_id != deletedCityPublicId;
+      });
     }
   },
   beforeRouteEnter (to, from, next) {

@@ -77,8 +77,8 @@ export default {
       });
     },
     deleteCity(publicId) {
-      citiesAPI.deleteCity(publicId).then(response => {
-        this.$emit('erase-city', response.data);
+      citiesAPI.deleteCity(publicId).then(() => {
+        this.$emit('erase-city', publicId);
       });
     }
   }
