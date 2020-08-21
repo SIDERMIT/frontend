@@ -73,7 +73,7 @@
 
 <script>
 import CityCard from '@/components/CityCard.vue';
-import cities from '@/api/cities.api';
+import citiesAPI from '@/api/cities.api';
 import axios from 'axios'
 
 export default {
@@ -117,15 +117,15 @@ export default {
         }
       },
       eraseCityList() {
-        cities.getAllCities(3).then(response => {
+        citiesAPI.getAllCities(3).then(response => {
             this.cities = response.data;
         });
       }
   },
   beforeRouteEnter (to, from, next) {
     axios.all([
-        cities.getAllCities(3),
-        cities.getRecentOptimizations()
+        citiesAPI.getAllCities(3),
+        citiesAPI.getRecentOptimizations()
     ]).then(axios.spread( (citiesResponse, optimizationsResponse) => {
         next(vm => vm.setData(citiesResponse.data, optimizationsResponse.data));
     }));
@@ -134,8 +134,8 @@ export default {
     this.city = [];
     this.optimizations = [];
     axios.all([
-          cities.getAllCities(3),
-          cities.getRecentOptimizations()
+          citiesAPI.getAllCities(3),
+          citiesAPI.getRecentOptimizations()
     ]).then(axios.spread( (citiesResponse, optimizationsResponse) => {
         this.setData(optimizationsResponse.data, optimizationsResponse.data);
         next();
