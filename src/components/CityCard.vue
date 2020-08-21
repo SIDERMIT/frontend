@@ -73,14 +73,12 @@ export default {
   methods: {
     duplicateCity(publicId) {
       citiesAPI.duplicateCity(publicId).then(response => {
-        // TODO: isertar respuesta en cities del componente padre
-        console.log(response.data)
+        this.$emit('new-city', response.data);
       });
     },
     deleteCity(publicId) {
       citiesAPI.deleteCity(publicId).then(response => {
-        // TODO: isertar respuesta en cities del componente padre, hay que usar vuex
-        console.log(response.data)
+        this.$emit('erase-city', response.data);
       });
     }
   }

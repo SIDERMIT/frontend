@@ -16,7 +16,7 @@
         </div>
         <template v-if="cities.length > 0">
             <div class="grid cities">
-                <CityCard v-for="city in cities" v-bind:key="city.public_id" v-bind:city="city"></CityCard>
+                <CityCard v-for="city in cities" v-bind:key="city.public_id" v-bind:city="city" v-on:new-city="updateCityList" v-on:erase-city="eraseCityList"></CityCard>
             </div>
         </template>
         <template v-else>
@@ -109,6 +109,17 @@ export default {
                   break;
           }
           return icon;
+      },
+      updateCityList(city) {
+        this.cities.unshift(city);
+        if (this.cities.length > 3) {
+            this.cities.pop();
+        }
+      },
+      eraseCityList() {
+        cities.getAllCities(3).then(response => {
+            this.cities = response.data;
+        });
       }
   },
   beforeRouteEnter (to, from, next) {
