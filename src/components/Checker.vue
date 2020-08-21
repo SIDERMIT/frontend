@@ -1,6 +1,6 @@
 <template>
   <div class="grid checker-body" :class=" isError ? 'error': 'ok'">
-      <span class="material-icons icon">check</span>
+      <span class="material-icons icon">{{ isError ? 'warning': 'check' }}</span>
       <span class="text">{{ message }}</span>
   </div>
 </template>
