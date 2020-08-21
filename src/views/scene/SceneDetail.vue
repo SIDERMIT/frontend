@@ -144,8 +144,8 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="checker">
-                <div></div>
+            <div class="checker ">
+                <div><Checker :isError="true" :message="asdasdas"></Checker></div>
                 <div class="grid min">
                     <button class="btn red"><span class="material-icons">close</span><span>Cancel</span></button>
                     <button class="btn"><span class="material-icons">check</span><span>Save mode</span></button>
