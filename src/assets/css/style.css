@@ -47,6 +47,7 @@ td input[type="text"] {text-align: center; padding: 8px; min-width: min-content;
 ul {padding: 0;}
 code {margin-bottom: 10px; color: white; background-color: var(--bg-dark); padding: 10px; font-size: 14px; display: inline-block; border-radius: 4px;}
 code:last-child {margin-bottom: 0;}
+input {text-align: center;}
 input, select {
     background: #fafafa;
     box-shadow:inset 2px 2px 0px 0px rgba(0,0,0,.1);
@@ -486,11 +487,29 @@ background: rgba(93, 78, 57, 0.5);
 }
 .num.plus:hover,.num.less:hover {color: var(--link); background-color: rgba(255,255,255,0.3);}
 /* Chrome, Safari, Edge, Opera */
-.counter input::-webkit-outer-spin-button, .counter input::-webkit-inner-spin-button {-webkit-appearance: none; margin: 0;}
-.counter input[type=number] {-moz-appearance: textfield;}
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {-webkit-appearance: none; margin: 0;}
+input[type="number"] {-moz-appearance: textfield;}
 
 .switch.big .switch-body {width: 90px; display: flex; justify-content: center; align-items: center; background-color: var(--dark-gray);}
 
+
+/** ============== SCENE DETAILS ============== **/
+
+.btn-filter {display: grid; grid-auto-flow: column; grid-gap: 10px;}
+.neuro.active {
+    background: var(--link2);
+    box-shadow: 1px 1px 1px 0 rgba(255,255,255,0.73), inset 1px 1px 1px 0 rgba(0,0,0,0.20);
+    border-radius: 8px;
+    color: white;
+}
+.neuro.active:hover {background-color: var(--link);
+    box-shadow: 1px 1px 1px 0 rgba(255,255,255,0.73), inset 1px 1px 1px 0 rgba(0,0,0,0.20);
+    color: white;
+}
+th {position: relative;}
+table th a {color: white; display: block;}
+table th a:hover:before {content: ''; position: absolute; width: 100%; height: 100%; left: 0; top: 0; background-color: rgba(255,255,255,0.05);}
+.btn-filter-column {position: absolute; top: 0; right: 0; background: transparent; color: white; font-size: 14px;}
 
 
 
