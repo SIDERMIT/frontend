@@ -3,6 +3,7 @@
     <div class="header"> 
       <h1>My cities</h1>
     </div>
+  
     <section class="cities">
       <div class="grid heading">
         <h2>{{ cities.length }} Cities available</h2>
@@ -22,6 +23,19 @@
         </template>
       </div>
     </section>
+    
+    <footer>
+        <div class="container full grid">
+            <div class="left-content">
+            </div>
+            <div class="right-content">
+                <router-link :to="{ name: 'NewCity'}" class="btn">
+                    <span>Add new city</span>
+                    <span class="material-icons">add</span>
+                </router-link>
+            </div>
+        </div>
+    </footer>
   </div>
 </template>
 
