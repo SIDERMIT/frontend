@@ -156,14 +156,16 @@
 </template>
 
 <script>
-import Modal from '@/components/Modal.vue'
-import CityGraph from '@/components/CityGraph.vue'
+import Modal from '@/components/Modal.vue';
+import CityGraph from '@/components/CityGraph.vue';
 import citiesAPI from '@/api/cities.api';
 import FileSaver from 'file-saver';
-import FileReader from '@/components/FileReader.vue'
+import FileReader from '@/components/FileReader.vue';
+import errorMessageMixin from '@/mixins/errorMessageMixin.js';
 
 export default {
   name: 'NewCity',
+  mixins: [errorMessageMixin],
   components: {
     Modal,
     FileReader,
@@ -239,15 +241,7 @@ export default {
         request.then(response => {
             this.$router.push({name: 'NewCityStep2', params: {cityPublicId: response.data.public_id}})
         }).catch(error => {
-            let data = error.response.data;
-            let message = '<b>Please correct the following error(s):</b><br /><br />';
-            for (let key in data) {
-                message += `<b>${key}:</b><ul>`;
-                data[key].forEach(el => {
-                   message += `<li>${el}</li>`; 
-                });
-                message += '</ul>'
-            }
+            let message = this.getErrorMessage(error.response.data);
             this.modalData.message = message;
             this.modalData.showCancelButton = false
             this.modalData.closeButtonName = 'OK'
