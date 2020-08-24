@@ -85,6 +85,11 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    initialRows: {
+      type: Array,
+      required: false,
+      default: () => []
     }
   },
   data() {
@@ -101,7 +106,7 @@ export default {
           show: false,
         },
         showDeleteConfirmationModal: false,
-        rows: []
+        rows: JSON.parse(JSON.stringify(this.initialRows))
         
     }
   },
@@ -133,11 +138,15 @@ export default {
       this.isAddingRow = true;
       this.checker.show = false;
     },
-    saveRow(row) {
+    sanitizeRow(row) {
       let copyRow = JSON.parse(JSON.stringify(row));
       delete copyRow.disabled;
       copyRow.bya = copyRow.bya ? 1 : 0;
 
+      return copyRow;
+    },
+    saveRow(row) {
+      let copyRow = this.sanitizeRow(row);
       console.log(copyRow);
       scenesAPI.checkTransportMode(copyRow).
       then(response => {
@@ -147,7 +156,7 @@ export default {
         this.checker.message = 'Transport mode is valid';
 
         this.isAddingRow = false;
-        this.$emit('transportModeCreated', copyRow)
+        this.$emit('new-transportmode', copyRow)
       }).catch(error => {
         let data = error.response.data;
         let fieldName = Object.getOwnPropertyNames(data)[0]
@@ -166,6 +175,8 @@ export default {
       this.isAddingRow = false;
     },
     deleteRow() {
+      let copyRow = this.sanitizeRow(this.rows[this.deleteModalData.index]);
+      this.$emit('erase-transportmode', copyRow);
       this.rows.splice(this.deleteModalData.index, 1)
     }
   }
