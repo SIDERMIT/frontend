@@ -61,7 +61,7 @@
                 <a class="icon-link" @click="showTransportModeLegendModal = true" ><span class="material-icons">help</span></a>
             </div>
         </div>
-        <TransportModeTable v-if="scene !== null" :scenePublicId="scene.public_id" :initialRows="scene.transportmode_set" v-on:new-transportmode="addTransportMode" v-on:erase-transportmode="removeTransportMode" ></TransportModeTable>
+        <TransportModeTable v-if="scene !== null" :scenePublicId="scene.public_id" :rows="scene.transportmode_set" v-on:new-transportmode="addTransportMode" v-on:erase-transportmode="removeTransportMode" ></TransportModeTable>
     </section>
     <footer>
         <div class="container full grid">
@@ -155,9 +155,6 @@ export default {
         this.pageTitle = 'Edit scene';
         this.isNew = false;
         this.scene = scene;
-      },
-      deleteTransportMode() {
-          this.scene.transportmode_set.splice(this.deleteModalData.index, 1)
       },
       addTransportMode(transportModeObj) {
         this.scene.transportmode_set.push(transportModeObj);

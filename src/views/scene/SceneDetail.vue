@@ -54,107 +54,13 @@
     </section>
     <section class="transportation-mode">
         <div class="grid title">
-            <h2>Transportation mode</h2>
+            <h2>Transport mode</h2>
             <a class="link-icon" @click="showTransportModeLegendModal = true"><span class="material-icons">help</span></a>
         </div>
-        <div class="table">
-            <table>
-                <tbody>
-                    <tr>
-                        <th><span>Mode</span></th>
-                        <th><span>𝐶𝑜<br>[$/h−𝑣𝑒h]</span></th>
-                        <th><span>𝐶1<br>[$/h−𝑝𝑎𝑥]</span></th>
-                        <th><span>𝐶2<br>[$/h−𝑘𝑚]</span></th>
-                        <th><span>𝜈<br>[𝑘𝑚/h]</span></th>
-                        <th><span>B&A<br>Sequential</span></th>
-                        <th><span>𝑡<br>[𝑠/𝑝𝑎𝑥]</span></th>
-                        <th><span>fini<br>[veh/hr]</span></th>
-                        <th><span>𝑓𝑚𝑎𝑥<br>[𝑣𝑒h/h]</span></th>
-                        <th><span>𝐾𝑚𝑎𝑥<br>[𝑝𝑎𝑥/𝑣𝑒h]</span></th>
-                        <th><span>𝜃</span></th>
-                        <th><span>𝑡𝑎𝑡<br>[𝑚𝑖𝑛]</span></th>
-                        <th><span>𝐷</span></th>
-                        <th><span>𝑣𝑎<br>[𝑘𝑚/h]</span></th>
-                    </tr>
-                    <tr>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" checked disabled>
-                                <div class="switch-body">
-                                </div>
-                            </label>
-                        </td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                        <td><input type="text" value="0" disabled></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" checked disabled>
-                                <div class="switch-body">
-                                </div>
-                            </label>
-                        </td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                        <td><input type="text" placeholder="0" value="0" disabled></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" checked>
-                                <div class="switch-body">
-                                </div>
-                            </label>
-                        </td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                        <td><input type="text" placeholder="0"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="checker ">
-                <div><Checker :isError="true" :message="asdasdas"></Checker></div>
-                <div class="grid min">
-                    <button class="btn red"><span class="material-icons">close</span><span>Cancel</span></button>
-                    <button class="btn"><span class="material-icons">check</span><span>Save mode</span></button>
-                </div>
-            </div>
-        </div>
+        <TransportModeTable v-if="scene !== null" :scenePublicId="scene.public_id" :rows="scene.transportmode_set" v-on:new-transportmode="addTransportMode" v-on:erase-transportmode="removeTransportMode" ></TransportModeTable>
     </section>
     <section class="transportation-network">
-        <h2>Transportation network</h2>
+        <h2>Transport network</h2>
         <div class="subtitle">
             <h4>Configuration of transport modes and users for the city</h4>
         </div>
@@ -263,6 +169,10 @@
             <div class="left-content">
             </div>
             <div class="right-content">
+                <router-link class="btn" v-if="scene.city.public_id !== null" :to="{ name: 'NewScene', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" >
+                    <span class="material-icons">edit</span>
+                    <span>Edit scene</span>
+                </router-link>
                 <router-link class="btn" v-if="scene.city.public_id !== null" :to="{ name: 'GlobalResults', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" >
                     <span>View global results</span>
                     <span class="material-icons">chevron_right</span>
@@ -312,12 +222,13 @@
 
 <script>
 import scenesAPI from '@/api/scenes.api';
-import dateMixin from '@/mixins/dateMixin.js'
-import CityGraph from '@/components/CityGraph'
-import CityDemand from '@/components/CityDemand'
-import UserLegend from '@/components/UserLegend.vue'
-import TransportModeLegend from '@/components/TransportModeLegend.vue'
-import Modal from '@/components/Modal.vue'
+import dateMixin from '@/mixins/dateMixin.js';
+import CityGraph from '@/components/CityGraph';
+import CityDemand from '@/components/CityDemand';
+import UserLegend from '@/components/UserLegend.vue';
+import TransportModeLegend from '@/components/TransportModeLegend.vue';
+import TransportModeTable from '@/components/TransportModeTable.vue';
+import Modal from '@/components/Modal.vue';
 
 export default {
   name: 'SceneDetail',
@@ -327,7 +238,8 @@ export default {
     CityDemand,
     Modal,
     UserLegend,
-    TransportModeLegend
+    TransportModeLegend,
+    TransportModeTable
   },
   data(){
     return {
@@ -359,15 +271,21 @@ export default {
                     edges: []
                 },
                 public_id: null
-            }
+            },
+            transportmode_set: []
         }
     }
   },
   methods: {
-      setData(scene) {
-          this.scene = scene
-          console.log(scene);
-      }
+    setData(scene) {
+        this.scene = scene;
+    },
+    addTransportMode(transportModeObj) {
+        this.scene.transportmode_set.push(transportModeObj);
+    },
+    removeTransportMode(transportModeObj) {
+        this.scene.transportmode_set.push(transportModeObj);
+    },
   },
   beforeRouteEnter (to, from, next) {
     scenesAPI.getScene(to.params.scenePublicId).then(response => {
