@@ -49,7 +49,9 @@
                 </div>
             </div>
         </div>
-        <div class="graph-container"></div>
+        <div class="graph-container">
+            <CityGraph :network="scene.city.network_descriptor"></CityGraph>
+        </div>
     </section>
     <section class="scene-modes">
         <h2>Define transportation modes</h2>
@@ -59,14 +61,14 @@
                 <a class="icon-link" @click="showTransportModeLegendModal = true" ><span class="material-icons">help</span></a>
             </div>
         </div>
-        <TransportModeTable v-if="scene !== null" :scenePublicId="scene.public_id" ></TransportModeTable>
+        <TransportModeTable v-if="scene !== null" :scenePublicId="scene.public_id" :initialRows="scene.transportmode_set" v-on:new-transportmode="addTransportMode" v-on:erase-transportmode="removeTransportMode" ></TransportModeTable>
     </section>
     <footer>
         <div class="container full grid">
             <div class="left-content">
             </div>
             <div class="right-content">
-                <button class="btn" @click="createScene">
+                <button class="btn" @click="updateScene">
                     <span>Save and continue</span>
                     <span class="material-icons">chevron_right</span>
                 </button>
@@ -88,21 +90,28 @@
 
 <script>
 import Modal from '@/components/Modal.vue';
+import CityGraph from '@/components/CityGraph.vue';
 import UserLegend from '@/components/UserLegend.vue';
 import TransportModeLegend from '@/components/TransportModeLegend.vue';
 import TransportModeTable from '@/components/TransportModeTable.vue';
 import scenesAPI from '@/api/scenes.api';
+import citiesAPI from '@/api/cities.api';
+import errorMessageMixin from '@/mixins/errorMessageMixin.js'
 
 export default {
   name: 'NewScene',
+  mixins: [errorMessageMixin],
   components: {
     Modal,
     UserLegend,
     TransportModeLegend,
-    TransportModeTable
+    TransportModeTable,
+    CityGraph
   },
   data() {
       return {
+          pageTitle: 'Add new scene',
+          isNew: true,
           showWarningModal: false,
           showUserLegendModal: false,
           showTransportModeLegendModal: false,
@@ -130,55 +139,78 @@ export default {
                 spt: null,
                 spv: null
               },
-              transport_modes: [],
-              public_id: null
+              transportmode_set: [],
+              public_id: null,
+              city: {
+                  network_descriptor: {
+                      nodes: [],
+                      edges: []
+                  }
+              }
           }
       }
   },
   methods: {
+      setData(scene) {
+        this.pageTitle = 'Edit scene';
+        this.isNew = false;
+        this.scene = scene;
+      },
       deleteTransportMode() {
-          this.scene.transport_modes.splice(this.deleteModalData.index, 1)
+          this.scene.transportmode_set.splice(this.deleteModalData.index, 1)
       },
-      addMode() {
-        this.scene.transport_modes.push({
-            name: null,
-            public_id: null,
-            b_a: false,
-            co: null,
-            c1: null,
-            c2: null,
-            v: null,
-            t: null,
-            f_ini: null,
-            f_max: null,
-            k_max: null,
-            theta: null,
-            tat: null,
-            d: null,
-        });
+      addTransportMode(transportModeObj) {
+        this.scene.transportmode_set.push(transportModeObj);
       },
-      createScene() {
+      removeTransportMode(transportModeObj) {
+        this.scene.transportmode_set.push(transportModeObj);
+      },
+      updateScene() {
         let data = JSON.parse(JSON.stringify(this.scene));
         data.city_public_id = this.$router.currentRoute.params.cityPublicId;
-        scenesAPI.createScene(data).
-        then(response => {
+
+        let request = null;
+        if (this.isNew) {
+            request = scenesAPI.createScene(data)
+        } else {
+            request = scenesAPI.updateScene(this.scene.public_id, data)
+        }
+        
+        request.then(response => {
             this.$router.push({name: 'SceneDetail', params: {scenePublicId: response.data.public_id}})
         }).catch(error => {
-            let data = error.response.data;
-            let message = '<b>Please correct the following error(s):</b><br /><br />';
-            for (let key in data) {
-                message += `<b>${key}:</b><ul>`;
-                data[key].forEach(el => {
-                   message += `<li>${el}</li>`; 
-                });
-                message += '</ul>'
-            }
+            let message = this.getErrorMessage(error.response.data);
             this.modalData.message = message;
             this.modalData.showCancelButton = false
             this.modalData.closeButtonName = 'OK'
             this.showWarningModal = true;
         });
       }
+  },
+  beforeRouteEnter (to, from, next) {
+    if (to.params.scenePublicId) {
+      scenesAPI.getScene(to.params.scenePublicId).then(response => (next(vm => vm.setData(response.data))));
+    } else {
+        // fill city data
+        citiesAPI.getCity(to.params.cityPublicId).then(response => {
+            next(vm => vm.scene.city.network_descriptor = response.data.network_descriptor);
+        });
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.params.scenePublicId) {
+        this.scene = {};
+        scenesAPI.getScene(to.params.scenePublicId).then(response => {
+            this.setData(response.data); 
+            next();
+        });
+    } else {
+        // fill city data
+        citiesAPI.getCity(to.params.cityPublicId).then(response => {
+            this.scene.city.network_descriptor = response.data.network_descriptor;
+            next();
+        });
+    }
   }
 }
 </script>
