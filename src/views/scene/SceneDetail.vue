@@ -169,6 +169,10 @@
             <div class="left-content">
             </div>
             <div class="right-content">
+                <router-link class="btn" v-if="scene.city.public_id !== null" :to="{ name: 'NetworkResults', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id, transportNetworkPublicId: 12 }}" >
+                    <span class="material-icons">edit</span>
+                    <span>Resultados de red (temporal)</span>
+                </router-link>
                 <router-link class="btn" v-if="scene.city.public_id !== null" :to="{ name: 'NewScene', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" >
                     <span class="material-icons">edit</span>
                     <span>Edit scene</span>
