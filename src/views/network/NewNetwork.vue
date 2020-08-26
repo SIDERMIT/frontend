@@ -7,7 +7,7 @@
     <section class="new-network">
         <div class="grid input-name">
             <h2>Name your network</h2>
-            <input type="text" placeholder="Can't be empty"/>
+            <input type="text" class="text-left" placeholder="Can't be empty"/>
         </div>
     </section>
     <section class="network-information">

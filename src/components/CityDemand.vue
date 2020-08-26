@@ -1,7 +1,7 @@
 <template>
   <div class="CityDemand">
     <div class="table">
-      <table>
+      <table class="fixed">
         <tbody>
           <tr>
             <th>&nbsp;</th>

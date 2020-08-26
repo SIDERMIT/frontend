@@ -12,7 +12,6 @@
             <div class="def-box">
                 <h2>City parameters</h2>
                 <div class="grid min">
-                    <button class="btn" @click="showMatrixModal = true"><span class="material-icons">chevron_right</span><span>View matrix parameters</span></button>
                     <button class="btn" @click="showMatrixModal = true"><span class="material-icons">chevron_right</span><span>View matrix</span></button>
                 </div>
             </div>
@@ -22,7 +21,7 @@
                     <a class="link-icon" @click="showUserLegendModal = true"><span class="material-icons">help</span></a>
                 </div>
                 <div class="table">
-                    <table>
+                    <table class="fixed">
                         <tbody>
                             <tr>
                                 <th><span>𝑣𝑎<br>[𝑘𝑚/h]</span></th>
