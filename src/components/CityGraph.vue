@@ -53,11 +53,23 @@ export default {
           };
 
           if (node.type == 'cbd') {
-            nodeAttributes.itemStyle.color = '#fff200';
+            nodeAttributes.itemStyle = {
+                color: '#fff',
+                borderWidth: 2,
+                borderColor:'#CACECE',
+            }
           } else if (node.type == 'periphery') {
-            nodeAttributes.itemStyle.color = '#4bd63b';
+            nodeAttributes.itemStyle = {
+                color: '#D06318',
+                borderWidth: 2,
+                borderColor:'#D06318',
+            }
           } else if (node.type == 'subcenter') {
-            nodeAttributes.itemStyle.color = '#ff0505';
+            nodeAttributes.itemStyle = {
+                color: '#D6951B',
+                borderWidth: 2,
+                borderColor:'#D6951B',
+            }
           } 
 
           data.push(nodeAttributes);
@@ -82,7 +94,7 @@ export default {
           bottom: 10,
           containLabel: true,
           top: 10,
-          right: 10
+          right: 15
         },
         xAxis: {
           type: 'value',

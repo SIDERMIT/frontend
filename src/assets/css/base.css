@@ -68,5 +68,6 @@ html {-webkit-font-smoothing: antialiased;}
 
 /* -- grillas -- */
 .grid {display: grid; grid-gap: 20px; grid-auto-flow: column; justify-content: flex-start; align-items: center;}
+.grid.flex-top {align-items: flex-start;}
 .grid-self-end {align-self: end;}
 .g2 {grid-template-columns: 1fr 1fr;}

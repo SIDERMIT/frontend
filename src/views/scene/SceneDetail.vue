@@ -64,7 +64,7 @@
         <div class="subtitle">
             <h4>Configuration of transport modes and users for the city</h4>
         </div>
-        <div class="table">
+        <div class="table full">
             <ul class="network-list">
                 <li class="ok">
                     <div class="icon"><span class="material-icons">check_circle</span></div>
