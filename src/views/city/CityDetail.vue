@@ -14,7 +14,7 @@
                     <div class="table-title">
                         <h4>Simetric city's parameters</h4>
                     </div>
-                    <table>
+                    <table class="fixed">
                         <tbody>
                             <tr>
                                 <th><span>𝑛</span></th>
@@ -36,9 +36,7 @@
         </section>
         <section>
             <h2>Stages</h2>
-            <div class="subtitle">
-                <h4>Transport modes and users settings for the city</h4>
-            </div>
+            <div class="subtitle"><h4>Transport modes and users settings for the city</h4></div>
             <template v-if="city.scene_set.length == 0">
                 <div class="empty-box">
                     <p>There is no defined stages for this project. start by creating a new one</p>
@@ -54,7 +52,7 @@
                         <li v-for="scene in city.scene_set" v-bind:key="scene.public_id">
                             <router-link class="name" :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id } }">
                                 <h4>{{ scene.name }}</h4>
-                                <span class="p-min">{{ scene.transportmode_set.length }} transport modes, {{ scene.transportnetwork_set.length }} transport networks </span>
+                                <span class="p-min">{{ scene.transportmode_set.length }} transport modes, {{ scene.transportnetwork_set.length }} transport networks</span>
                             </router-link>
                             <div class="grid min">
                                 <router-link :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id }}" class="btn icon" tag="button" alt="Edit"><span class="material-icons">edit</span></router-link>

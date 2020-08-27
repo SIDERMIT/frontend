@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="table">
-            <table>
+            <table class="fixed">
                 <tbody>
                     <tr>
                         <th><span>Network</span></th>
