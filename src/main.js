@@ -11,12 +11,11 @@ require('@/assets/css/style.css')
 Vue.component('v-chart', ECharts)
 Vue.use(VueBreadcrumbs, {
   template:
-    '        <nav v-if="$breadcrumbs.length" aria-label="breadcrumb">\n' +
-    '            <ol class="breadcrumb">\n' +
-    '                <li v-for="(crumb, key) in $breadcrumbs" v-if="crumb.meta.breadcrumb" :key="key" class="breadcrumb-item active" aria-current="page">\n' +
-    '                    <router-link :to="{ path: getPath(crumb) }">{{ getBreadcrumb(crumb.meta.breadcrumb) }}</router-link>' +
-    '                </li>\n' +
-    '            </ol>\n' +
+    '        <nav v-if="$breadcrumbs.length" aria-label="breadcrumb" class="breadcrumbs">\n' +
+                '<span class="step first"><span class="material-icons">home</span></span>' +
+'                <span v-for="(crumb, key) in $breadcrumbs" v-if="crumb.meta.breadcrumb" :key="key" class="step" aria-current="page">\n' +
+'                    <router-link :to="{ path: getPath(crumb) }">{{ getBreadcrumb(crumb.meta.breadcrumb) }}</router-link>' +
+'                </span>\n' +
     '        </nav>'
 });
 

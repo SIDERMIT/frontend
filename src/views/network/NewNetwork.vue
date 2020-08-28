@@ -22,10 +22,23 @@
             <div>
                 <div class="grid search-bar">
                     <input type="search"/>
-                    <button class="btn neuro">
+                    <button class="btn neuro" disabled>
                         <span class="material-icons">visibility</span>
                         <span>View all</span>
                     </button>
+                </div>
+                <div class="empty-box">
+                    <p>There is no defined route in this network. You can add a new one or create predefined tours</p>
+                    <div class="grid">
+                        <button class="btn">
+                            <span class="material-icons">add</span>
+                            <span>Add transit line</span>
+                        </button>
+                        <button class="btn">
+                            <span>Add default travels</span>
+                            <span class="material-icons">format_list_bulleted</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="linebox-container">
                     <div class="linebox">
@@ -187,7 +200,7 @@
             </div>
         </div>
     </section>
-    <div class="modal-container">
+    <div class="modal-container" style="display:none;">
         <div class="modal">
             <div class="modal-title">
                 <h2>Add default transit lines</h2>
