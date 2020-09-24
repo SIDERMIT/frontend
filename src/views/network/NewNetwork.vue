@@ -2,7 +2,7 @@
   <div class="NewNetwork">
     <div class="header">          
         <h1>New transportation network</h1>
-        <p>Stage 1</p>
+        <p>Scene 1</p>
     </div>
     <section class="new-network">
         <div class="grid input-name">

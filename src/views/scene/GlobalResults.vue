@@ -2,7 +2,7 @@
   <div class="GlobalResults">
     <div class="header">          
         <h1>Overall optimization results</h1>
-        <p>Stage 1</p>
+        <p>Scene 1</p>
     </div>
     <section>
         <div class="grid title">

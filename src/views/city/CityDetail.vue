@@ -41,7 +41,7 @@
                 <div class="empty-box">
                     <p>There are no scenes for this project. Start by creating a new one</p>
                     <router-link :to="{ name: 'NewScene'}" class="btn">
-                        <span>Add new stage</span>
+                        <span>Add new scene</span>
                         <span class="material-icons">add</span>
                     </router-link>
                 </div>
@@ -74,7 +74,7 @@
                         <span>Edit city</span>
                     </router-link>
                     <router-link :to="{ name: 'NewScene'}" class="btn">
-                        <span>Add new stage</span>
+                        <span>Add new scene</span>
                         <span class="material-icons">add</span>
                     </router-link>
                 </div>

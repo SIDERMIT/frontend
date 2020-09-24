@@ -34,7 +34,7 @@
         <h2>Last optimizations</h2>
         <template v-if="optimizations.length == 0">
             <div class="empty-box">
-                <p>You have no optimization finished yet. Start its process from the network list in a city stage.</p>
+                <p>You have no optimization finished yet. Start its process from network list in a city scene.</p>
             </div>
         </template>
         <template v-else>
