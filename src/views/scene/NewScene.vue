@@ -7,7 +7,7 @@
         <div>
             <div class="def-box">
                 <h2>Name your scene</h2>
-                <input v-model="scene.name" v-bind:class="{ error: (scene.name === null || scene.name === '') }"  type="text" placeholder="Cant be empty" class="text-left"/>
+                <input v-model="scene.name" v-bind:class="{ error: (scene.name === null || scene.name === '') }"  type="text" placeholder="Can't be empty" class="text-left"/>
             </div>
             <div>
                 <h2>Define transport user</h2>
