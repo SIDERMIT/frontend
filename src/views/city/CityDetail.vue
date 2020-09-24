@@ -48,7 +48,7 @@
             </template>
             <template v-else>
                 <div class="table full">
-                    <ul class="stages-list">
+                    <ul class="scenes-list">
                         <li v-for="scene in city.scene_set" v-bind:key="scene.public_id">
                             <router-link class="name" :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id } }">
                                 <h4>{{ scene.name }}</h4>

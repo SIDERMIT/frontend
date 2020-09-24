@@ -52,7 +52,7 @@
                 <div><textarea class="editor-container" v-model="newCity.graph" @input="pajekChange" /></div>
                 <div class="graph-container"><CityGraph :network="newCity.network_descriptor"></CityGraph></div>
             </div>
-            <div>
+            <div class="checker">
                 <Checker v-if="graphValidator.show" :isError="graphValidator.isError" :message="graphValidator.message" />
                 <button class="btn" @click="downloadPajekFile"><span class="material-icons">get_app</span><span>Download pajek</span></button>
             </div>
