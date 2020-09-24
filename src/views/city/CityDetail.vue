@@ -23,10 +23,10 @@
                                 <th><span>𝑔</span></th>
                             </tr>
                             <tr>
-                                <td><span>{{ city.n }}</span></td>
-                                <td><span>{{ city.p }}</span></td>
-                                <td><span>{{ city.l }}</span></td>
-                                <td><span>{{ city.g }}</span></td>
+                                <td><span>{{ city.n ? city.n : '-' }}</span></td>
+                                <td><span>{{ city.p ? city.p : '-'  }}</span></td>
+                                <td><span>{{ city.l ? city.l : '-'  }}</span></td>
+                                <td><span>{{ city.g ? city.g : '-'  }}</span></td>
                             </tr>
                         </tbody>
                     </table>
