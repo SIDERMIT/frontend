@@ -22,6 +22,14 @@ export default {
     network: {
       type: Object,
       required: true
+    },
+    symbolSize: {
+      type: Number,
+      default: 15
+    },
+    showLabel: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -33,7 +41,7 @@ export default {
       nodes.forEach(node => {
           let nodeAttributes = {
             label: {
-              show: true,
+              show: this.showLabel,
               position: 'bottom'
             },
             emphasis: {
@@ -45,7 +53,7 @@ export default {
               color: '#D6951B',
               borderWidth: 0,
             },
-            symbolSize: 15,
+            symbolSize: this.symbolSize,
             name: node.name,
             value: [node.x, node.y, node.name, node.id],
           };
