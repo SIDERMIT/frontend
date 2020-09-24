@@ -38,12 +38,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="checker" v-if="parameterValidator.show" v-bind:class="[parameterValidator.icon == 'check' ? 'ok': 'error']">
-                    <div class="grid checker-body">
-                        <span class="material-icons icon ok">{{ parameterValidator.icon }}</span>
-                        <span class="text">{{ parameterValidator.message }}</span>
-                    </div>
-                </div>
+                <Checker v-if="parameterValidator.show" :isError="parameterValidator.isError" :message="parameterValidator.message" />
             </div>
             <div class="flex flex-end" v-if="!enableParameters">
                 <button class="btn" @click="showEditParameterModal = true"><span class="material-icons">publish</span><span>Edit parameters</span></button>
@@ -54,14 +49,11 @@
             <h2>Definition of the city by nodes and arcs</h2>
             <h4>Editor</h4>
             <div class="grid g2">
-                <div><pre class="editor-container">{{ newCity.graph }}</pre></div>
+                <div><textarea class="editor-container" v-model="newCity.graph" @input="pajekChange" /></div>
                 <div class="graph-container"><CityGraph :network="newCity.network_descriptor"></CityGraph></div>
             </div>
-            <div class="checker ok">
-                <div class="grid checker-body">
-                    <span class="material-icons icon ok">check</span>
-                    <span class="text">Table correctly defined</span>
-                </div>
+            <div>
+                <Checker v-if="graphValidator.show" :isError="graphValidator.isError" :message="graphValidator.message" />
                 <button class="btn" @click="downloadPajekFile"><span class="material-icons">get_app</span><span>Download pajek</span></button>
             </div>
         </section>
@@ -162,6 +154,8 @@ import citiesAPI from '@/api/cities.api';
 import FileSaver from 'file-saver';
 import FileReader from '@/components/FileReader.vue';
 import errorMessageMixin from '@/mixins/errorMessageMixin.js';
+import Checker from '@/components/Checker.vue';
+import { debounce } from "debounce";
 
 export default {
   name: 'NewCity',
@@ -169,7 +163,8 @@ export default {
   components: {
     Modal,
     FileReader,
-    CityGraph
+    CityGraph,
+    Checker
   },
   data() {
       return {
@@ -184,7 +179,12 @@ export default {
           parameterValidator: {
             show: false,
             message: '',
-            icon: '',
+            isError: false,
+          },
+          graphValidator: {
+            show: false,
+            message: '',
+            isError: false
           },
           modalData: {
             showCancelButton: true,
@@ -262,6 +262,24 @@ export default {
         this.showEditorAndGraph = true;
         this.enableParameters = false;
       },
+      pajekChange: debounce(function() {
+          citiesAPI.getGraphFromPajekFile(this.newCity.graph).then(response => {
+            this.newCity.n = null;
+            this.newCity.p = null;
+            this.newCity.l = null;
+            this.newCity.g = null;
+            this.enableParameters = false;
+            this.newCity.network_descriptor = response.data.network;
+            
+            this.graphValidator.show = true;
+            this.graphValidator.isError = false;
+            this.graphValidator.message = 'File correctly defined';
+          }).catch(error => {
+            this.graphValidator.show = true;
+            this.graphValidator.isError = true;
+            this.graphValidator.message = error.response.data.detail;
+          });
+      }, 300),
       editParameterAction() {
         this.enableParameters = true
         this.showEditorAndGraph = false;
