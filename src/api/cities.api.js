@@ -9,7 +9,8 @@ const deleteCity = (publicId) => httpClient.delete(`${END_POINT}${publicId}`);
 const updateCity = (publicId, data) => httpClient.patch(`${END_POINT}${publicId}/`, data);
 const createCity = (name, n, p, l, g, graph) => httpClient.post(END_POINT, {name, n, p, l, g, graph, step: 'step1'});
 const duplicateCity = (publicId) => httpClient.post(`${END_POINT}${publicId}/duplicate/`);
-const getPajekFile = (n,p,l,g) => httpClient.get(`${END_POINT}build_graph_file`, {params:{n,p,l,g}});
+const getPajekFile = (n,p,l,g) => httpClient.get(`${END_POINT}build_graph_file_from_parameters`, {params:{n,p,l,g}});
+const getGraphFromPajekFile = (graph) => httpClient.get(`${END_POINT}network_data_from_pajek_file`, {params:{graph}});
 const getMatrixFile = (publicId, y, a, alpha, beta) => httpClient.get(`${END_POINT}${publicId}/build_matrix_file/`, {params:{y, a, alpha, beta}});
 
 const getRecentOptimizations = () => httpClient.get(`${BASE_END_POINT}/recent_optimizations`, {});
@@ -23,5 +24,6 @@ export default {
     getRecentOptimizations,
     duplicateCity,
     getPajekFile,
+    getGraphFromPajekFile,
     getMatrixFile
 }
