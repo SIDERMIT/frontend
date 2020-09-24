@@ -34,12 +34,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="checker" v-if="parameterValidator.show" v-bind:class="[parameterValidator.icon == 'check' ? 'ok': 'error']">
-                    <div class="grid checker-body">
-                        <span class="material-icons icon ok">{{ parameterValidator.icon }}</span>
-                        <span class="text">{{ parameterValidator.message }}</span>
-                    </div>
-                </div>
+                <Checker v-if="parameterValidator.show" :isError="parameterValidator.isError" :message="parameterValidator.message" />
                 <div class="flex flex-end" v-if="!enableParameters">
                     <button class="btn"><span class="material-icons">edit</span><span>Edit parameters</span></button>
                 </div>
@@ -165,7 +160,8 @@
 import Modal from '@/components/Modal.vue'
 import CityGraph from '@/components/CityGraph.vue';
 import citiesAPI from '@/api/cities.api';
-import FileReader from '@/components/FileReader.vue'
+import FileReader from '@/components/FileReader.vue';
+import Checker from '@/components/Checker.vue';
 
 export default {
   name: 'NewCityStep2',
@@ -173,6 +169,7 @@ export default {
     Modal,
     FileReader,
     CityGraph,
+    Checker
   },
   data() {
     return {
@@ -183,7 +180,7 @@ export default {
         parameterValidator: {
             show: false,
             message: '',
-            icon: '',
+            isError: false,
         },
         modalData: {
             showCancelButton: true,
@@ -251,12 +248,12 @@ export default {
             this.city.demand_matrix_header = response.data.demand_matrix_header;
             this.parameterValidator.message = 'Matrix correctly defined';
             this.parameterValidator.show = true;
-            this.parameterValidator.icon = 'check';
+            this.parameterValidator.isError = false;
         }).catch(error => {
             let message = error.response.data.detail;
             this.parameterValidator.message = message;
             this.parameterValidator.show = true;
-            this.parameterValidator.icon = 'warning';
+            this.parameterValidator.isError = true;
         });
     },
     importMatrixFile(fileContent) {
