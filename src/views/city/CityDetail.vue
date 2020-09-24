@@ -35,11 +35,11 @@
             </div>
         </section>
         <section>
-            <h2>Stages</h2>
+            <h2>Scenes</h2>
             <div class="subtitle"><h4>Transport modes and users settings for the city</h4></div>
             <template v-if="city.scene_set.length == 0">
                 <div class="empty-box">
-                    <p>There is no defined stages for this project. start by creating a new one</p>
+                    <p>There are no scenes for this project. Start by creating a new one</p>
                     <router-link :to="{ name: 'NewScene'}" class="btn">
                         <span>Add new stage</span>
                         <span class="material-icons">add</span>
