@@ -8,10 +8,11 @@ const deleteScene = (publicId) => httpClient.delete(`${END_POINT}${publicId}`);
 const updateScene = (publicId, data) => httpClient.put(`${END_POINT}${publicId}`, data);
 const createScene = (data) => httpClient.post(END_POINT, data);
 const duplicateScene = (publicId) => httpClient.post(`${END_POINT}${publicId}/duplicate/`);
-const checkTransportMode = (data) => httpClient.get(`${BASE_END_POINT}/validation/transport_mode`, {params: data});
 
-const updateTransportMode = (scenePublicId, transportModePublicId, data) => httpClient.put(`${END_POINT}${scenePublicId}/transport_mode/${transportModePublicId}/`, data);
-const deleteTransportMode = (scenePublicId, transportModePublicId) => httpClient.delete(`${END_POINT}${scenePublicId}/transport_mode/${transportModePublicId}/`);
+const checkTransportMode = (data) => httpClient.get(`${BASE_END_POINT}/validation/transport_mode`, {params: data});
+const updateTransportMode = (scenePublicId, transportModePublicId, data) => httpClient.put(`${END_POINT}${scenePublicId}/transport_modes/${transportModePublicId}/`, data);
+const deleteTransportMode = (scenePublicId, transportModePublicId) => httpClient.delete(`${END_POINT}${scenePublicId}/transport_modes/${transportModePublicId}/`);
+const createTransportMode = (scenePublicId, data) => httpClient.post(`${END_POINT}${scenePublicId}/transport_modes/`, data);
 
 export default {
     getScene,
@@ -21,5 +22,6 @@ export default {
     duplicateScene,
     checkTransportMode,
     updateTransportMode,
-    deleteTransportMode
+    deleteTransportMode,
+    createTransportMode
 }
