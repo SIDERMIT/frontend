@@ -172,7 +172,7 @@
                     <span class="material-icons">edit</span>
                     <span>Resultados de red (temporal)</span>
                 </router-link>
-                <router-link class="btn" v-if="scene.city.public_id !== null" :to="{ name: 'NewScene', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" >
+                <router-link class="btn" v-if="scene.city.public_id !== null" :to="{ name: 'EditScene', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" >
                     <span class="material-icons">edit</span>
                     <span>Edit scene</span>
                 </router-link>

@@ -93,6 +93,14 @@ Vue.use(VueRouter)
                 component: SceneDetail
               },
               {
+                path: 'edit',
+                name: 'EditScene',
+                component: NewScene,
+                meta: {
+                  breadcrumb: 'edit'
+                }
+              },
+              {
                 path: 'new_network',
                 name: 'NewNetwork',
                 component: NewNetwork,
