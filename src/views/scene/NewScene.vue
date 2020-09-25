@@ -159,8 +159,8 @@ export default {
       addTransportMode(transportModeObj) {
         this.scene.transportmode_set.push(transportModeObj);
       },
-      removeTransportMode(transportModeObj) {
-        this.scene.transportmode_set.push(transportModeObj);
+      removeTransportMode(transportModeObj, index) {
+        this.scene.transportmode_set.splice(index, 1);
       },
       updateScene() {
         let data = JSON.parse(JSON.stringify(this.scene));

@@ -286,8 +286,8 @@ export default {
     addTransportMode(transportModeObj) {
         this.scene.transportmode_set.push(transportModeObj);
     },
-    removeTransportMode(transportModeObj) {
-        this.scene.transportmode_set.push(transportModeObj);
+    removeTransportMode(transportModeObj, index) {
+        this.scene.transportmode_set.splice(index, 1);
     },
   },
   beforeRouteEnter (to, from, next) {
