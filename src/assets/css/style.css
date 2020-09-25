@@ -395,13 +395,16 @@ text-align: center;
 .modal-container {position: fixed; z-index: 9; width: 100vw; height: 100vh; display: flex; top: 0; left: 0; justify-content: center; align-content: center; align-items:center;
 background: rgba(93, 78, 57, 0.5);
     cursor: pointer;
-    padding: 100px;
+    padding: 0 100px;
 }
 .modal {
     background: var(--bg-base); 
     box-shadow: 0 15px 40px 0 rgba(0,0,0,0.50); 
-    border-radius: 20px; min-width: 550px; 
-    max-width: calc(100% - 60px); max-height: 100%; overflow: hidden; 
+    border-radius: 20px; 
+    min-width: 550px; 
+    width: 100%;
+    max-width: 900px;
+    max-height: 100%; overflow: hidden;
     cursor: initial;
     display: grid;
     grid-template-rows: auto minmax(auto, 1fr) auto;
