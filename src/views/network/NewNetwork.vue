@@ -374,10 +374,53 @@
 </template>
 
 <script>
+import transportNetworksAPI from '@/api/transportNetworks.api';
+import citiesAPI from '@/api/cities.api';
+
 export default {
   name: 'NewNetwork',
   components: {
     
+  },
+  data() {
+    return {
+      city: {
+      network_descriptor: {
+          nodes: [],
+          edges: []
+        }
+      }
+    }
+  },
+  methods: {
+      setData(transportNetworkData) {
+        console.log(transportNetworkData);
+      }
+  },
+  beforeRouteEnter (to, from, next) {
+    if (to.params.transportNetworkPublicId) {
+      transportNetworksAPI.getTransportNetwork(to.params.transportNetworkPublicId).then(response => (next(vm => vm.setData(response.data))));
+    } else {
+        // fill city data
+        citiesAPI.getCity(to.params.cityPublicId).then(response => {
+            next(vm => vm.city.network_descriptor = response.data.network_descriptor);
+        });
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.params.transportNetworkPublicId) {
+        this.scene = {};
+        transportNetworksAPI.getTransportNetwork(to.params.transportNetworkPublicId).then(response => {
+            this.setData(response.data); 
+            next();
+        });
+    } else {
+        // fill city data
+        citiesAPI.getCity(to.params.cityPublicId).then(response => {
+            this.scene.city.network_descriptor = response.data.network_descriptor;
+            next();
+        });
+    }
   }
 }
 </script>

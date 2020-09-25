@@ -4,7 +4,7 @@ const BASE_END_POINT = '/api'
 const END_POINT = `${BASE_END_POINT}/cities/`;
 
 const getAllCities = (limit) => httpClient.get(END_POINT, {params:{limit}});
-const getCity = (publicId) => httpClient.get(`${END_POINT}${publicId}`);
+const getCity = (publicId) => httpClient.get(`${END_POINT}${publicId}/`);
 const deleteCity = (publicId) => httpClient.delete(`${END_POINT}${publicId}`);
 const updateCity = (publicId, data) => httpClient.patch(`${END_POINT}${publicId}/`, data);
 const createCity = (name, n, p, l, g, graph) => httpClient.post(END_POINT, {name, n, p, l, g, graph, step: 'step1'});
