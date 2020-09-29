@@ -276,22 +276,51 @@
     </Modal>
     <Modal v-if="showLegendModal" @close="showLegendModal = false" :showBase="false">
         <template slot="title">
-            <h2>modal</h2>
+            <h2>Terminology</h2>
         </template>
         <template slot="content">
-            <p>table</p>
             <div class="table">
                 <table>
                     <tbody>
                         <tr>
-                            <th><span>Symbol</span></th>
+                            <th><span>Name</span></th>
                             <th><span>Unit</span></th>
-                            <th><span>Description</span></th>
+                            <th colspan="2"><span>Description</span></th>
                         </tr>
                         <tr>
-                            <td><span>𝑛</span></td>
-                            <td>&nbsp;</td>
-                            <td><span>Number of zones</span></td>
+                            <td><span>Line ID</span></td>
+                            <td><span>Any</span></td>
+                            <td colspan="2"><span>Name for the specific transport line</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Mode</span></td>
+                            <td><span>Select</span></td>
+                            <td colspan="2"><span>Select one of the predefined modes</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Dir</span></td>
+                            <td><span>I</span></td>
+                            <td colspan="2"><span>Direction I of the line</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Dir</span></td>
+                            <td><span>R</span></td>
+                            <td colspan="2"><span>Direction R of the line</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Node sequence</span></td>
+                            <td><span>Number</span></td>
+                            <td colspan="2"><span>Specific nodes where the transit line will travel</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Stop sequence</span></td>
+                            <td><span>Number</span></td>
+                            <td colspan="2"><span>Specific nodes where the transit line will stop</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Graph visibility</span></td>
+                            <td><span class="material-icons color-link">visibility</span></td>
+                            <td colspan="2"><span>Turn on/off to show the current line in the graph view</span></td>
                         </tr>
                     </tbody>
                 </table>
