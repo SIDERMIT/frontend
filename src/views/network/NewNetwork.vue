@@ -42,17 +42,16 @@
                     </div>
                 </div>
                 <div class="linebox-container" v-else>
-                    <div class="linebox">
+                    <div class="linebox" v-for="(route, index) in network.route_set" v-bind:key="route.route_id">
                         <div class="linebox-header">
                             <div class="line-input">
                                 <h4>Line ID</h4>
-                                <input type="text">
+                                <input v-model="route.route_id" type="text">
                             </div>
                             <div class="line-input">
                                 <h4>Mode</h4>
-                                <select>
-                                    <option selected>bus 1</option>
-                                    <option>metro 1</option>
+                                <select v-model="route.transport_mode_public_id">
+                                    <option v-for="transportMode in scene.transportmode_set" v-bind:value="transportMode.public_id" v-bind:key="transportMode.public_id">{{ transportMode.name }}</option>
                                 </select>
                             </div>
                             <div class="grid min">
@@ -73,14 +72,14 @@
                                             </tr>
                                             <tr>
                                                 <th colspan="1"><span>I</span></th>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
+                                                <td colspan="4"><input type="text" placeholder="-" v-model="route.nodes_sequence_i"></td>
+                                                <td colspan="4"><input type="text" placeholder="-" v-model="route.stops_sequence_i"></td>
                                                 <td colspan="1"><button class="btn icon flat" alt="Show"><span class="material-icons">visibility_off</span></button></td>
                                             </tr>
                                             <tr>
                                                 <th colspan="1"><span>R</span></th>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
+                                                <td colspan="4"><input type="text" placeholder="-" v-model="route.nodes_sequence_r"></td>
+                                                <td colspan="4"><input type="text" placeholder="-" v-model="route.stops_sequence_r"></td>
                                                 <td colspan="1"><button class="btn icon flat active" alt="Hide"><span class="material-icons">visibility</span></button></td>
                                             </tr>
                                         </tbody>
@@ -88,7 +87,7 @@
                                 </div>
                                 <div class="checker">
                                     <div></div>
-                                    <button class="btn neuro"><span>Delete</span><span class="material-icons">delete</span></button>
+                                    <button class="btn neuro" @click="deleteRoute(route, index)"><span>Delete</span><span class="material-icons">delete</span></button>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +201,7 @@
             </div>
         </div>
     </section>
-    <Modal v-if="showDefaultRouteCreatorModal" @close="showDefaultRouteCreatorModal = false" @ok="createDefaultRoutes()" :isWarning="false">
+    <Modal v-if="showDefaultRouteCreatorModal" @close="showDefaultRouteCreatorModal = false" @ok="createDefaultRoutes" :isWarning="false">
         <template slot="title">
             <div class="modal-title">
                 <h2>Add default transit lines</h2>
@@ -214,9 +213,9 @@
                     <div class="options">
                         <div class="mode">
                             <h4>Mode</h4>
-                            <select v-model="defaultRoute.transport_mode">
+                            <select v-model="defaultRoute.transportMode">
                                 <option selected disabled>Choose one</option>
-                                <option v-for="transportMode in transport_modes" v-bind:value="transportMode.public_id" v-bind:key="transportMode.public_id">{{ transportMode.name }}</option>
+                                <option v-for="transportMode in scene.transportmode_set" v-bind:value="transportMode.public_id" v-bind:key="transportMode.public_id">{{ transportMode.name }}</option>
                             </select>
                         </div>
                         <div class="type">
@@ -226,15 +225,15 @@
                                 <option v-for="defaultRouteType in defaultRouteTypes" v-bind:value="defaultRouteType" v-bind:key="defaultRouteType">{{ defaultRouteType }}</option>
                             </select>
                         </div>
-                        <div class="zones">
+                        <div class="zones" v-if="['Diametral', 'Tangential'].includes(defaultRoute.type)">
                             <h4>Zone jumps</h4>
                             <div class="counter">
                                 <input v-model="defaultRoute.zoneJumps" type="number" class="number" placeholder="0">
-                                <button class="num plus"><span class="material-icons">arrow_drop_up</span></button>
-                                <button class="num less"><span class="material-icons">arrow_drop_down</span></button>
+                                <button class="num plus" @click="defaultRoute.zoneJumps += 1"><span class="material-icons">arrow_drop_up</span></button>
+                                <button class="num less" @click="defaultRoute.zoneJumps -= 1"><span class="material-icons">arrow_drop_down</span></button>
                             </div>
                         </div>
-                        <div class="extension">
+                        <div class="extension" v-if="['Diametral', 'Tangential', 'Radial'].includes(defaultRoute.type)">
                             <h4>Extension</h4>
                             <label class="switch big">
                                 <input v-model="defaultRoute.extension" type="checkbox">
@@ -244,7 +243,7 @@
                                 </div>
                             </label>
                         </div>
-                        <div class="exclusive">
+                        <div class="exclusive" v-if="['Diametral', 'Tangential', 'Radial'].includes(defaultRoute.type)">
                             <h4>OD exclusive</h4>
                             <label class="switch big">
                                 <input v-model="defaultRoute.odExclusive" type="checkbox">
@@ -263,14 +262,14 @@
         </template>
         <template slot="base">
             <div class="left-content">
-                <button class="btn" @click="addDefaultTemplateRoute()">
+                <button class="btn" @click="addDefaultTemplateRoute">
                     <span class="material-icons">add</span>
                     <span>Add row</span>
                 </button>
             </div>
             <div class="right-content">
                 <button class="btn red" @click="showDefaultRouteCreatorModal = false"><span>Cancel</span></button>
-                <button class="btn" @click="createDefaultRoutes()"><span>Generate</span></button>
+                <button class="btn" @click="createDefaultRoutes"><span>Generate</span></button>
             </div>
         </template>
         <template slot="close-button-name">Proceed</template>
@@ -340,20 +339,17 @@ export default {
         showDefaultRouteCreatorModal: false,
         showLegendModal: false,
         search: '',
-        defaultRouteTypes: ['Tangential','Diametral','Radial','Feeder'],
+        defaultRouteTypes: ['Circular', 'Diametral','Feeder','Radial','Tangential'],
         defaultRoutes: [
-            {id:0, transport_mode: 'd481df32-a416-44e1-9e21-330c19e1b51a', type: 'Radial', zoneJumps: 10, extension: false, odExclusive: true}
-        ],
-        transport_modes: [
-            {name: "metro", public_id: "d481df32-a416-44e1-9e21-330c19e1b51a"}
+            {transportMode: 'd481df32-a416-44e1-9e21-330c19e1b51a', type: 'Radial', zoneJumps: 10, extension: false, odExclusive: true}
         ],
         network: {
             name: null,
             route_set: []
-            
         },
         scene: {
             name: null,
+            transportmode_set: [],
             city: {
                 network_descriptor: {
                     nodes: [],
@@ -368,14 +364,27 @@ export default {
         console.log(transportNetworkData);
       },
       createDefaultRoutes() {
-
+        transportNetworksAPI.createDefaultRoutes(this.scene.public_id, this.defaultRoutes).then(response => {
+            response.data.forEach(route => {
+                this.network.route_set.push(route);
+            });
+        }).catch(error => {
+            let message = this.getErrorMessage(error.response.data);
+            this.modalData.message = message;
+            this.modalData.showCancelButton = false
+            this.modalData.closeButtonName = 'OK'
+            this.showWarningModal = true;
+        });
+        console.log("createDefaultRoutes");
+        this.showDefaultRouteCreatorModal = false;
+        this.defaultRoutes = [];
       },
       createTransportNetwork() {
-
+        console.log("createTransportNetwork");
       },
       addDefaultTemplateRoute() {
         let defaultTemplateRoute = {
-            transport_mode: null,
+            transportMode: null,
             type: null,
             zoneJumps: 0,
             extension: false,
