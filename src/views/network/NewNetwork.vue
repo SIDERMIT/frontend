@@ -21,7 +21,7 @@
         <div class="line-details">
             <div>
                 <div class="grid search-bar">
-                    <input v-model="search" type="search"/>
+                    <input v-model="searchQuery" type="search"/>
                     <button class="btn neuro" disabled>
                         <span class="material-icons">visibility</span>
                         <span>View all</span>
@@ -42,158 +42,9 @@
                     </div>
                 </div>
                 <div class="linebox-container" v-else>
-                    <div class="linebox" v-for="(route, index) in network.route_set" v-bind:key="route.route_id">
-                        <div class="linebox-header">
-                            <div class="line-input">
-                                <h4>Line ID</h4>
-                                <input v-model="route.route_id" type="text">
-                            </div>
-                            <div class="line-input">
-                                <h4>Mode</h4>
-                                <select v-model="route.transport_mode_public_id">
-                                    <option v-for="transportMode in scene.transportmode_set" v-bind:value="transportMode.public_id" v-bind:key="transportMode.public_id">{{ transportMode.name }}</option>
-                                </select>
-                            </div>
-                            <div class="grid min">
-                                <button class="btn icon" alt="Show"><span class="material-icons">visibility_off</span></button>
-                                <button class="btn icon" alt="Open"><span class="material-icons">arrow_drop_down</span></button>
-                            </div>
-                        </div>
-                        <div class="linebox-anim">
-                            <div class="linebox-content">
-                                <div class="table min">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <th colspan="1"><span>Dir</span></th>
-                                                <th colspan="4"><span>Node sequence</span></th>
-                                                <th colspan="4"><span>Stop sequence</span></th>
-                                                <th colspan="1">&nbsp;</th>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="1"><span>I</span></th>
-                                                <td colspan="4"><input type="text" placeholder="-" v-model="route.nodes_sequence_i"></td>
-                                                <td colspan="4"><input type="text" placeholder="-" v-model="route.stops_sequence_i"></td>
-                                                <td colspan="1"><button class="btn icon flat" alt="Show"><span class="material-icons">visibility_off</span></button></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="1"><span>R</span></th>
-                                                <td colspan="4"><input type="text" placeholder="-" v-model="route.nodes_sequence_r"></td>
-                                                <td colspan="4"><input type="text" placeholder="-" v-model="route.stops_sequence_r"></td>
-                                                <td colspan="1"><button class="btn icon flat active" alt="Hide"><span class="material-icons">visibility</span></button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="checker">
-                                    <div></div>
-                                    <button class="btn neuro" @click="deleteRoute(route, index)"><span>Delete</span><span class="material-icons">delete</span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="linebox">
-                        <div class="linebox-header">
-                            <div class="line-input">
-                                <h4>Line ID</h4>
-                                <input type="text">
-                            </div>
-                            <div class="line-input">
-                                <h4>Mode</h4>
-                                <select>
-                                    <option selected>bus 1</option>
-                                    <option>metro 1</option>
-                                </select>
-                            </div>
-                            <div class="grid min">
-                                <button class="btn icon active" alt="Show all"><span class="material-icons">vignette</span></button>
-                                <button class="btn icon" alt="Open"><span class="material-icons">arrow_drop_down</span></button>
-                            </div>
-                        </div>
-                        <div class="linebox-anim open">
-                            <div class="linebox-content">
-                                <div class="table min">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <th colspan="1"><span>Dir</span></th>
-                                                <th colspan="4"><span>Node sequence</span></th>
-                                                <th colspan="4"><span>Stop sequence</span></th>
-                                                <th colspan="1">&nbsp;</th>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="1"><span>I</span></th>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
-                                                <td colspan="1"><button class="btn icon flat" alt="Show"><span class="material-icons">visibility_off</span></button></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="1"><span>R</span></th>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
-                                                <td colspan="1"><button class="btn icon flat active" alt="Hide"><span class="material-icons">visibility</span></button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="checker">
-                                    <div></div>
-                                    <button class="btn neuro"><span>Delete</span><span class="material-icons">delete</span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="linebox">
-                        <div class="linebox-header">
-                            <div class="line-input">
-                                <h4>Line ID</h4>
-                                <input type="text">
-                            </div>
-                            <div class="line-input">
-                                <h4>Mode</h4>
-                                <select>
-                                    <option selected>bus 1</option>
-                                    <option>metro 1</option>
-                                </select>
-                            </div>
-                            <div class="grid min">
-                                <button class="btn icon active" alt="Show all"><span class="material-icons">vignette</span></button>
-                                <button class="btn icon" alt="Open"><span class="material-icons">arrow_drop_down</span></button>
-                            </div>
-                        </div>
-                        <div class="linebox-anim open">
-                            <div class="linebox-content">
-                                <div class="table min">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <th colspan="1"><span>Dir</span></th>
-                                                <th colspan="4"><span>Node sequence</span></th>
-                                                <th colspan="4"><span>Stop sequence</span></th>
-                                                <th colspan="1">&nbsp;</th>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="1"><span>I</span></th>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
-                                                <td colspan="1"><button class="btn icon flat" alt="Show"><span class="material-icons">visibility_off</span></button></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="1"><span>R</span></th>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
-                                                <td colspan="4"><input type="text" placeholder="0"></td>
-                                                <td colspan="1"><button class="btn icon flat active" alt="Hide"><span class="material-icons">visibility</span></button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="checker">
-                                    <div></div>
-                                    <button class="btn neuro"><span>Delete</span><span class="material-icons">delete</span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <template v-for="(route, index) in resultQuery">
+                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" @erase-route="deleteRoute" :routeIndex="index" v-bind:key="route.route_id"/>
+                    </template>
                 </div>
             </div>
             <div class="graph-container">
@@ -201,79 +52,7 @@
             </div>
         </div>
     </section>
-    <Modal v-if="showDefaultRouteCreatorModal" @close="showDefaultRouteCreatorModal = false" @ok="createDefaultRoutes" :isWarning="false">
-        <template slot="title">
-            <div class="modal-title">
-                <h2>Add default transit lines</h2>
-            </div>
-        </template>
-        <template slot="content">
-            <div class="default-lines">
-                <div class="default-line-row" v-for="(defaultRoute, index) in defaultRoutes" v-bind:key="defaultRoute.id">
-                    <div class="options">
-                        <div class="mode">
-                            <h4>Mode</h4>
-                            <select v-model="defaultRoute.transportMode">
-                                <option selected disabled>Choose one</option>
-                                <option v-for="transportMode in scene.transportmode_set" v-bind:value="transportMode.public_id" v-bind:key="transportMode.public_id">{{ transportMode.name }}</option>
-                            </select>
-                        </div>
-                        <div class="type">
-                            <h4>Type</h4>
-                            <select v-model="defaultRoute.type">
-                                <option selected disabled>Choose one</option>
-                                <option v-for="defaultRouteType in defaultRouteTypes" v-bind:value="defaultRouteType" v-bind:key="defaultRouteType">{{ defaultRouteType }}</option>
-                            </select>
-                        </div>
-                        <div class="zones" v-if="['Diametral', 'Tangential'].includes(defaultRoute.type)">
-                            <h4>Zone jumps</h4>
-                            <div class="counter">
-                                <input v-model="defaultRoute.zoneJumps" type="number" class="number" placeholder="0">
-                                <button class="num plus" @click="defaultRoute.zoneJumps += 1"><span class="material-icons">arrow_drop_up</span></button>
-                                <button class="num less" @click="defaultRoute.zoneJumps -= 1"><span class="material-icons">arrow_drop_down</span></button>
-                            </div>
-                        </div>
-                        <div class="extension" v-if="['Diametral', 'Tangential', 'Radial'].includes(defaultRoute.type)">
-                            <h4>Extension</h4>
-                            <label class="switch big">
-                                <input v-model="defaultRoute.extension" type="checkbox">
-                                <div class="switch-body">
-                                    <span class="text-on">Large</span>
-                                    <span class="text-off">Short</span>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="exclusive" v-if="['Diametral', 'Tangential', 'Radial'].includes(defaultRoute.type)">
-                            <h4>OD exclusive</h4>
-                            <label class="switch big">
-                                <input v-model="defaultRoute.odExclusive" type="checkbox">
-                                <div class="switch-body">
-                                    <span class="text-on">Yes</span>
-                                    <span class="text-off">No</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="flex end">
-                        <button class="btn icon" alt="Delete" @click="removeDefaultTemplateRoute(index)"><span class="material-icons">delete</span></button>
-                    </div>
-                </div>
-            </div>
-        </template>
-        <template slot="base">
-            <div class="left-content">
-                <button class="btn" @click="addDefaultTemplateRoute">
-                    <span class="material-icons">add</span>
-                    <span>Add row</span>
-                </button>
-            </div>
-            <div class="right-content">
-                <button class="btn red" @click="showDefaultRouteCreatorModal = false"><span>Cancel</span></button>
-                <button class="btn" @click="createDefaultRoutes"><span>Generate</span></button>
-            </div>
-        </template>
-        <template slot="close-button-name">Proceed</template>
-    </Modal>
+    <DefaultRouteCreator :route_set="network.route_set" :transportmode_set="scene.transportmode_set" :scene_public_id="scene.public_id" :show="showDefaultRouteCreatorModal" @close="showDefaultRouteCreatorModal=false" @routes-created="createRoutes" />
     <Modal v-if="showLegendModal" @close="showLegendModal = false" :showBase="false">
         <template slot="title">
             <h2>Terminology</h2>
@@ -355,28 +134,29 @@
 import transportNetworksAPI from '@/api/transportNetworks.api';
 import CityGraph from '@/components/CityGraph.vue';
 import scenesAPI from '@/api/scenes.api';
-import Modal from '@/components/Modal.vue'
+import Modal from '@/components/Modal.vue';
+import RouteCard from '@/components/RouteCard.vue';
+import DefaultRouteCreator from '@/components/DefaultRouteCreator.vue';
 
 export default {
   name: 'NewNetwork',
   components: {
     CityGraph,
-    Modal
+    Modal,
+    RouteCard,
+    DefaultRouteCreator
   },
   data() {
     return {
         showDefaultRouteCreatorModal: false,
         showLegendModal: false,
-        search: '',
-        defaultRouteTypes: ['Circular', 'Diametral','Feeder','Radial','Tangential'],
-        defaultRoutes: [
-            {transportMode: 'd481df32-a416-44e1-9e21-330c19e1b51a', type: 'Radial', zoneJumps: 10, extension: false, odExclusive: true}
-        ],
+        searchQuery: '',
         network: {
             name: null,
             route_set: []
         },
         scene: {
+            public_id: '',
             name: null,
             transportmode_set: [],
             city: {
@@ -388,41 +168,33 @@ export default {
         }
     }
   },
+  computed: {
+    resultQuery() {
+      if(this.searchQuery) {
+          console.log("filter");
+          console.log(this.searchQuery);
+        return this.network.route_set.filter((item)=>{
+          return this.searchQuery.toLowerCase().split(' ').every(v => item.route_id.toLowerCase().includes(v))
+        })
+      } else {
+          console.log("return all");
+        return this.network.route_set;
+      }
+    }
+  },
   methods: {
       setData(transportNetworkData) {
-        console.log(transportNetworkData);
-      },
-      createDefaultRoutes() {
-        transportNetworksAPI.createDefaultRoutes(this.scene.public_id, this.defaultRoutes).then(response => {
-            response.data.forEach(route => {
-                this.network.route_set.push(route);
-            });
-        }).catch(error => {
-            let message = this.getErrorMessage(error.response.data);
-            this.modalData.message = message;
-            this.modalData.showCancelButton = false
-            this.modalData.closeButtonName = 'OK'
-            this.showWarningModal = true;
-        });
-        console.log("createDefaultRoutes");
-        this.showDefaultRouteCreatorModal = false;
-        this.defaultRoutes = [];
-      },
+        console.log(transportNetworkData);      },
       createTransportNetwork() {
         console.log("createTransportNetwork");
       },
-      addDefaultTemplateRoute() {
-        let defaultTemplateRoute = {
-            transportMode: null,
-            type: null,
-            zoneJumps: 0,
-            extension: false,
-            odExclusive: false
-        }
-        this.defaultRoutes.push(defaultTemplateRoute);
+      createRoutes(routes){
+        routes.forEach(route => {
+          this.network.route_set.push(route);
+        });
       },
-      removeDefaultTemplateRoute(index) {
-        this.defaultRoutes.splice(index, 1);
+      deleteRoute(route, routeIndex) {
+        this.network.route_set.splice(routeIndex, 1);
       }
   },
   beforeRouteEnter (to, from, next) {
