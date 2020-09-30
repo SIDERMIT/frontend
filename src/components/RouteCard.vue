@@ -82,10 +82,6 @@ export default {
       type: Array,
       required: true
     },
-    routeIndex: {
-      type: Number,
-      required: true
-    },
     transportNetworkPublicId: {
       type: String,
       required: false,
@@ -118,14 +114,14 @@ export default {
     deleteRow() {
       if (this.transportNetworkPublicId !== null && Object.prototype.hasOwnProperty.call(this.route, 'public_id')) {
         transportNetworksAPI.deleteRoute(this.transportNetworkPublicId, this.route.public_id).then(() => {
-          this.$emit('erase-route', this.route, this.routeIndex);
+          this.$emit('erase-route', this.route);
         }).catch(error => {
           let message = this.getErrorMessage(error.response.data);
           this.checker.isError = true;
           this.checker.message = message;
         });
       } else {
-        this.$emit('erase-route', this.route, this.routeIndex);
+        this.$emit('erase-route', this.route);
       }
     }
   }

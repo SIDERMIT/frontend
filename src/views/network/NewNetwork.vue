@@ -42,8 +42,8 @@
                     </div>
                 </div>
                 <div class="linebox-container" v-else>
-                    <template v-for="(route, index) in resultQuery">
-                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" @erase-route="deleteRoute" :routeIndex="index" v-bind:key="route.route_id"/>
+                    <template v-for="route in resultQuery">
+                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" @erase-route="deleteRoute" v-bind:key="route.route_id"/>
                     </template>
                 </div>
             </div>
@@ -171,13 +171,10 @@ export default {
   computed: {
     resultQuery() {
       if(this.searchQuery) {
-          console.log("filter");
-          console.log(this.searchQuery);
         return this.network.route_set.filter((item)=>{
           return this.searchQuery.toLowerCase().split(' ').every(v => item.route_id.toLowerCase().includes(v))
-        })
+        });
       } else {
-          console.log("return all");
         return this.network.route_set;
       }
     }
@@ -193,7 +190,8 @@ export default {
           this.network.route_set.push(route);
         });
       },
-      deleteRoute(route, routeIndex) {
+      deleteRoute(route) {
+        let routeIndex = this.network.route_set.findIndex(el => el.route_id === route.route_id);
         this.network.route_set.splice(routeIndex, 1);
       }
   },
