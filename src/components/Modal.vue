@@ -1,13 +1,13 @@
 <template>
   <div class="modal-container" @click="$emit('close')">
-    <div class="modal" @click.stop v-bind:class="{'warning': isWarning}">
+    <div class="modal" :class="modalClasses" @click.stop>
         <div class="modal-title">
             <slot name="title"></slot>
         </div>
         <div class="modal-content">
             <slot name="content"></slot>
         </div>
-        <div class="modal-base" v-if="showBase">
+        <div class="modal-base" v-bind:class="{}" v-if="showBase">
             <slot name="base">
               <button class="btn solo red" @click="$emit('cancel')" v-if="showCancelButton">Cancel</button>
               <button class="btn solo" @click="$emit('close');$emit('ok')"><slot name="close-button-name">Ok</slot></button>
@@ -29,9 +29,9 @@ export default {
       type: Boolean,
       default: false
     },
-    isWarning: {
-      type: Boolean,
-      default: false
+    modalClasses: {
+      type: Array,
+      default: () => []
     }
   }
 }
