@@ -2,9 +2,7 @@
   <div>
     <Modal v-if="show" v-on="$listeners" @ok="createDefaultRoutes" :modalClasses="['modal-lines']">
         <template slot="title">
-            <div class="modal-title">
-                <h2>Add default transit lines</h2>
-            </div>
+            <h2>Add default transit lines</h2>
         </template>
         <template slot="content">
             <div class="default-lines">
