@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal v-if="show" v-on="$listeners" @ok="createDefaultRoutes" :isWarning="false">
+    <Modal v-if="show" v-on="$listeners" @ok="createDefaultRoutes" :modalClasses="['modal-lines']">
         <template slot="title">
             <div class="modal-title">
                 <h2>Add default transit lines</h2>
@@ -60,17 +60,15 @@
             </div>
         </template>
         <template slot="base">
-            <div class="full">
-                <div class="left-content">
-                    <button class="btn" @click="addDefaultTemplateRoute">
-                        <span class="material-icons">add</span>
-                        <span>Add row</span>
-                    </button>
-                </div>
-                <div class="right-content">
-                    <button class="btn red" @click="$emit('close')"><span>Cancel</span></button>
-                    <button class="btn" @click="createDefaultRoutes"><span>Generate</span></button>
-                </div>
+            <div class="left-content">
+                <button class="btn" @click="addDefaultTemplateRoute">
+                    <span class="material-icons">add</span>
+                    <span>Add row</span>
+                </button>
+            </div>
+            <div class="right-content">
+                <button class="btn red" @click="$emit('close')"><span>Cancel</span></button>
+                <button class="btn" @click="createDefaultRoutes"><span>Generate</span></button>
             </div>
         </template>
         <template slot="close-button-name">Proceed</template>
