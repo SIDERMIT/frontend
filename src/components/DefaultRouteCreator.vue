@@ -60,15 +60,17 @@
             </div>
         </template>
         <template slot="base">
-            <div class="left-content">
-                <button class="btn" @click="addDefaultTemplateRoute">
-                    <span class="material-icons">add</span>
-                    <span>Add row</span>
-                </button>
-            </div>
-            <div class="right-content">
-                <button class="btn red" @click="$emit('close')"><span>Cancel</span></button>
-                <button class="btn" @click="createDefaultRoutes"><span>Generate</span></button>
+            <div class="full">
+                <div class="left-content">
+                    <button class="btn" @click="addDefaultTemplateRoute">
+                        <span class="material-icons">add</span>
+                        <span>Add row</span>
+                    </button>
+                </div>
+                <div class="right-content">
+                    <button class="btn red" @click="$emit('close')"><span>Cancel</span></button>
+                    <button class="btn" @click="createDefaultRoutes"><span>Generate</span></button>
+                </div>
             </div>
         </template>
         <template slot="close-button-name">Proceed</template>
