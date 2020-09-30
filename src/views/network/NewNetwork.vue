@@ -1,7 +1,7 @@
 <template>
   <div class="NewNetwork">
     <div class="header">          
-        <h1>New transportation network</h1>
+        <h1>{{ network.public_id? "Edit": "New" }} transportation network</h1>
         <p>{{ scene.name }}</p>
     </div>
     <section class="new-network">
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="graph-container">
-                <CityGraph :network="scene.city.network_descriptor"></CityGraph>
+                <CityGraph :network="scene.city.network_descriptor" :showNodeId="true"></CityGraph>
             </div>
         </div>
     </section>
@@ -120,7 +120,7 @@
                     <span>Add default transit lines</span>
                     <span class="material-icons">format_list_bulleted</span>
                 </button>
-                <button class="btn" @click="createTransportNetwork">
+                <button class="btn" @click="updateTransportNetwork">
                     <span>Save</span>
                     <span class="material-icons">chevron_right</span>
                 </button>
@@ -152,6 +152,7 @@ export default {
         showLegendModal: false,
         searchQuery: '',
         network: {
+            public_id: null,
             name: null,
             route_set: []
         },
@@ -180,20 +181,40 @@ export default {
     }
   },
   methods: {
-      setData(transportNetworkData) {
-        console.log(transportNetworkData);      },
-      createTransportNetwork() {
-        console.log("createTransportNetwork");
-      },
-      createRoutes(routes){
-        routes.forEach(route => {
-          this.network.route_set.push(route);
-        });
-      },
-      deleteRoute(route) {
-        let routeIndex = this.network.route_set.findIndex(el => el.route_id === route.route_id);
-        this.network.route_set.splice(routeIndex, 1);
+    setData(transportNetworkData) {
+      this.network = transportNetworkData;
+    },
+    updateTransportNetwork() {
+      console.log("updateTransportNetwork");
+
+      let request = null;
+      if (!this.network.public_id) {
+        request = transportNetworksAPI.createTransportNetwork(this.scene.public_id, this.network.name, this.network.route_set);
+      } else {
+        request = transportNetworksAPI.updateTransportNetwork(this.network.public_id, this.network.name, this.network.route_set);
       }
+      request.then(response => {
+          console.log(response.data);
+        this.$router.push({name: 'NetworkDetail', params: {transportNetworkPublicId: response.data.public_id}})
+      }).catch(error => {
+        console.log(error.response.data);
+        let message = this.getErrorMessage(error.response.data);
+        this.modalData.message = message;
+        this.modalData.showCancelButton = false
+        this.modalData.closeButtonName = 'OK'
+        this.showWarningModal = true;
+      });
+    },
+    createRoutes(routes){
+      routes.forEach(route => {
+        this.network.route_set.push(route);
+        this.scene = null;
+      });
+    },
+    deleteRoute(route) {
+      let routeIndex = this.network.route_set.findIndex(el => el.route_id === route.route_id);
+      this.network.route_set.splice(routeIndex, 1);
+    }
   },
   beforeRouteEnter (to, from, next) {
     if (to.params.transportNetworkPublicId) {

@@ -30,6 +30,10 @@ export default {
     showLabel: {
       type: Boolean,
       default: true
+    },
+    showNodeId: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -39,6 +43,7 @@ export default {
       let data = [];
 
       nodes.forEach(node => {
+          let nodeName = this.showNodeId?node.name + " (" + node.id + ")":node.name;
           let nodeAttributes = {
             label: {
               show: this.showLabel,
@@ -54,7 +59,7 @@ export default {
               borderWidth: 0,
             },
             symbolSize: this.symbolSize,
-            name: node.name,
+            name: nodeName,
             value: [node.x, node.y, node.name, node.id],
           };
 
