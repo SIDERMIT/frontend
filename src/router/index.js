@@ -15,7 +15,6 @@ import SceneDetail from '../views/scene/SceneDetail.vue'
 import GlobalResults from '../views/scene/GlobalResults.vue'
 
 import NewNetwork from '../views/network/NewNetwork.vue'
-import NetworkDetail from '../views/network/NetworkDetail.vue'
 import NetworkResults from '../views/network/NetworkResults.vue'
 
 Vue.use(VueRouter)
@@ -130,7 +129,7 @@ Vue.use(VueRouter)
                   {
                     path: '',
                     name: 'NetworkDetail',
-                    component: NetworkDetail
+                    component: NewNetwork
                   },
                   {
                     path: 'results',
