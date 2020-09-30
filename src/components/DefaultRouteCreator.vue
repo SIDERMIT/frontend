@@ -63,6 +63,9 @@
                     <span class="material-icons">add</span>
                     <span>Add row</span>
                 </button>
+                <div class="checker dark">
+                    <div class="grid checker-body error"><span class="material-icons icon">warning</span><span class="text">Fields can not be empty</span></div>
+                </div>
             </div>
             <div class="right-content">
                 <button class="btn red" @click="$emit('close')"><span>Cancel</span></button>
