@@ -22,7 +22,7 @@
             <div>
                 <div class="grid search-bar">
                     <input v-model="searchQuery" type="search"/>
-                    <button class="btn neuro" disabled>
+                    <button class="btn neuro" :disabled="network.route_set.length === 0">
                         <span class="material-icons">visibility</span>
                         <span>View all</span>
                     </button>
