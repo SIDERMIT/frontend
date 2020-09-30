@@ -111,7 +111,7 @@
                 <CityDemand :matrixData="city.demand_matrix" :header="city.demand_matrix_header"></CityDemand>
             </template>
         </Modal>
-        <Modal v-if="modalData.showModal" @close="modalData.showModal = false" @cancel="modalData.showModal = false" @ok="processSceneAction" :isWarning="true" :showCancelButton="true">
+        <Modal v-if="modalData.showModal" @close="modalData.showModal = false" @cancel="modalData.showModal = false" @ok="processSceneAction" :modalClasses="['warning']" :showCancelButton="true">
             <template slot="title">
                 <div><h4>{{ modalData.title }}</h4></div>
             </template>

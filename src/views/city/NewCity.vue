@@ -113,7 +113,7 @@
                 </div>
             </template>
         </Modal>
-        <Modal v-if="showWarningModal" @close="showWarningModal = false" :showCancelButton="modalData.showCancelButton" :isWarning="true">
+        <Modal v-if="showWarningModal" @close="showWarningModal = false" :showCancelButton="modalData.showCancelButton" :modalClasses="['warning']">
             <template slot="title">
                 <div class="icon"><span class="material-icons">warning</span></div>
                 <div><h4>Warning</h4></div>
