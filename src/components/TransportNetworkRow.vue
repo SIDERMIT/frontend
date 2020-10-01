@@ -103,7 +103,7 @@ export default {
   methods: {
     duplicateTransportNetwork(publicId) {
       transportNetworksAPI.duplicateTransportNetwork(publicId).then(response => {
-        this.$emit('new-trasport-network', response.data);
+        this.$emit('new-transport-network', response.data);
       });
     },
     deleteTransportNetwork(publicId) {

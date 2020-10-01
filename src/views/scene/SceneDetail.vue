@@ -66,7 +66,7 @@
         <div class="table full">
             <ul class="network-list">
                 <template v-for="transportNetwork in scene.transportnetwork_set">
-                    <TransportNetworkRow :cityPublicId="scene.city.public_id" :scenePublicId="scene.public_id" :transportNetwork="transportNetwork" v-bind:key="transportNetwork.public_id"/>
+                    <TransportNetworkRow :cityPublicId="scene.city.public_id" :scenePublicId="scene.public_id" :transportNetwork="transportNetwork" @new-transport-network="newTransportNetwork" @erase-transport-network="removeTransportNetwork" v-bind:key="transportNetwork.public_id"/>
                 </template>
             </ul>
         </div>
@@ -200,6 +200,15 @@ export default {
     removeTransportMode(transportModeObj, index) {
         this.scene.transportmode_set.splice(index, 1);
     },
+    newTransportNetwork(transportNetwork) {
+        console.log("hola");
+        this.scene.transportnetwork_set.push(transportNetwork);
+    },
+    removeTransportNetwork(deletedTransportNetworkPublicId) {
+        this.scene.transportnetwork_set = this.scene.transportnetwork_set.filter(transportNetwork => {
+          return transportNetwork.public_id != deletedTransportNetworkPublicId;
+      });
+    }
   },
   beforeRouteEnter (to, from, next) {
     scenesAPI.getScene(to.params.scenePublicId).then(response => {
