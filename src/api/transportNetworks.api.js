@@ -10,11 +10,16 @@ const createTransportNetwork = (scene_public_id, name, route_set) => httpClient.
 const duplicateTransportNetwork = (publicId) => httpClient.post(`${END_POINT}${publicId}/duplicate/`);
 const createDefaultRoutes = (scene_public_id, default_routes) => httpClient.post(`${END_POINT}create_default_routes/`, {scene_public_id, default_routes});
 
+const runOptimization = (publicId) => httpClient.post(`${END_POINT}${publicId}/run_optimization/`);
+const cancelOptimization = (publicId) => httpClient.post(`${END_POINT}${publicId}/cancel_optimization/`);
+
 export default {
     getTransportNetwork,
     deleteTransportNetwork,
     updateTransportNetwork,
     createTransportNetwork,
     duplicateTransportNetwork,
-    createDefaultRoutes
+    createDefaultRoutes,
+    runOptimization,
+    cancelOptimization
 }

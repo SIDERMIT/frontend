@@ -8,14 +8,14 @@
       <div class="status">
         <span v-html="state.label"></span>
       </div>
-      <button class="btn neuro" v-html="state.buttonName">
+      <button class="btn neuro" v-html="state.buttonName" @click="action">
       </button>
       <div class="grid min">
         <router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: cityPublicId, scenePublicId: scenePublicId, transportNetworkPublicId: transportNetwork.public_id }}" class="btn icon" tag="button" alt="Edit"><span class="material-icons">edit</span></router-link>
         <button class="btn icon" alt="Duplicate" @click="showConfirmDuplicateModal=true"><span class="material-icons">file_copy</span></button>
         <button class="btn icon" alt="Delete" @click="showConfirmDeleteModal = true"><span class="material-icons">delete</span></button>
       </div>
-      <Modal v-if="showConfirmDeleteModal" @cancel="showConfirmDeleteModal = false" @close="showConfirmDeleteModal = false" @ok="deleteTransportNetwork(transportNetwork.public_id)" :showCancelButton="true" :modalClasses="['warning']">
+      <Modal v-if="showConfirmDeleteModal" @cancel="showConfirmDeleteModal = false" @close="showConfirmDeleteModal = false" @ok="deleteTransportNetwork()" :showCancelButton="true" :modalClasses="['warning']">
         <template slot="title">
           <div class="icon"><span class="material-icons">warning</span></div>
           <div><h4>Warning</h4></div>
@@ -23,12 +23,28 @@
         <p slot="content">Are you sure you want to delete transport network "{{ transportNetwork.name }}"?</p>
         <template slot="close-button-name">Proceed</template>
       </Modal>
-      <Modal v-if="showConfirmDuplicateModal" @cancel="showConfirmDuplicateModal = false" @close="showConfirmDuplicateModal = false" @ok="duplicateTransportNetwork(transportNetwork.public_id)" :showCancelButton="true" :modalClasses="['warning']">
+      <Modal v-if="showConfirmDuplicateModal" @cancel="showConfirmDuplicateModal = false" @close="showConfirmDuplicateModal = false" @ok="duplicateTransportNetwork()" :showCancelButton="true" :modalClasses="['warning']">
         <template slot="title">
           <div class="icon"><span class="material-icons">warning</span></div>
           <div><h4>Warning</h4></div>
         </template>
         <p slot="content">Are you sure you want to duplicate transport network "{{ transportNetwork.name }}"?</p>
+        <template slot="close-button-name">Proceed</template>
+      </Modal>      
+      <Modal v-if="showConfirmRunOptimizationModal" @cancel="showConfirmRunOptimizationModal = false" @close="showConfirmRunOptimizationModal = false" @ok="runOptimization" :showCancelButton="true" :modalClasses="['warning']">
+        <template slot="title">
+          <div class="icon"><span class="material-icons">warning</span></div>
+          <div><h4>Warning</h4></div>
+        </template>
+        <p slot="content">Are you sure you want to run optimization for transport network "{{ transportNetwork.name }}"?</p>
+        <template slot="close-button-name">Proceed</template>
+      </Modal>      
+      <Modal v-if="showConfirmCancelOptimizationModal" @cancel="showConfirmCancelOptimizationModal = false" @close="showConfirmCancelOptimizationModal = false" @ok="cancelOptimization" :showCancelButton="true" :modalClasses="['warning']">
+        <template slot="title">
+          <div class="icon"><span class="material-icons">warning</span></div>
+          <div><h4>Warning</h4></div>
+        </template>
+        <p slot="content">Are you sure you want to cancel optimization for transport network "{{ transportNetwork.name }}"?</p>
         <template slot="close-button-name">Proceed</template>
       </Modal>
     </li>
@@ -59,6 +75,8 @@ export default {
   },
   data() {
     return {
+      showConfirmCancelOptimizationModal: false,
+      showConfirmRunOptimizationModal: false,
       showConfirmDeleteModal: false,
       showConfirmDuplicateModal: false
     }
@@ -101,14 +119,44 @@ export default {
     },
   },
   methods: {
-    duplicateTransportNetwork(publicId) {
-      transportNetworksAPI.duplicateTransportNetwork(publicId).then(response => {
+    duplicateTransportNetwork() {
+      transportNetworksAPI.duplicateTransportNetwork(this.transportNetwork.public_id).then(response => {
         this.$emit('new-transport-network', response.data);
       });
     },
-    deleteTransportNetwork(publicId) {
-      transportNetworksAPI.deleteTransportNetwork(publicId).then(() => {
-        this.$emit('erase-transport-network', publicId);
+    deleteTransportNetwork() {
+      transportNetworksAPI.deleteTransportNetwork(this.transportNetwork.public_id).then(() => {
+        this.$emit('erase-transport-network', this.transportNetwork.public_id);
+      });
+    },
+    action() {
+      switch(this.transportNetwork.optimization_status) {
+        case 'queued':
+          this.showConfirmCancelOptimizationModal = true;
+          break;
+        case 'processing':
+          this.showConfirmCancelOptimizationModal = true;
+          break;
+        case 'finished':
+          this.$router.push({name: 'NetworkResults', params: {cityPublicId: this.cityPublicId, scenePublicId: this.scenePublicId, transportNetworkPublicId: this.transportNetwork.public_id}});
+          break;
+        case 'error':
+          // TODO: what do i do in this case!
+          break;
+        default:
+          // so it is ready to run
+          this.showConfirmRunOptimizationModal = true;
+          break;
+      }
+    },
+    runOptimization() {
+      transportNetworksAPI.runOptimization(this.transportNetwork.public_id).then(response => {
+        this.transportNetwork = response.data;
+      });
+    },
+    cancelOptimization() {
+      transportNetworksAPI.cancelOptimization(this.transportNetwork.public_id).then(response => {
+        this.transportNetwork = response.data;
       });
     }
   }
