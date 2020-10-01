@@ -7,7 +7,7 @@
     <section>
         <div class="grid title">
             <h2>Processed networks</h2>
-            <a class="icon-link"><span class="material-icons">help</span></a>
+            <a class="icon-link" @click="showLegendModal=true"><span class="material-icons">help</span></a>
         </div>
     </section>
     <section>
@@ -106,15 +106,29 @@
             </div>
         </div>
     </footer>
-
+    <Modal v-if="showLegendModal" @close="showLegendModal = false" :showBase="false">
+        <template slot="title">
+            <h2>Title</h2>
+        </template>
+        <template slot="content">
+            <div>Content</div>
+        </template>
+    </Modal>
   </div>
 </template>
 
 <script>
+import Modal from '@/components/Modal.vue';
+
 export default {
   name: 'GlobalResults',
   components: {
-    
+    Modal,
+  },
+  data() {
+      return {
+        showLegendModal: false
+      } 
   }
 }
 </script>

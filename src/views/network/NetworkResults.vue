@@ -7,7 +7,7 @@
     <section>
         <div class="grid title">
             <h2>Overall optimization results</h2>
-            <a class="icon-link"><span class="material-icons">help</span></a>
+            <a class="icon-link" @click="showLegendModal=true"><span class="material-icons">help</span></a>
         </div>
     </section>
     <section>
@@ -73,7 +73,7 @@
                 <div class="title grid full">
                     <div class="grid">
                         <h2>Result details</h2>
-                        <a class="icon-link"><span class="material-icons">help</span></a>
+                        <a class="icon-link" @click="showDetailLegendModal=true"><span class="material-icons">help</span></a>
                     </div>
                     <button class="btn neuro"><span class="material-icons">visibility</span><span>View all</span></button>
                 </div>
@@ -288,14 +288,38 @@
             </div>
         </div>
     </footer>
+    <Modal v-if="showLegendModal" @close="showLegendModal = false" :showBase="false">
+        <template slot="title">
+            <h2>Title 1</h2>
+        </template>
+        <template slot="content">
+            <div>content 1</div>
+        </template>
+    </Modal>
+    <Modal v-if="showDetailLegendModal" @close="showDetailLegendModal = false" :showBase="false">
+        <template slot="title">
+            <h2>Title 2</h2>
+        </template>
+        <template slot="content">
+            <div>content 2</div>
+        </template>
+    </Modal>
   </div>
 </template>
 
 <script>
+import Modal from '@/components/Modal.vue';
+
 export default {
   name: 'NetworkResults',
   components: {
-    
+    Modal,
+  },
+  data() {
+      return {
+          showLegendModal: false,
+          showDetailLegendModal: false
+      }
   }
 }
 </script>
