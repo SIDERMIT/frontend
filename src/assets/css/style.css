@@ -474,7 +474,7 @@ background: rgba(93, 78, 57, 0.5);
 .network-list p {color: var(--soft-gray); font-size: 14px;}
 .network-list p b {color: var(--mid-gray);}
 .network-list .ok .icon:not(.btn),.network-list .ok h4 {color: var(--ok);}
-.network-list .queued .icon:not(.btn),.network-list .queued h4, .network-list .procesing .icon:not(.btn),.network-list .procesing h4 {color: var(--soft-gray);}
+.network-list .queued .icon:not(.btn),.network-list .queued h4, .network-list .processing .icon:not(.btn),.network-list .processing h4 {color: var(--soft-gray);}
 .network-list .error .icon:not(.btn),.network-list .error h4 {color: var(--error);}
 
 
