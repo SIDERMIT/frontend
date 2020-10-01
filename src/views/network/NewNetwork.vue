@@ -208,7 +208,6 @@ export default {
     createRoutes(routes){
       routes.forEach(route => {
         this.network.route_set.push(route);
-        this.scene = null;
       });
     },
     deleteRoute(route) {
