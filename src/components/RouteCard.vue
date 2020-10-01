@@ -51,7 +51,7 @@
        </div>
     </div>
   </div>
-  <Modal v-if="showDeleteConfirmationModal" @cancel="showDeleteConfirmationModal = false" @close="showDeleteConfirmationModal = false" @ok="deleteRow" :showCancelButton="true" :isWarning="true">
+  <Modal v-if="showDeleteConfirmationModal" @cancel="showDeleteConfirmationModal = false" @close="showDeleteConfirmationModal = false" @ok="deleteRow" :showCancelButton="true" :modalClasses="['warning']">
     <template slot="title">
       <div class="icon"><span class="material-icons">warning</span></div>
       <div><h4>Warning</h4></div>

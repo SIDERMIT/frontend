@@ -65,101 +65,9 @@
         </div>
         <div class="table full">
             <ul class="network-list">
-                <li class="ok">
-                    <div class="icon"><span class="material-icons">check_circle</span></div>
-                    <div class="network-list-name">
-                        <h4>Network 1 copy</h4>
-                        <p><b>28 total networks</b> 13 tangential, 7 diametrial and 8 others</p>
-                    </div>
-                    <div class="status">
-                        <span>Processed</span>
-                    </div>
-                    <button class="btn neuro">
-                        <span>View results</span>
-                        <span class="material-icons">chevron_right</span>
-                    </button>
-                    <div class="grid min">
-                        <button class="btn icon" alt="Edit"><span class="material-icons">edit</span></button>
-                        <button class="btn icon" alt="Duplicate"><span class="material-icons">file_copy</span></button>
-                        <button class="btn icon" alt="Delete"><span class="material-icons">delete</span></button>
-                    </div>
-                </li>
-                <li class="procesing">
-                    <div class="loader">Loading...</div>
-                    <div class="network-list-name">
-                        <h4>Network 2 copy</h4>
-                        <p><b>5 total networks</b> 13 tangential, 7 diametrial and 8 others</p>
-                    </div>
-                    <div class="status">
-                        <span>Procesing...</span>
-                    </div>
-                    <button class="btn neuro">
-                        <span>Cancel</span>
-                        <span class="material-icons">close</span>
-                    </button>
-                    <div class="grid min">
-                        <button class="btn icon" alt="Edit" disabled><span class="material-icons">edit</span></button>
-                        <button class="btn icon" alt="Duplicate"><span class="material-icons">file_copy</span></button>
-                        <button class="btn icon" alt="Delete"><span class="material-icons">delete</span></button>
-                    </div>
-                </li>
-                <li class="queued">
-                    <div class="icon"><span class="material-icons">schedule</span></div>
-                    <div class="network-list-name">
-                        <h4>Network 2</h4>
-                        <p><b>28 total networks</b> 13 tangential, 7 diametrial and 8 others</p>
-                    </div>
-                    <div class="status">
-                        <span>In queued</span>
-                    </div>
-                    <button class="btn neuro">
-                        <span>Remove</span>
-                        <span class="material-icons">remove</span>
-                    </button>
-                    <div class="grid min">
-                        <button class="btn icon" alt="Edit"><span class="material-icons">edit</span></button>
-                        <button class="btn icon" alt="Duplicate"><span class="material-icons">file_copy</span></button>
-                        <button class="btn icon" alt="Delete"><span class="material-icons">delete</span></button>
-                    </div>
-                </li>
-                <li>
-                    <div class="icon"><span class="material-icons">more_horiz</span></div>
-                    <div class="network-list-name">
-                        <h4>Network 3</h4>
-                        <p><b>28 total networks</b> 13 tangential, 7 diametrial and 8 others</p>
-                    </div>
-                    <div class="status">
-                        <span>Ready</span>
-                    </div>
-                    <button class="btn neuro">
-                        <span>Process</span>
-                        <span class="material-icons">add</span>
-                    </button>
-                    <div class="grid min">
-                        <button class="btn icon" alt="Edit"><span class="material-icons">edit</span></button>
-                        <button class="btn icon" alt="Duplicate"><span class="material-icons">file_copy</span></button>
-                        <button class="btn icon" alt="Delete"><span class="material-icons">delete</span></button>
-                    </div>
-                </li>
-                <li class="error">
-                    <div class="icon"><span class="material-icons">error</span></div>
-                    <div class="network-list-name">
-                        <h4>Network 3 copy</h4>
-                        <p><b>28 total networks</b> 13 tangential, 7 diametrial and 8 others</p>
-                    </div>
-                    <div class="status">
-                        <span>Error</span>
-                    </div>
-                    <button class="btn neuro">
-                        <span>View errors</span>
-                        <span class="material-icons">chevron_right</span>
-                    </button>
-                    <div class="grid min">
-                        <button class="btn icon" alt="Edit"><span class="material-icons">edit</span></button>
-                        <button class="btn icon" alt="Duplicate"><span class="material-icons">file_copy</span></button>
-                        <button class="btn icon" alt="Delete"><span class="material-icons">delete</span></button>
-                    </div>
-                </li>
+                <template v-for="transportNetwork in scene.transportnetwork_set">
+                    <TransportNetworkRow :cityPublicId="scene.city.public_id" :scenePublicId="scene.public_id" :transportNetwork="transportNetwork" v-bind:key="transportNetwork.public_id"/>
+                </template>
             </ul>
         </div>
     </section>
@@ -231,6 +139,7 @@ import CityDemand from '@/components/CityDemand';
 import UserLegend from '@/components/UserLegend.vue';
 import TransportModeLegend from '@/components/TransportModeLegend.vue';
 import TransportModeTable from '@/components/TransportModeTable.vue';
+import TransportNetworkRow from '@/components/TransportNetworkRow.vue';
 import Modal from '@/components/Modal.vue';
 
 export default {
@@ -242,7 +151,8 @@ export default {
     Modal,
     UserLegend,
     TransportModeLegend,
-    TransportModeTable
+    TransportModeTable,
+    TransportNetworkRow
   },
   data(){
     return {
@@ -275,7 +185,8 @@ export default {
                 },
                 public_id: null
             },
-            transportmode_set: []
+            transportmode_set: [],
+            transportnetwork_set: []
         }
     }
   },
