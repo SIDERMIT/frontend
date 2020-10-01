@@ -25,7 +25,7 @@
       <div class="bot-info">
           <router-link :to="{ name: 'CityDetail', params: { cityPublicId: city.public_id }}" class="btn neuro">View details</router-link>
       </div>
-      <Modal v-if="showConfirmDeleteModal" @cancel="showConfirmDeleteModal = false" @close="showConfirmDeleteModal = false" @ok="deleteCity(city.public_id)" :showCancelButton="true" :isWarning="true">
+      <Modal v-if="showConfirmDeleteModal" @cancel="showConfirmDeleteModal = false" @close="showConfirmDeleteModal = false" @ok="deleteCity(city.public_id)" :showCancelButton="true" :modalClasses="['warning']">
           <template slot="title">
               <div class="icon"><span class="material-icons">warning</span></div>
               <div><h4>Warning</h4></div>
@@ -33,7 +33,7 @@
           <p slot="content">Are you sure you want to delete city "{{ city.name }}"?</p>
           <template slot="close-button-name">Proceed</template>
       </Modal>
-      <Modal v-if="showConfirmDuplicateModal" @cancel="showConfirmDuplicateModal = false" @close="showConfirmDuplicateModal = false" @ok="duplicateCity(city.public_id)" :showCancelButton="true" :isWarning="true">
+      <Modal v-if="showConfirmDuplicateModal" @cancel="showConfirmDuplicateModal = false" @close="showConfirmDuplicateModal = false" @ok="duplicateCity(city.public_id)" :showCancelButton="true" :modalClasses="['warning']">
           <template slot="title">
               <div class="icon"><span class="material-icons">warning</span></div>
               <div><h4>Warning</h4></div>
