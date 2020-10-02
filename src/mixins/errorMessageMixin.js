@@ -9,7 +9,11 @@ function processObject(errorData) {
   for (let key in errorData) {
     let item = errorData[key];
     if (Array.isArray(item)){
-      message += `<b>${key}:</b><ul>`;
+      if (key !== 'non_field_errors') {
+        message += `<b>${key}:</b><ul>`;
+      } else {
+        message += `<ul>`;
+      }      
       errorData[key].forEach(el => {
           message += `<li>${el}</li>`; 
       });
