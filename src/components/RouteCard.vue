@@ -4,7 +4,7 @@
     <div class="linebox-header">
         <div class="line-input">
             <h4>Line ID</h4>
-            <input v-model="route.route_id" type="text">
+            <input v-model="route.name" type="text">
         </div>
         <div class="line-input">
             <h4>Mode</h4>
@@ -56,7 +56,7 @@
       <div class="icon"><span class="material-icons">warning</span></div>
       <div><h4>Warning</h4></div>
     </template>
-    <p slot="content">Are you sure you want to delete route "{{ route.route_id }}"</p>
+    <p slot="content">Are you sure you want to delete route "{{ route.name }}"</p>
     <template slot="close-button-name">Proceed</template>
   </Modal>
   </div>

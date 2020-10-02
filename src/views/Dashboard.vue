@@ -74,7 +74,7 @@
 <script>
 import CityCard from '@/components/CityCard.vue';
 import citiesAPI from '@/api/cities.api';
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   name: 'Dashboard',
