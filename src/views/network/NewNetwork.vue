@@ -31,7 +31,7 @@
                 <div class="empty-box" v-if="network.route_set.length === 0">
                     <p>There is not defined route in this network. You can add a new one or create predefined tours</p>
                     <div class="grid">
-                        <button class="btn">
+                        <button class="btn" @click="addEmptyRoute">
                             <span class="material-icons">add</span>
                             <span>Add transit line</span>
                         </button>
@@ -42,8 +42,8 @@
                     </div>
                 </div>
                 <div class="linebox-container" v-else>
-                    <template v-for="route in resultQuery">
-                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" @erase-route="deleteRoute" v-bind:key="route.route_id"/>
+                    <template v-for="(route, index) in resultQuery">
+                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" @erase-route="deleteRoute" v-bind:key="index"/>
                     </template>
                 </div>
             </div>
@@ -109,7 +109,7 @@
     <footer>
         <div class="container full grid">
             <div class="left-content">
-                <button class="btn">
+                <button class="btn" @click="addEmptyRoute">
                     <span class="material-icons">add</span>
                     <span>Add new transit line</span>
                 </button>
@@ -137,6 +137,7 @@ import scenesAPI from '@/api/scenes.api';
 import Modal from '@/components/Modal.vue';
 import RouteCard from '@/components/RouteCard.vue';
 import DefaultRouteCreator from '@/components/DefaultRouteCreator.vue';
+import axios from 'axios';
 
 export default {
   name: 'NewNetwork',
@@ -173,7 +174,7 @@ export default {
     resultQuery() {
       if(this.searchQuery) {
         return this.network.route_set.filter((item)=>{
-          return this.searchQuery.toLowerCase().split(' ').every(v => item.route_id.toLowerCase().includes(v))
+          return this.searchQuery.toLowerCase().split(' ').every(v => item.name.toLowerCase().includes(v))
         });
       } else {
         return this.network.route_set;
@@ -181,12 +182,11 @@ export default {
     }
   },
   methods: {
-    setData(transportNetworkData) {
+    setData(transportNetworkData, sceneData) {
       this.network = transportNetworkData;
+      this.scene = sceneData;
     },
     updateTransportNetwork() {
-      console.log("updateTransportNetwork");
-
       let request = null;
       if (!this.network.public_id) {
         request = transportNetworksAPI.createTransportNetwork(this.scene.public_id, this.network.name, this.network.route_set);
@@ -194,10 +194,8 @@ export default {
         request = transportNetworksAPI.updateTransportNetwork(this.network.public_id, this.network.name, this.network.route_set);
       }
       request.then(response => {
-          console.log(response.data);
         this.$router.push({name: 'NetworkDetail', params: {transportNetworkPublicId: response.data.public_id}})
       }).catch(error => {
-        console.log(error.response.data);
         let message = this.getErrorMessage(error.response.data);
         this.modalData.message = message;
         this.modalData.showCancelButton = false
@@ -211,13 +209,30 @@ export default {
       });
     },
     deleteRoute(route) {
-      let routeIndex = this.network.route_set.findIndex(el => el.route_id === route.route_id);
+      let routeIndex = this.network.route_set.findIndex(el => el.name === route.name);
       this.network.route_set.splice(routeIndex, 1);
+    },
+    addEmptyRoute(){
+        let emptyRoute = {
+            name: null,
+            transport_mode_public_id: null,
+            nodes_sequence_i: null,
+            nodes_sequence_r: null,
+            stops_sequence_i: null,
+            stops_sequence_r: null,
+            type: null
+        };
+        this.network.route_set.unshift(emptyRoute);
     }
   },
   beforeRouteEnter (to, from, next) {
     if (to.params.transportNetworkPublicId) {
-      transportNetworksAPI.getTransportNetwork(to.params.transportNetworkPublicId).then(response => (next(vm => vm.setData(response.data))));
+        axios.all([
+            transportNetworksAPI.getTransportNetwork(to.params.transportNetworkPublicId),
+            scenesAPI.getScene(to.params.scenePublicId)    
+        ]).then(axios.spread((transportNetworkresponse, sceneResponse) => {
+            next(vm => vm.setData(transportNetworkresponse.data, sceneResponse.data));
+        }));
     } else {
         // fill city data
         scenesAPI.getScene(to.params.scenePublicId).then(response => {
