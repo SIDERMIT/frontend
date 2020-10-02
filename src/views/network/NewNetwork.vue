@@ -43,7 +43,7 @@
                 </div>
                 <div class="linebox-container" v-else>
                     <template v-for="(route, index) in resultQuery">
-                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" @erase-route="deleteRoute" v-bind:key="index"/>
+                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :checkerMessage="checkerMessages[index]" @erase-route="deleteRoute" v-bind:key="index"/>
                     </template>
                 </div>
             </div>
@@ -127,6 +127,14 @@
             </div>
         </div>
     </footer>
+    <Modal v-if="showWarningModal" @close="showWarningModal = false" :showCancelButton="false" :modalClasses="['warning']">
+        <template slot="title">
+            <div class="icon"><span class="material-icons">warning</span></div>
+            <div><h4>Warning</h4></div>
+        </template>
+        <p slot="content" v-html="warningModalMessage"></p>
+        <template slot="close-button-name">OK</template>
+    </Modal>
   </div>
 </template>
 
@@ -138,9 +146,11 @@ import Modal from '@/components/Modal.vue';
 import RouteCard from '@/components/RouteCard.vue';
 import DefaultRouteCreator from '@/components/DefaultRouteCreator.vue';
 import axios from 'axios';
+import errorMessageMixin from '@/mixins/errorMessageMixin.js'
 
 export default {
   name: 'NewNetwork',
+  mixins: [errorMessageMixin],
   components: {
     CityGraph,
     Modal,
@@ -151,6 +161,9 @@ export default {
     return {
         showDefaultRouteCreatorModal: false,
         showLegendModal: false,
+        showWarningModal: false,
+        warningModalMessage: '',
+        checkerMessages: [],
         searchQuery: '',
         network: {
             public_id: null,
@@ -185,6 +198,9 @@ export default {
     setData(transportNetworkData, sceneData) {
       this.network = transportNetworkData;
       this.scene = sceneData;
+      this.network.route_set.forEach(() => {
+          this.checkerMessages.push(null);
+      });
     },
     updateTransportNetwork() {
       let request = null;
@@ -193,24 +209,46 @@ export default {
       } else {
         request = transportNetworksAPI.updateTransportNetwork(this.network.public_id, this.network.name, this.network.route_set);
       }
+
       request.then(response => {
         this.$router.push({name: 'NetworkDetail', params: {transportNetworkPublicId: response.data.public_id}})
-      }).catch(error => {
-        let message = this.getErrorMessage(error.response.data);
-        this.modalData.message = message;
-        this.modalData.showCancelButton = false
-        this.modalData.closeButtonName = 'OK'
-        this.showWarningModal = true;
+      }).catch((error) => {
+        if (Object.prototype.hasOwnProperty.call(error.response.data, 'route_set')) {
+            error.response.data.route_set.forEach((el, index) => {
+                if (Object.keys(el).length === 0) {
+                    this.$set(this.checkerMessages, index, null);
+                } else {
+                    let dictUserFrendlyKey = {
+                        name: "Line ID",
+                        nodes_sequence_i: "Node sequence I",
+                        nodes_sequence_r: "Node sequence R",
+                        stops_sequence_i: "Stop sequence I",
+                        stops_sequence_r: "Stop sequence R",
+                        transport_mode_public_id: "Mode"
+                    }
+                    console.log(dictUserFrendlyKey);
+                    let key = Object.keys(el)[0];
+                    let firstMessage = dictUserFrendlyKey[key] + ": " + el[key];
+                    this.$set(this.checkerMessages, index, firstMessage);
+                }
+            });
+        } else {
+            let message = this.getErrorMessage(error.response.data);
+            this.warningModalMessage = message;
+            this.showWarningModal = true;
+        }
       });
     },
     createRoutes(routes){
       routes.forEach(route => {
         this.network.route_set.push(route);
+        this.checkerMessages.push(null);
       });
     },
     deleteRoute(route) {
       let routeIndex = this.network.route_set.findIndex(el => el.name === route.name);
       this.network.route_set.splice(routeIndex, 1);
+      this.checkerMessages.splice(routeIndex, 1);
     },
     addEmptyRoute(){
         let emptyRoute = {
@@ -220,9 +258,10 @@ export default {
             nodes_sequence_r: null,
             stops_sequence_i: null,
             stops_sequence_r: null,
-            type: null
+            type: 1
         };
         this.network.route_set.unshift(emptyRoute);
+        this.checkerMessages.unshift(null);
     }
   },
   beforeRouteEnter (to, from, next) {

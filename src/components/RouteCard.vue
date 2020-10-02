@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="linebox">
+  <div class="linebox" v-bind:class="{error: checkerMessage!==null}">
     <div class="linebox-header">
         <div class="line-input">
             <h4>Line ID</h4>
@@ -44,8 +44,7 @@
                 </table>
             </div>
             <div class="checker">
-                <Checker v-if="checker.show" :isError="checker.isError" :message="checker.message" />
-                <div></div>
+                <Checker v-if="checkerMessage!==null" :isError="true" :message="checkerMessage" />
                 <button class="btn neuro" @click="showDeleteConfirmationModal=true"><span>Delete</span><span class="material-icons">delete</span></button>
             </div>
        </div>
@@ -65,7 +64,6 @@
 <script>
 import Modal from '@/components/Modal.vue';
 import Checker from '@/components/Checker.vue';
-import transportNetworksAPI from '@/api/transportNetworks.api';
 
 export default {
   name: 'RouteCard',
@@ -86,15 +84,15 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    checkerMessage: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   data() {
     return {
-        checker: {
-          show: false,
-          message: '',
-          isError: false,
-        },
         showDeleteConfirmationModal: false,
         collapse: false,
         showInGraphI: false,
@@ -112,17 +110,7 @@ export default {
       }
     },
     deleteRow() {
-      if (this.transportNetworkPublicId !== null && Object.prototype.hasOwnProperty.call(this.route, 'public_id')) {
-        transportNetworksAPI.deleteRoute(this.transportNetworkPublicId, this.route.public_id).then(() => {
-          this.$emit('erase-route', this.route);
-        }).catch(error => {
-          let message = this.getErrorMessage(error.response.data);
-          this.checker.isError = true;
-          this.checker.message = message;
-        });
-      } else {
-        this.$emit('erase-route', this.route);
-      }
+      this.$emit('erase-route', this.route);
     }
   }
 }
