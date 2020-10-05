@@ -148,7 +148,7 @@ footer .full.grid {grid-template-columns: 1fr 1fr;}
     cursor: pointer;
     transition: background-color .2s, transform .2s, color .2s, box-shadow .2s;
 }
-.btn:disabled,.btn:disabled:hover {background-color: var(--soft-gray); opacity: .3; box-shadow: none; transform: none; cursor: pointer;}
+.btn:disabled,.btn:disabled:hover {background-color: var(--soft-gray); opacity: .3; box-shadow: none; transform: none; cursor: default;}
 .btn input[type="file"] {display: none;}
 .material-icons {line-height: 1; font-size: 24px;}
 .btn .material-icons {font-size: 24px;}
@@ -368,6 +368,7 @@ text-align: center;
 .step1-definition {max-width: 610px; margin-bottom: 60px;}
 .input-name {grid-template-columns: auto 1fr; margin-bottom: 60px; align-items: center; grid-gap: 20px; max-width: 600px;}
 .input-name h2 {margin: 0;}
+.input-name input {text-align: left;}
 .grid.subtitle {grid-template-columns: 1fr auto; margin-bottom: 20px;}
 .step1-definition .subtitle .btn {margin: 0;}
 .subtitle {margin-bottom: 20px;}
@@ -494,7 +495,7 @@ background: rgba(93, 78, 57, 0.5);
 .linebox-header {display: grid; grid-auto-flow: column; grid-template-columns: 1fr 1fr auto; align-items: center; grid-gap: 30px; padding: 10px;}
 .linebox-header h4{font-size: 16px; font-weight: 600; margin: 0;}
 .linebox-header .line-input {display: grid; grid-template-columns: auto 1fr; align-items: center; grid-gap: 10px;}
-.linebox-header select, .linebox-header input {width: 100%; display: block; padding: 8px 10px; font-size: 16px;}
+.linebox-header select, .linebox-header input {width: 100%; display: block; padding: 8px 10px; font-size: 16px; text-align: left;}
 .linebox-anim {overflow: hidden; height: 0; transition: height .5s;}
 .linebox-anim.open {height:222px;}
 .linebox-content {padding:10px;}

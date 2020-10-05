@@ -88,13 +88,13 @@
                         </tr>
                         <tr>
                             <td><span>Node sequence</span></td>
-                            <td><span>Number</span></td>
-                            <td colspan="2"><span>Specific nodes where the transit line will travel</span></td>
+                            <td><span>List[Number]</span></td>
+                            <td colspan="2"><span>Specific nodes id separated by "," where the transit line will travel</span></td>
                         </tr>
                         <tr>
                             <td><span>Stop sequence</span></td>
-                            <td><span>Number</span></td>
-                            <td colspan="2"><span>Specific nodes where the transit line will stop</span></td>
+                            <td><span>List[Number]</span></td>
+                            <td colspan="2"><span>Specific nodes id separated by "," where the transit line will stop</span></td>
                         </tr>
                         <tr>
                             <td><span>Graph visibility</span></td>
