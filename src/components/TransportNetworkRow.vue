@@ -47,6 +47,13 @@
         <p slot="content">Are you sure you want to cancel optimization for transport network "{{ transportNetwork.name }}"?</p>
         <template slot="close-button-name">Proceed</template>
       </Modal>
+      <Modal v-if="showOptimizationErrorModal" @cancel="showOptimizationErrorModal = false" @close="showOptimizationErrorModal = false" @ok="cancelOptimization" :showCancelButton="true" :modalClasses="['warning']">
+        <template slot="title">
+          <div class="icon"><span class="material-icons">warning</span></div>
+          <div><h4>Warning</h4></div>
+        </template>
+        <p slot="content">{{ errorMessage }}</p>
+      </Modal>
     </li>
 </template>
 
@@ -78,7 +85,9 @@ export default {
       showConfirmCancelOptimizationModal: false,
       showConfirmRunOptimizationModal: false,
       showConfirmDeleteModal: false,
-      showConfirmDuplicateModal: false
+      showConfirmDuplicateModal: false,
+      showOptimizationErrorModal: false,
+      errorMessage: ''
     }
   },
   computed: {
@@ -141,7 +150,7 @@ export default {
           this.$router.push({name: 'NetworkResults', params: {cityPublicId: this.cityPublicId, scenePublicId: this.scenePublicId, transportNetworkPublicId: this.transportNetwork.public_id}});
           break;
         case 'error':
-          // TODO: what do i do in this case!
+          this.showOptimizationErrorModal = true;
           break;
         default:
           // so it is ready to run
@@ -152,11 +161,17 @@ export default {
     runOptimization() {
       transportNetworksAPI.runOptimization(this.transportNetwork.public_id).then(response => {
         this.transportNetwork = response.data;
+      }).catch(error => {
+          this.errorMessage = error.response.data;
+          this.showOptimizationErrorModal = true;
       });
     },
     cancelOptimization() {
       transportNetworksAPI.cancelOptimization(this.transportNetwork.public_id).then(response => {
         this.transportNetwork = response.data;
+      }).catch(error => {
+        this.errorMessage = error.response.data;
+        this.showOptimizationErrorModal = true;
       });
     }
   }
