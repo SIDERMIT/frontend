@@ -11,7 +11,7 @@
         </div>
     </section>
     <section>
-        <NetworkResultTable :rows="rows"></NetworkResultTable>
+        <NetworkResultTable :rows="rows" :cityPublicId="scene.city.public_id" :scenePublicId="scene.public_id" ></NetworkResultTable>
     </section>
     <footer>
         <div class="container full grid">
