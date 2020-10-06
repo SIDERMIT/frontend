@@ -13,6 +13,8 @@ const createDefaultRoutes = (scene_public_id, default_routes) => httpClient.post
 const runOptimization = (publicId) => httpClient.post(`${END_POINT}${publicId}/run_optimization/`);
 const cancelOptimization = (publicId) => httpClient.post(`${END_POINT}${publicId}/cancel_optimization/`);
 
+const getResults = (publicId) => httpClient.get(`${END_POINT}${publicId}/results/`);
+
 export default {
     getTransportNetwork,
     deleteTransportNetwork,
@@ -21,5 +23,6 @@ export default {
     duplicateTransportNetwork,
     createDefaultRoutes,
     runOptimization,
-    cancelOptimization
+    cancelOptimization,
+    getResults
 }
