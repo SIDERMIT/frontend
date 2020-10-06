@@ -12,7 +12,7 @@
         <table class="fixed">
             <tbody>
                 <tr>
-                    <th><span>Network</span></th>
+                    <th v-if="showNetworkName"><span>Network</span></th>
                     <th v-if="showCostValues"><a><span>𝑉𝑅𝐶<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
                     <th v-if="showCostValues"><a><span>𝐶𝑂<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
                     <th v-if="showCostValues"><a><span>𝐶𝐼<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
@@ -30,7 +30,7 @@
                     </template>
                 </tr>
                 <tr v-for="(row, index) in rows" v-bind:key="index">
-                    <td><router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: scene.city.public_id, scenePublicId: scene.public_id, transportNetworkPublicId: row.public_id }}" class="btn icon" alt="Detail">{{ row.name }}</router-link></td>
+                    <td v-if="showNetworkName"><router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: cityPublicId, scenePublicId: scenePublicId, transportNetworkPublicId: row.public_id }}" class="btn icon" alt="Detail">{{ row.name }}</router-link></td>
                     <td v-if="showCostValues"><span>{{ row.vrc }}</span></td>
                     <td v-if="showCostValues"><span>{{ row.co }}</span></td>
                     <td v-if="showCostValues"><span>{{ row.ci }}</span></td>
@@ -60,6 +60,21 @@ export default {
     rows: {
       type: Array,
       required: true
+    },
+    cityPublicId: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    scenePublicId: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    showNetworkName: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   data() {
