@@ -2,7 +2,7 @@
   <div class="NetworkResults">
     <div class="header">          
         <h1>Optimization results</h1>
-        <p>Networks 1</p>
+        <p>{{ network.name }}</p>
     </div>
     <section>
         <div class="grid title">
@@ -11,62 +11,7 @@
         </div>
     </section>
     <section>
-        <div class="grid title">
-            <h4>Filter columns</h4>
-            <div class="btn-filter">
-                <button class="btn neuro">Cost</button>
-                <button class="btn neuro active">Users</button>
-                <button class="btn neuro">Modes</button>
-            </div>
-        </div>
-        <div class="table">
-            <table class="fixed">
-                <tbody>
-                    <tr>
-                        <th><span>Network</span></th>
-                        <th><span>𝑉𝑅𝐶<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span></th>
-                        <th><span>𝐶𝑂<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span></th>
-                        <th><span>𝐶𝐼<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span></th>
-                        <th><span>𝐶𝑈<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span></th>
-                        <th><span>𝑡v<br>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span></th>
-                        <th><span>𝑡w<br>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span></th>
-                        <th><span>𝑡a<br>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span></th>
-                        <th><span>𝑇<br>[𝑡𝑟𝑎𝑛𝑠/𝑝𝑎𝑥]</span></th>
-                        <th><span>𝐵<br>bus1</span></th>
-                        <th><span>𝐾<br>bus1</span></th>
-                        <th><span>𝑙<br>bus1</span></th>
-                        <th><span>𝐵<br>metro1</span></th>
-                        <th><span>𝐾<br>bus1</span></th>
-                        <th><span>𝑙<br>bus1</span></th>
-                        <th><span>𝐵<br>metro1</span></th>
-                        <th><span>𝐾<br>bus1</span></th>
-                        <th><span>𝑙<br>bus1</span></th>
-                        <th><span>𝐵<br>metro1</span></th>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Network 1</a></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                        <td><span>0.1</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <NetworkResultTable :rows="[network]" :showNetworkName="false"></NetworkResultTable>
     </section>
     <section>
         <div class="grid-results">
@@ -79,7 +24,7 @@
                 </div>
                 <div class="graph-view">
                     <div class="search"><input type="search"></div>
-                    <div class="graph-container"></div>
+                    <div class="graph-container"><CityGraph :network="scene.city.network_descriptor" :showNodeId="true"></CityGraph></div>
                 </div>
                 <div class="table">
                     <table class="result-details">
@@ -288,143 +233,125 @@
             </div>
         </div>
     </footer>
-    <Modal v-if="showLegendModal" @close="showLegendModal = false" :showBase="false">
-          <template slot="title">
-                <h2>Terminology</h2>
-            </template>
-            <template slot="content">
-                <div class="table">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th><span>Symbol</span></th>
-                                <th><span>Unit</span></th>
-                                <th><span>Description</span></th>
-                            </tr>
-                            <tr>
-                                <td><span>𝑉𝑅𝐶</span></td>
-                                <td>[𝑈𝑆$/h − 𝑝𝑎𝑥]</td>
-                                <td><span>Total cost</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝐶𝑂</span></td>
-                                <td>[𝑈𝑆$/h − 𝑝𝑎𝑥]</td>
-                                <td><span>Operators cost</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝐶𝐼</span></td>
-                                <td>[𝑈𝑆$/h − 𝑝𝑎𝑥]</td>
-                                <td><span>Infrastructure cost</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝐶𝑈</span></td>
-                                <td>[𝑈𝑆$/h − 𝑝𝑎𝑥]</td>
-                                <td><span>Users cost</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝑡v</span></td>
-                                <td><span>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span></td>
-                                <td><span>Travel time</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝑡w</span></td>
-                                <td><span>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span></td>
-                                <td><span>Regularity arrivals</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝑡𝑎</span></td>
-                                <td>[𝑡𝑟𝑎𝑛𝑠/𝑝𝑎𝑥]</td>
-                                <td><span>Transfers</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝐵</span></td>
-                                <td>[𝑣𝑒h]</td>
-                                <td><span>Vehicle fleet</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝐾</span></td>
-                                <td>[𝑝𝑎𝑥/𝑣𝑒h]</td>
-                                <td><span>Design boarding size</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝑙</span></td>
-                                <td>[𝑙𝑖𝑛𝑒]</td>
-                                <td><span>Number of lines</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </template>
-    </Modal>
     <Modal v-if="showDetailLegendModal" @close="showDetailLegendModal = false" :showBase="false">
-          <template slot="title">
-                <h2>Terminology</h2>
-            </template>
-            <template slot="content">
-                <div class="table">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th><span>Symbol</span></th>
-                                <th><span>Unit</span></th>
-                                <th><span>Description</span></th>
-                            </tr>
-                            <tr>
-                                <td><span>𝑓</span></td>
-                                <td>[𝑣𝑒h/h]</td>
-                                <td><span>frequency</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝐾</span></td>
-                                <td>[𝑝𝑎𝑥/𝑣𝑒h]</td>
-                                <td><span>Design boarding size</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝐵</span></td>
-                                <td>[𝑣𝑒h]</td>
-                                <td><span>Vehicle fleet</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝑡𝑐</span></td>
-                                <td>[𝑚𝑖𝑛]</td>
-                                <td><span>Cycle time</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝐶𝑜</span></td>
-                                <td><span>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span></td>
-                                <td><span>Cost of operation</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝜆𝑚𝑖𝑛</span></td>
-                                <td><span>[%]</span></td>
-                                <td><span>minimum boarding fee</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>[𝜆]</span></td>
-                                <td>[%]</td>
-                                <td><span>Boarding fee</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </template>
+        <template slot="title">
+            <h2>Terminology</h2>
+        </template>
+        <template slot="content">
+            <div class="table">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th><span>Symbol</span></th>
+                            <th><span>Unit</span></th>
+                            <th><span>Description</span></th>
+                        </tr>
+                        <tr>
+                            <td><span>𝑓</span></td>
+                            <td>[𝑣𝑒h/h]</td>
+                            <td><span>frequency</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>𝐾</span></td>
+                            <td>[𝑝𝑎𝑥/𝑣𝑒h]</td>
+                            <td><span>Design boarding size</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>𝐵</span></td>
+                            <td>[𝑣𝑒h]</td>
+                            <td><span>Vehicle fleet</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>𝑡𝑐</span></td>
+                            <td>[𝑚𝑖𝑛]</td>
+                            <td><span>Cycle time</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>𝐶𝑜</span></td>
+                            <td><span>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span></td>
+                            <td><span>Cost of operation</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>𝜆𝑚𝑖𝑛</span></td>
+                            <td><span>[%]</span></td>
+                            <td><span>minimum boarding fee</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>[𝜆]</span></td>
+                            <td>[%]</td>
+                            <td><span>Boarding fee</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </template>
     </Modal>
+    <NetworkResultLegend :showLegendModal="showLegendModal" @close="showLegendModal=false"></NetworkResultLegend>
   </div>
 </template>
 
 <script>
 import Modal from '@/components/Modal.vue';
+import NetworkResultTable from '@/components/NetworkResultTable.vue';
+import NetworkResultLegend from '@/components/NetworkResultLegend.vue';
+import CityGraph from '@/components/CityGraph.vue';
+import transportNetworksAPI from '@/api/transportNetworks.api';
+import scenesAPI from '@/api/scenes.api';
+import axios from 'axios';
 
 export default {
   name: 'NetworkResults',
   components: {
     Modal,
+    NetworkResultTable,
+    NetworkResultLegend,
+    CityGraph
   },
   data() {
       return {
           showLegendModal: false,
-          showDetailLegendModal: false
+          showDetailLegendModal: false,
+          network: {
+              name: ''
+          },
+          resultPerRoute: [],
+          scene: {
+              city: {
+                  network_descriptor: {
+                      nodes: [],
+                      edges: []
+                  }
+              }
+          }
       }
+  },
+  methods: {
+      setData(networkData, sceneData) {
+          this.network = networkData.opt_result;
+          this.result_per_route = networkData.opt_result_per_route;
+          this.scene = sceneData;
+      }
+  },
+  beforeRouteEnter (to, from, next) {
+    if (to.params.transportNetworkPublicId) {
+        axios.all([
+            transportNetworksAPI.getResults(to.params.transportNetworkPublicId),
+            scenesAPI.getScene(to.params.scenePublicId)    
+        ]).then(axios.spread((transportNetworkresponse, sceneResponse) => {
+            next(vm => vm.setData(transportNetworkresponse.data, sceneResponse.data));
+        }));
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.params.transportNetworkPublicId) {
+        axios.all([
+            transportNetworksAPI.getResults(to.params.transportNetworkPublicId),
+            scenesAPI.getScene(to.params.scenePublicId)    
+        ]).then(axios.spread((transportNetworkresponse, sceneResponse) => {
+            this.setData(transportNetworkresponse.data, sceneResponse.data); 
+            next();
+        }));
+    }
   }
 }
 </script>
