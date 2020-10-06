@@ -69,7 +69,7 @@
                         <tr>
                             <td><span>Line ID</span></td>
                             <td><span>Any</span></td>
-                            <td colspan="2"><span>Name for the specific transport line</span></td>
+                            <td colspan="2"><span>Name for the specific transit line</span></td>
                         </tr>
                         <tr>
                             <td><span>Mode</span></td>
@@ -78,23 +78,18 @@
                         </tr>
                         <tr>
                             <td><span>Dir</span></td>
-                            <td><span>I</span></td>
-                            <td colspan="2"><span>Direction I of the line</span></td>
-                        </tr>
-                        <tr>
-                            <td><span>Dir</span></td>
-                            <td><span>R</span></td>
-                            <td colspan="2"><span>Direction R of the line</span></td>
+                            <td><span>I o R</span></td>
+                            <td colspan="2"><span>I to "in route" direction, R to "return" direction</span></td>
                         </tr>
                         <tr>
                             <td><span>Node sequence</span></td>
-                            <td><span>Number</span></td>
-                            <td colspan="2"><span>Specific nodes where the transit line will travel</span></td>
+                            <td><span>List[Number]</span></td>
+                            <td colspan="2"><span>Specific nodes id separated by "," where the transit line will travel</span></td>
                         </tr>
                         <tr>
                             <td><span>Stop sequence</span></td>
-                            <td><span>Number</span></td>
-                            <td colspan="2"><span>Specific nodes where the transit line will stop</span></td>
+                            <td><span>List[Number]</span></td>
+                            <td colspan="2"><span>Specific nodes id separated by "," where the transit line will stop</span></td>
                         </tr>
                         <tr>
                             <td><span>Graph visibility</span></td>
