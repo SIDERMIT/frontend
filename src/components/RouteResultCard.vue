@@ -2,12 +2,12 @@
   <tbody class="collapse-row" v-bind:class="{active: !collapse}">
     <tr class="main-row">
       <td><span>{{ computedRoute.route }}</span></td>
-      <td><span>{{ computedRoute.frequency }}</span></td>
-      <td><span>{{ computedRoute.k }}</span></td>
-      <td><span>{{ computedRoute.b }}</span></td>
-      <td><span>{{ computedRoute.tc }}</span></td>
-      <td><span>{{ computedRoute.co }}</span></td>
-      <td><span>{{ computedRoute.lambda_min }}</span></td>
+      <td><span>{{ computedRoute.frequency.toLocaleString() }}</span></td>
+      <td><span>{{ computedRoute.k.toLocaleString() }}</span></td>
+      <td><span>{{ computedRoute.b.toLocaleString() }}</span></td>
+      <td><span>{{ computedRoute.tc.toLocaleString() }}</span></td>
+      <td><span>{{ computedRoute.co.toLocaleString() }}</span></td>
+      <td><span>{{ computedRoute.lambda_min.toLocaleString() }}</span></td>
       <td>
         <div class="grid g2 min">
           <button class="btn icon flat" v-bind:class="{active: !collapse}" @click="setVisibility"><span class="material-icons">{{ showInGraphI && showInGraphR ? "visibility": ((showInGraphI && !showInGraphR) || (!showInGraphI && showInGraphR))? "vignette":"visibility_off" }}</span></button>

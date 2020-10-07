@@ -31,19 +31,19 @@
                 </tr>
                 <tr v-for="(row, index) in rows" v-bind:key="index">
                     <td v-if="showNetworkName"><router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: cityPublicId, scenePublicId: scenePublicId, transportNetworkPublicId: row.public_id }}" alt="Detail">{{ row.name }}</router-link></td>
-                    <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.vrc }}</span></td>
-                    <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.co }}</span></td>
-                    <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.ci }}</span></td>
-                    <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.cu }}</span></td>
-                    <td v-if="showUserValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.tv }}</span></td>
-                    <td v-if="showUserValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.tw }}</span></td>
-                    <td v-if="showUserValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.ta }}</span></td>
-                    <td v-if="showUserValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.t }}</span></td>
+                    <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.vrc.toLocaleString() }}</span></td>
+                    <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.co.toLocaleString() }}</span></td>
+                    <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.ci.toLocaleString() }}</span></td>
+                    <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.cu.toLocaleString() }}</span></td>
+                    <td v-if="showUserValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.tv.toLocaleString() }}</span></td>
+                    <td v-if="showUserValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.tw.toLocaleString() }}</span></td>
+                    <td v-if="showUserValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.ta.toLocaleString() }}</span></td>
+                    <td v-if="showUserValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.t.toLocaleString() }}</span></td>
                     <template v-if="showModeValues">
                         <template v-for="(optResultPerMode, index) in row.optimizationresultpermode_set">
-                            <td v-bind:key="index"><span>{{ optResultPerMode.b }}</span></td>
-                            <td v-bind:key="index+1000"><span>{{ optResultPerMode.k }}</span></td>
-                            <td v-bind:key="index+2000"><span>{{ optResultPerMode.l }}</span></td>
+                            <td v-bind:key="index"><span>{{ optResultPerMode.b.toLocaleString() }}</span></td>
+                            <td v-bind:key="index+1000"><span>{{ optResultPerMode.k.toLocaleString() }}</span></td>
+                            <td v-bind:key="index+2000"><span>{{ optResultPerMode.l.toLocaleString() }}</span></td>
                         </template>
                     </template>
                 </tr>
