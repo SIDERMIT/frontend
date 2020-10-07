@@ -63,8 +63,8 @@
                     <span class="material-icons">add</span>
                     <span>Add row</span>
                 </button>
-                <div class="checker dark">
-                    <div class="grid checker-body error"><span class="material-icons icon">warning</span><span class="text">Fields can not be empty</span></div>
+                <div class="checker dark" v-if="errorMessage !== null">
+                    <div class="grid checker-body error"><span class="material-icons icon">warning</span><span class="text">{{ errorMessage }}</span></div>
                 </div>
             </div>
             <div class="right-content">
@@ -80,13 +80,11 @@
 <script>
 import transportNetworksAPI from '@/api/transportNetworks.api';
 import Modal from '@/components/Modal.vue';
-//import Checker from '@/components/Checker.vue';
 
 export default {
   name: 'RouteCard',
   components: {
     Modal,
-    //Checker
   },
   props: {
     route_set: {
@@ -109,24 +107,20 @@ export default {
   data() {
     return {
         defaultRouteTypes: ['Circular', 'Diametral','Feeder','Radial','Tangential'],
-        defaultRoutes: [
-            {transportMode: 'd481df32-a416-44e1-9e21-330c19e1b51a', type: 'Radial', zoneJumps: 10, extension: false, odExclusive: true}
-        ],
+        defaultRoutes: [],
+        errorMessage: null
     }
   },
   methods: {
     createDefaultRoutes() {
         transportNetworksAPI.createDefaultRoutes(this.scene_public_id, this.defaultRoutes).then(response => {
             this.$emit('routes-created', response.data);
+            this.defaultRoutes = [];
+            this.$emit('close');
+            this.errorMessage = null;
         }).catch(error => {
-            let message = this.getErrorMessage(error.response.data);
-            this.modalData.message = message;
-            this.modalData.showCancelButton = false
-            this.modalData.closeButtonName = 'OK'
-            this.showWarningModal = true;
+            this.errorMessage = error.response.data.detail;
         });
-        this.defaultRoutes = [];
-        this.$emit('close');
     },
     addDefaultTemplateRoute() {
       let defaultTemplateRoute = {
