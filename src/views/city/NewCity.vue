@@ -253,21 +253,27 @@ export default {
         FileSaver.saveAs(blob, "city-graph.net");
       },
       importPajekFile(fileContent) {
-        this.newCity.n = null;
-        this.newCity.p = null;
-        this.newCity.l = null;
-        this.newCity.g = null;
-        this.newCity.graph = fileContent;
-        this.showImportModal = false
-        this.showEditorAndGraph = true;
-        this.enableParameters = false;
+          citiesAPI.getGraphFromPajekFile(this.newCity.graph).then(response => {
+            this.newCity.n = response.data.n;
+            this.newCity.p = response.data.p;
+            this.newCity.l = response.data.l;
+            this.newCity.g = response.data.g;
+            this.newCity.graph = fileContent;
+            this.showImportModal = false
+            this.showEditorAndGraph = true;
+            this.enableParameters = false;
+          }).catch(error => {
+            this.graphValidator.show = true;
+            this.graphValidator.isError = true;
+            this.graphValidator.message = error.response.data.detail;
+          });
       },
       pajekChange: debounce(function() {
           citiesAPI.getGraphFromPajekFile(this.newCity.graph).then(response => {
-            this.newCity.n = null;
-            this.newCity.p = null;
-            this.newCity.l = null;
-            this.newCity.g = null;
+            this.newCity.n = response.data.n;
+            this.newCity.p = response.data.p;
+            this.newCity.l = response.data.l;
+            this.newCity.g = response.data.g;
             this.enableParameters = false;
             this.newCity.network_descriptor = response.data.network;
             
