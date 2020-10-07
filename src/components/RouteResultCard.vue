@@ -23,7 +23,7 @@
               <th colspan="3">
                 <div class="grid">
                   <span>Forward</span>
-                  <button class="btn icon flat" @click="showInGraphI=!showInGraphI" v-bind:class="{active: showInGraphI}"><span class="material-icons">{{showInGraphI?'visibility':'visibility_off'}}</span></button>
+                  <button class="btn icon flat" @click="$emit('update-visibility', route, !showInGraphI, showInGraphR)" v-bind:class="{active: showInGraphI}"><span class="material-icons">{{showInGraphI?'visibility':'visibility_off'}}</span></button>
                 </div>
               </th>
             </tr>
@@ -49,7 +49,7 @@
               <th colspan="3">
                 <div class="grid">
                   <span>Return</span>
-                  <button class="btn icon flat" @click="showInGraphR=!showInGraphR" v-bind:class="{active: showInGraphR}"><span class="material-icons">{{showInGraphR?'visibility':'visibility_off'}}</span></button>
+                  <button class="btn icon flat" @click="$emit('update-visibility', route, showInGraphI, !showInGraphR)" v-bind:class="{active: showInGraphR}"><span class="material-icons">{{showInGraphR?'visibility':'visibility_off'}}</span></button>
                 </div>
               </th>
             </tr>
@@ -80,12 +80,20 @@ export default {
       type: Object,
       required: true
     },
+    showInGraphI: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    showInGraphR: {
+      type: Boolean,
+      required: true,
+      default: false
+    }
   },
   data() {
     return {
         collapse: true,
-        showInGraphI: false,
-        showInGraphR: false,
     }
   },
   computed: {
@@ -111,11 +119,9 @@ export default {
   methods: {
     setVisibility() {
       if ((this.showInGraphI && this.showInGraphR) || ((this.showInGraphI && !this.showInGraphR) || (!this.showInGraphI && this.showInGraphR))) {
-        this.showInGraphI = false;
-        this.showInGraphR = false;
+        this.$emit('update-visibility', this.route, false, false);
       } else if (!this.showInGraphI && !this.showInGraphR) {
-        this.showInGraphI = true;
-        this.showInGraphR = true;
+        this.$emit('update-visibility', this.route, true, true);
       }
     }
   }

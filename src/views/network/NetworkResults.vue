@@ -20,7 +20,7 @@
                         <h2>Result details</h2>
                         <a class="icon-link" @click="showDetailLegendModal=true"><span class="material-icons">help</span></a>
                     </div>
-                    <button class="btn neuro"><span class="material-icons">visibility</span><span>View all</span></button>
+                    <button class="btn neuro" @click="setViewAll" v-bind:class="{active: viewAll}"><span class="material-icons">visibility</span><span>View all</span></button>
                 </div>
                 <div class="graph-view">
                     <div class="search"><input type="search"></div>
@@ -41,7 +41,7 @@
                             </tr>
                         </thead>
                         <template v-for="(route, index) in resultPerRoute">
-                            <RouteResultCard :route="route" v-bind:key="index"></RouteResultCard>
+                            <RouteResultCard :route="route" :showInGraphI="routeVisibility[route.route]['showInGraphI']" :showInGraphR="routeVisibility[route.route]['showInGraphR']" @update-visibility="updateVisibility" v-bind:key="index"></RouteResultCard>
                         </template>
                     </table>
                 </div>
@@ -144,10 +144,12 @@ export default {
       return {
           showLegendModal: false,
           showDetailLegendModal: false,
+          viewAll: false,
           network: {
               name: ''
           },
           resultPerRoute: [],
+          routeVisibility: {},
           scene: {
               city: {
                   network_descriptor: {
@@ -160,9 +162,33 @@ export default {
   },
   methods: {
       setData(networkData, sceneData) {
-          this.network = networkData.opt_result;
-          this.resultPerRoute = networkData.opt_result_per_route;
-          this.scene = sceneData;
+        this.network = networkData.opt_result;
+        this.resultPerRoute = networkData.opt_result_per_route;
+        this.scene = sceneData;
+        this.resultPerRoute.forEach(el => {
+          this.$set(this.routeVisibility, el.route, {
+            showInGraphI: false,
+            showInGraphR: false
+          });
+        });
+      },
+      updateVisibility(route, showInGraphI, showInGraphR) {
+        this.routeVisibility[route.route]['showInGraphI'] = showInGraphI;
+        this.routeVisibility[route.route]['showInGraphR'] = showInGraphR;
+        if (!showInGraphI || !showInGraphR) {
+            this.viewAll = false;
+        }
+      },
+      setViewAll() {
+          let value = true;
+          if (this.viewAll) {
+            value = false;
+          }
+        Object.keys(this.routeVisibility).forEach(key => {
+            this.routeVisibility[key]['showInGraphI'] = value;
+            this.routeVisibility[key]['showInGraphR'] = value;
+        });
+        this.viewAll = value;
       }
   },
   beforeRouteEnter (to, from, next) {

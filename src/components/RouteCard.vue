@@ -32,13 +32,13 @@
                             <th colspan="1"><span>I</span></th>
                             <td colspan="4"><input type="text" placeholder="-" v-model="route.nodes_sequence_i"></td>
                             <td colspan="4"><input type="text" placeholder="-" v-model="route.stops_sequence_i"></td>
-                            <td colspan="1"><button class="btn icon flat" :alt="showInGraphI?'Hide':'Show'" v-bind:class="{active: showInGraphI}" @click="showInGraphI = !showInGraphI"><span class="material-icons">{{ showInGraphI?"visibility":"visibility_off"}}</span></button></td>
+                            <td colspan="1"><button class="btn icon flat" :alt="showInGraphI?'Hide':'Show'" v-bind:class="{active: showInGraphI}" @click="$emit('update-visibility', route, !showInGraphI, showInGraphR)"><span class="material-icons">{{ showInGraphI?"visibility":"visibility_off"}}</span></button></td>
                         </tr>
                         <tr>
                             <th colspan="1"><span>R</span></th>
                             <td colspan="4"><input type="text" placeholder="-" v-model="route.nodes_sequence_r"></td>
                             <td colspan="4"><input type="text" placeholder="-" v-model="route.stops_sequence_r"></td>
-                            <td colspan="1"><button class="btn icon flat" :alt="showInGraphR?'Hide':'Show'" v-bind:class="{active: showInGraphR}" @click="showInGraphR = !showInGraphR"><span class="material-icons">{{ showInGraphR?"visibility":"visibility_off"}}</span></button></td>
+                            <td colspan="1"><button class="btn icon flat" :alt="showInGraphR?'Hide':'Show'" v-bind:class="{active: showInGraphR}" @click="$emit('update-visibility', route, showInGraphI, !showInGraphR)"><span class="material-icons">{{ showInGraphR?"visibility":"visibility_off"}}</span></button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -89,24 +89,30 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    showInGraphI: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    showInGraphR: {
+      type: Boolean,
+      required: true,
+      default: false
     }
   },
   data() {
     return {
         showDeleteConfirmationModal: false,
         collapse: false,
-        showInGraphI: false,
-        showInGraphR: false,
     }
   },
   methods: {
     setVisibility() {
       if ((this.showInGraphI && this.showInGraphR) || ((this.showInGraphI && !this.showInGraphR) || (!this.showInGraphI && this.showInGraphR))) {
-        this.showInGraphI = false;
-        this.showInGraphR = false;
+        this.$emit('update-visibility', this.route, false, false);
       } else if (!this.showInGraphI && !this.showInGraphR) {
-        this.showInGraphI = true;
-        this.showInGraphR = true;
+        this.$emit('update-visibility', this.route, true, true);
       }
     },
     deleteRow() {

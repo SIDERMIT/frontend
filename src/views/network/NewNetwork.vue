@@ -22,7 +22,7 @@
             <div>
                 <div class="grid search-bar">
                     <input v-model="searchQuery" type="search"/>
-                    <button class="btn neuro" :disabled="network.route_set.length === 0">
+                    <button class="btn neuro" :disabled="network.route_set.length === 0" @click="setViewAll" v-bind:class="{active: viewAll}">
                         <span class="material-icons">visibility</span>
                         <span>View all</span>
                     </button>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="linebox-container" v-else>
                     <template v-for="(route, index) in resultQuery">
-                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :checkerMessage="checkerMessages[index]" @erase-route="deleteRoute" v-bind:key="index"/>
+                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.route]['showInGraphI']" :showInGraphR="routeVisibility[route.route]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" v-bind:key="index"/>
                     </template>
                 </div>
             </div>
@@ -157,8 +157,10 @@ export default {
         showDefaultRouteCreatorModal: false,
         showLegendModal: false,
         showWarningModal: false,
+        viewAll: false,
         warningModalMessage: '',
         checkerMessages: [],
+        routeVisibility: {},
         searchQuery: '',
         network: {
             public_id: null,
@@ -193,8 +195,12 @@ export default {
     setData(transportNetworkData, sceneData) {
       this.network = transportNetworkData;
       this.scene = sceneData;
-      this.network.route_set.forEach(() => {
+      this.network.route_set.forEach(el => {
           this.checkerMessages.push(null);
+          this.$set(this.routeVisibility, el.route, {
+            showInGraphI: false,
+            showInGraphR: false
+          });
       });
     },
     updateTransportNetwork() {
@@ -262,6 +268,24 @@ export default {
         };
         this.network.route_set.unshift(emptyRoute);
         this.checkerMessages.unshift(null);
+    },
+    updateVisibility(route, showInGraphI, showInGraphR) {
+        this.routeVisibility[route.route]['showInGraphI'] = showInGraphI;
+        this.routeVisibility[route.route]['showInGraphR'] = showInGraphR;
+        if (!showInGraphI || !showInGraphR) {
+            this.viewAll = false;
+        }
+    },
+    setViewAll() {
+        let value = true;
+        if (this.viewAll) {
+            value = false;
+        }
+        Object.keys(this.routeVisibility).forEach(key => {
+            this.routeVisibility[key]['showInGraphI'] = value;
+            this.routeVisibility[key]['showInGraphR'] = value;
+        });
+        this.viewAll = value;
     }
   },
   beforeRouteEnter (to, from, next) {
