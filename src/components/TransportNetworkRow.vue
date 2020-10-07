@@ -47,7 +47,7 @@
         <p slot="content">Are you sure you want to cancel optimization for transport network "{{ transportNetwork.name }}"?</p>
         <template slot="close-button-name">Proceed</template>
       </Modal>
-      <Modal v-if="showOptimizationErrorModal" @cancel="showOptimizationErrorModal = false" @close="showOptimizationErrorModal = false" @ok="cancelOptimization" :showCancelButton="true" :modalClasses="['warning']">
+      <Modal v-if="showOptimizationErrorModal" @cancel="showOptimizationErrorModal = false" @close="showOptimizationErrorModal = false" @ok="showOptimizationErrorModal = false" :showCancelButton="false" :modalClasses="['warning']">
         <template slot="title">
           <div class="icon"><span class="material-icons">warning</span></div>
           <div><h4>Warning</h4></div>
@@ -87,7 +87,8 @@ export default {
       showConfirmDeleteModal: false,
       showConfirmDuplicateModal: false,
       showOptimizationErrorModal: false,
-      errorMessage: ''
+      errorMessage: '',
+      interval: null
     }
   },
   computed: {
@@ -151,6 +152,7 @@ export default {
           break;
         case 'error':
           this.showOptimizationErrorModal = true;
+          this.errorMessage = this.transportNetwork.optimization_error_message;
           break;
         default:
           // so it is ready to run
@@ -161,18 +163,37 @@ export default {
     runOptimization() {
       transportNetworksAPI.runOptimization(this.transportNetwork.public_id).then(response => {
         this.transportNetwork = response.data;
+        this.runPeriodicCall();
       }).catch(error => {
-          this.errorMessage = error.response.data;
+          this.errorMessage = error.response.data[0];
           this.showOptimizationErrorModal = true;
       });
     },
     cancelOptimization() {
       transportNetworksAPI.cancelOptimization(this.transportNetwork.public_id).then(response => {
         this.transportNetwork = response.data;
+        clearInterval(this.interval);
       }).catch(error => {
-        this.errorMessage = error.response.data;
+        this.errorMessage = error.response.data[0];
         this.showOptimizationErrorModal = true;
       });
+    },
+    runPeriodicCall() {
+      clearInterval(this.interval);
+      this.interval = setInterval(() => {
+        console.log(`updated network "${this.transportNetwork.name}" ...`);
+        transportNetworksAPI.getTransportNetwork(this.transportNetwork.public_id).then(response => {
+          if (['finished', 'error'].indexOf(response.data.optimization_status) > -1 ) {
+            clearInterval(this.interval);
+          }
+          this.transportNetwork = response.data;
+        });
+      }, 5000);
+    }
+  },
+  created() {
+    if (['queued', 'processing'].indexOf(this.transportNetwork.optimization_status) > -1) {
+      this.runPeriodicCall();
     }
   }
 }
