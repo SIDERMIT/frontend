@@ -40,178 +40,9 @@
                                 <th>&nbsp;</th>
                             </tr>
                         </thead>
-                        <tbody class="collapse-row active">
-                            <tr class="main-row">
-                                <td><span>506</span></td>
-                                <td><span>327</span></td>
-                                <td><span>100</span></td>
-                                <td><span>0.1</span></td>
-                                <td><span>0.1</span></td>
-                                <td><span>0.1</span></td>
-                                <td><span>0.1</span></td>
-                                <td><div class="grid g2 min"><button class="btn icon flat active"><span class="material-icons">vignette</span></button><button class="btn icon flat"><span class="material-icons">arrow_drop_up</span></button></div></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table class="subtable">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="3">
-                                                    <div class="grid">
-                                                        <span>Forward</span>
-                                                        <button class="btn icon flat active"><span class="material-icons">visibility</span></button>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th><span>Node I</span></th>
-                                                <th><span>Node j</span></th>
-                                                <th><span>𝜆</span></th>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table class="subtable">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="3">
-                                                    <div class="grid">
-                                                        <span>Return</span>
-                                                        <button class="btn icon flat"><span class="material-icons">visibility_off</span></button>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th><span>Node I</span></th>
-                                                <th><span>Node j</span></th>
-                                                <th><span>𝜆</span></th>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody class="collapse-row">
-                            <tr class="main-row">
-                                <td><span>506</span></td>
-                                <td><span>327</span></td>
-                                <td><span>100</span></td>
-                                <td><span>0.1</span></td>
-                                <td><span>0.1</span></td>
-                                <td><span>0.1</span></td>
-                                <td><span>0.1</span></td>
-                                <td><div class="grid g2 min"><button class="btn icon flat"><span class="material-icons">visibility_off</span></button><button class="btn icon flat"><span class="material-icons">arrow_drop_down</span></button></div></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table class="subtable">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="3">
-                                                    <div class="grid">
-                                                        <span>Return</span>
-                                                        <button class="btn icon flat"><span class="material-icons">visibility_off</span></button>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th><span>Node I</span></th>
-                                                <th><span>Node j</span></th>
-                                                <th><span>𝜆</span></th>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table class="subtable">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="3">
-                                                    <div class="grid">
-                                                        <span>Forward</span>
-                                                        <button class="btn icon flat"><span class="material-icons">visibility_off</span></button>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th><span>Node I</span></th>
-                                                <th><span>Node j</span></th>
-                                                <th><span>𝜆</span></th>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><span>2</span></td>
-                                                <td><span>3</span></td>
-                                                <td><span>0.8</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <template v-for="(route, index) in resultPerRoute">
+                            <RouteResultCard :route="route" v-bind:key="index"></RouteResultCard>
+                        </template>
                     </table>
                 </div>
         </div>
@@ -294,6 +125,7 @@
 import Modal from '@/components/Modal.vue';
 import NetworkResultTable from '@/components/NetworkResultTable.vue';
 import NetworkResultLegend from '@/components/NetworkResultLegend.vue';
+import RouteResultCard from '@/components/RouteResultCard.vue';
 import CityGraph from '@/components/CityGraph.vue';
 import transportNetworksAPI from '@/api/transportNetworks.api';
 import scenesAPI from '@/api/scenes.api';
@@ -305,6 +137,7 @@ export default {
     Modal,
     NetworkResultTable,
     NetworkResultLegend,
+    RouteResultCard,
     CityGraph
   },
   data() {
@@ -328,7 +161,7 @@ export default {
   methods: {
       setData(networkData, sceneData) {
           this.network = networkData.opt_result;
-          this.result_per_route = networkData.opt_result_per_route;
+          this.resultPerRoute = networkData.opt_result_per_route;
           this.scene = sceneData;
       }
   },
