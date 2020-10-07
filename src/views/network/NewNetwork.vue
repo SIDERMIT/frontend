@@ -43,7 +43,7 @@
                 </div>
                 <div class="linebox-container" v-else>
                     <template v-for="(route, index) in resultQuery">
-                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.route]['showInGraphI']" :showInGraphR="routeVisibility[route.route]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" v-bind:key="index"/>
+                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.name]['showInGraphI']" :showInGraphR="routeVisibility[route.name]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" v-bind:key="index"/>
                     </template>
                 </div>
             </div>
@@ -197,7 +197,7 @@ export default {
       this.scene = sceneData;
       this.network.route_set.forEach(el => {
           this.checkerMessages.push(null);
-          this.$set(this.routeVisibility, el.route, {
+          this.$set(this.routeVisibility, el.name, {
             showInGraphI: false,
             showInGraphR: false
           });
@@ -249,12 +249,17 @@ export default {
       routes.forEach(route => {
         this.network.route_set.push(route);
         this.checkerMessages.push(null);
+        this.routeVisibility[route.name] = {
+            showInGraphI: false,
+            showInGraphR: false
+        }
       });
     },
     deleteRoute(route) {
       let routeIndex = this.network.route_set.findIndex(el => el.name === route.name);
       this.network.route_set.splice(routeIndex, 1);
       this.checkerMessages.splice(routeIndex, 1);
+      delete this.routeVisibility[route.name];
     },
     addEmptyRoute(){
         let emptyRoute = {
@@ -270,8 +275,8 @@ export default {
         this.checkerMessages.unshift(null);
     },
     updateVisibility(route, showInGraphI, showInGraphR) {
-        this.routeVisibility[route.route]['showInGraphI'] = showInGraphI;
-        this.routeVisibility[route.route]['showInGraphR'] = showInGraphR;
+        this.routeVisibility[route.name]['showInGraphI'] = showInGraphI;
+        this.routeVisibility[route.name]['showInGraphR'] = showInGraphR;
         if (!showInGraphI || !showInGraphR) {
             this.viewAll = false;
         }
