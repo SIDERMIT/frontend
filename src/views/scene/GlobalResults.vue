@@ -68,17 +68,18 @@ export default {
         });
     },
     downloadData() {
-        let header = ['Network', '𝑉𝑅𝐶', '𝐶𝑂', '𝐶𝐼', '𝐶𝑈', '𝑡v', '𝑡w', '𝑡a', '𝑇'];
+        let header = ['Network', 'VRC', 'CO', 'CI', 'CU', 'tv', 'tw', 'ta', 'T'];
         let data = this.rows.map((row, index) => {
             let modes = row.optimizationresultpermode_set.reduce((previous, current) => {
                 if (index === 0){
-                    header.concat(['B-' + current.transport_mode , 'K-' + current.transport_mode, 'l-' + current.transport_mode])
+                    header = header.concat(['B-' + current.transport_mode , 'K-' + current.transport_mode, 'l-' + current.transport_mode])
                 }
                 return previous.concat([current.b, current.k, current.l]);
             }, []);
-            return [row.name, row.vrc, row.co, row.ci, row.cu, row.tv, row.tw, row.ta, row.t].concat(modes);
+            return ['\n', row.name, row.optimizationresult.vrc, row.optimizationresult.co, row.optimizationresult.ci, row.optimizationresult.cu, 
+            row.optimizationresult.tv, row.optimizationresult.tw, row.optimizationresult.ta, row.optimizationresult.t].concat(modes);
         }).reduce((previous, current) => {
-            return previous += current.join(',') + '\n';
+            return previous += current.join(',');
         }, header);
         let blob = new Blob([data], {type: "text/plain;charset=utf-8"});
         FileSaver.saveAs(blob, "result-data.csv");
