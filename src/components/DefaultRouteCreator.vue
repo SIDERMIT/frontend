@@ -35,8 +35,8 @@
                             <label class="switch big">
                                 <input v-model="defaultRoute.extension" type="checkbox">
                                 <div class="switch-body">
-                                    <span class="text-on">Large</span>
-                                    <span class="text-off">Short</span>
+                                    <span class="text-on">Short</span>
+                                    <span class="text-off">Large</span>
                                 </div>
                             </label>
                         </div>
