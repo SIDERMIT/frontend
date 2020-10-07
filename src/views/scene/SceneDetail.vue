@@ -62,13 +62,20 @@
         <h2>Transport network</h2>
         <div class="subtitle">
             <h4>Configuration of transport modes and users for the city</h4>
-        </div>
-        <div class="table full">
+        </div>        
+        <div class="table full" v-if="scene.transportnetwork_set.length !== 0">
             <ul class="network-list">
                 <template v-for="transportNetwork in scene.transportnetwork_set">
                     <TransportNetworkRow :cityPublicId="scene.city.public_id" :scenePublicId="scene.public_id" :transportNetwork="transportNetwork" @new-transport-network="newTransportNetwork" @erase-transport-network="removeTransportNetwork" v-bind:key="transportNetwork.public_id"/>
                 </template>
             </ul>
+        </div>
+        <div class="empty-box" v-else>
+            <p>There are not transport networks for this scenario</p>
+            <router-link :to="{ name: 'NewNetwork', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" class="btn">
+                <span>Add new network</span>
+                <span class="material-icons">add</span>
+            </router-link>
         </div>
     </section>
     <footer>
