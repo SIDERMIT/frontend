@@ -30,15 +30,15 @@
                     </template>
                 </tr>
                 <tr v-for="(row, index) in rows" v-bind:key="index">
-                    <td v-if="showNetworkName"><router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: cityPublicId, scenePublicId: scenePublicId, transportNetworkPublicId: row.public_id }}" class="btn icon" alt="Detail">{{ row.name }}</router-link></td>
-                    <td v-if="showCostValues"><span>{{ row.vrc }}</span></td>
-                    <td v-if="showCostValues"><span>{{ row.co }}</span></td>
-                    <td v-if="showCostValues"><span>{{ row.ci }}</span></td>
-                    <td v-if="showCostValues"><span>{{ row.cu }}</span></td>
-                    <td v-if="showUserValues"><span>{{ row.tv }}</span></td>
-                    <td v-if="showUserValues"><span>{{ row.tw }}</span></td>
-                    <td v-if="showUserValues"><span>{{ row.ta }}</span></td>
-                    <td v-if="showUserValues"><span>{{ row.t }}</span></td>
+                    <td v-if="showNetworkName"><router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: cityPublicId, scenePublicId: scenePublicId, transportNetworkPublicId: row.public_id }}" alt="Detail">{{ row.name }}</router-link></td>
+                    <td v-if="showCostValues"><span>{{ row.optimizationresult.vrc }}</span></td>
+                    <td v-if="showCostValues"><span>{{ row.optimizationresult.co }}</span></td>
+                    <td v-if="showCostValues"><span>{{ row.optimizationresult.ci }}</span></td>
+                    <td v-if="showCostValues"><span>{{ row.optimizationresult.cu }}</span></td>
+                    <td v-if="showUserValues"><span>{{ row.optimizationresult.tv }}</span></td>
+                    <td v-if="showUserValues"><span>{{ row.optimizationresult.tw }}</span></td>
+                    <td v-if="showUserValues"><span>{{ row.optimizationresult.ta }}</span></td>
+                    <td v-if="showUserValues"><span>{{ row.optimizationresult.t }}</span></td>
                     <template v-if="showModeValues">
                         <template v-for="(optResultPerMode, index) in row.optimizationresultpermode_set">
                             <td v-bind:key="index"><span>{{ optResultPerMode.b }}</span></td>
