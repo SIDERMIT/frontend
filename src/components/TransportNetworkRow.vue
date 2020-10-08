@@ -197,6 +197,9 @@ export default {
     if (['queued', 'processing'].indexOf(this.transportNetwork.optimization_status) > -1) {
       this.runPeriodicCall();
     }
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   }
 }
 </script>
