@@ -22,7 +22,7 @@
             <tr>
               <th colspan="3">
                 <div class="grid">
-                  <span>Forward</span>
+                  <span>Inbound</span>
                   <button class="btn icon flat" @click="$emit('update-visibility', route, !showInGraphI, showInGraphR)" v-bind:class="{active: showInGraphI}"><span class="material-icons">{{showInGraphI?'visibility':'visibility_off'}}</span></button>
                 </div>
               </th>
@@ -48,7 +48,7 @@
             <tr>
               <th colspan="3">
                 <div class="grid">
-                  <span>Return</span>
+                  <span>Outbound</span>
                   <button class="btn icon flat" @click="$emit('update-visibility', route, showInGraphI, !showInGraphR)" v-bind:class="{active: showInGraphR}"><span class="material-icons">{{showInGraphR?'visibility':'visibility_off'}}</span></button>
                 </div>
               </th>
