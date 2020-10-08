@@ -162,7 +162,7 @@ export default {
     },
     runOptimization() {
       transportNetworksAPI.runOptimization(this.transportNetwork.public_id).then(response => {
-        this.transportNetwork = response.data;
+        this.$emit('change-optimization-info', response.data);
         this.runPeriodicCall();
       }).catch(error => {
           this.errorMessage = error.response.data[0];
@@ -171,7 +171,7 @@ export default {
     },
     cancelOptimization() {
       transportNetworksAPI.cancelOptimization(this.transportNetwork.public_id).then(response => {
-        this.transportNetwork = response.data;
+        this.$emit('change-optimization-info', response.data);
         clearInterval(this.interval);
       }).catch(error => {
         this.errorMessage = error.response.data[0];
@@ -186,7 +186,7 @@ export default {
           if (['finished', 'error'].indexOf(response.data.optimization_status) > -1 ) {
             clearInterval(this.interval);
           }
-          this.transportNetwork = response.data;
+          this.$emit('change-optimization-info', response.data);
         });
       }, 5000);
     }

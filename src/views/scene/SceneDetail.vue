@@ -66,7 +66,7 @@
         <div class="table full" v-if="scene.transportnetwork_set.length !== 0">
             <ul class="network-list">
                 <template v-for="transportNetwork in scene.transportnetwork_set">
-                    <TransportNetworkRow :cityPublicId="scene.city.public_id" :scenePublicId="scene.public_id" :transportNetwork="transportNetwork" @new-transport-network="newTransportNetwork" @erase-transport-network="removeTransportNetwork" v-bind:key="transportNetwork.public_id"/>
+                    <TransportNetworkRow :cityPublicId="scene.city.public_id" :scenePublicId="scene.public_id" :transportNetwork="transportNetwork" @new-transport-network="newTransportNetwork" @erase-transport-network="removeTransportNetwork" @change-optimization-info="updateTransportNetwork" v-bind:key="transportNetwork.public_id"/>
                 </template>
             </ul>
         </div>
@@ -204,13 +204,16 @@ export default {
         this.scene.transportmode_set.splice(index, 1);
     },
     newTransportNetwork(transportNetwork) {
-        console.log("hola");
         this.scene.transportnetwork_set.push(transportNetwork);
     },
     removeTransportNetwork(deletedTransportNetworkPublicId) {
         this.scene.transportnetwork_set = this.scene.transportnetwork_set.filter(transportNetwork => {
           return transportNetwork.public_id != deletedTransportNetworkPublicId;
       });
+    },
+    updateTransportNetwork(transportNetworkObj) {
+        let index = this.scene.transportnetwork_set.findIndex(el => el.public_id === transportNetworkObj.public_id);
+        this.scene.transportnetwork_set[index] = transportNetworkObj;
     }
   },
   beforeRouteEnter (to, from, next) {
