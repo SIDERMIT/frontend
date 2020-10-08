@@ -34,12 +34,12 @@
               </label>
             </td>
             <td><input v-model="tm.t" v-bind:class="{ error: (tm.t === null || tm.t === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
-            <td><input v-model="tm.fini" v-bind:class="{ error: (tm.fini === null || tm.fini === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
-            <td><input v-model="tm.fmax" v-bind:class="{ error: (tm.fmax === null || tm.fmax === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
-            <td><input v-model="tm.kmax" v-bind:class="{ error: (tm.kmax === null || tm.kmax === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
             <td><input v-model="tm.theta" v-bind:class="{ error: (tm.theta === null || tm.theta === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
             <td><input v-model="tm.tat" v-bind:class="{ error: (tm.tat === null || tm.tat === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
             <td><input v-model="tm.d" v-bind:class="{ error: (tm.d === null || tm.d=== '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
+            <td><input v-model="tm.kmax" v-bind:class="{ error: (tm.kmax === null || tm.kmax === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
+            <td><input v-model="tm.fmax" v-bind:class="{ error: (tm.fmax === null || tm.fmax === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
+            <td><input v-model="tm.fini" v-bind:class="{ error: (tm.fini === null || tm.fini === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
           </tr>
         </tbody>
       </table>
@@ -64,7 +64,8 @@
         <div><h4>Warning</h4></div>
       </template>
       <p slot="content">Are you sure you want to delete transport mode "{{ deleteModalData.name }}"</p>
-      <template slot="close-button-name">Proceed</template>
+      <template slot="close-button-name">Yes</template>
+      <template slot="cancel-button-name">No</template>
     </Modal>
   </div>
 </template>
