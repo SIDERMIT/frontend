@@ -61,7 +61,7 @@
             <div class="left-content">
                 <button class="btn" @click="addDefaultTemplateRoute">
                     <span class="material-icons">add</span>
-                    <span>Add row</span>
+                    <span>Add generic transit lines</span>
                 </button>
                 <div class="checker dark" v-if="errorMessage !== null">
                     <div class="grid checker-body error"><span class="material-icons icon">warning</span><span class="text">{{ errorMessage }}</span></div>
