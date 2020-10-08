@@ -253,12 +253,13 @@ export default {
         FileSaver.saveAs(blob, "city-graph.net");
       },
       importPajekFile(fileContent) {
-          citiesAPI.getGraphFromPajekFile(this.newCity.graph).then(response => {
+          citiesAPI.getGraphFromPajekFile(fileContent).then(response => {
             this.newCity.n = response.data.n;
             this.newCity.p = response.data.p;
             this.newCity.l = response.data.l;
             this.newCity.g = response.data.g;
             this.newCity.graph = fileContent;
+            this.newCity.network_descriptor = response.data.network;
             this.showImportModal = false
             this.showEditorAndGraph = true;
             this.enableParameters = false;
