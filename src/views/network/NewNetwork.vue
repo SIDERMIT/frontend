@@ -21,7 +21,7 @@
         <div class="line-details">
             <div>
                 <div class="grid search-bar">
-                    <input v-model="searchQuery" type="search"/>
+                    <input v-model="searchQuery" type="search" placeholder="search by Line ID ..."/>
                     <button class="btn neuro" :disabled="network.route_set.length === 0" @click="setViewAll" v-bind:class="{active: viewAll}">
                         <span class="material-icons">visibility</span>
                         <span>View all</span>
@@ -111,12 +111,16 @@
                 <p class="info">{{ network.route_set.length }} total transit lines</p>
             </div>
             <div class="right-content">
+                <router-link :to="{ name: 'SceneDetail', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id}}" class="btn">
+                    <span class="material-icons">chevron_left</span>
+                    <span>Back</span>
+                </router-link>
                 <button class="btn" @click="showDefaultRouteCreatorModal=true">
                     <span>Add default transit lines</span>
                     <span class="material-icons">format_list_bulleted</span>
                 </button>
                 <button class="btn" @click="updateTransportNetwork">
-                    <span>Save</span>
+                    <span>Save Network</span>
                     <span class="material-icons">chevron_right</span>
                 </button>
             </div>

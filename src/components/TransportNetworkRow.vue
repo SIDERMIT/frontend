@@ -37,7 +37,8 @@
           <div><h4>Warning</h4></div>
         </template>
         <p slot="content">Are you sure you want to run optimization for transport network "{{ transportNetwork.name }}"?</p>
-        <template slot="close-button-name">Proceed</template>
+        <template slot="close-button-name">Yes</template>
+        <template slot="cancel-button-name">No</template>
       </Modal>      
       <Modal v-if="showConfirmCancelOptimizationModal" @cancel="showConfirmCancelOptimizationModal = false" @close="showConfirmCancelOptimizationModal = false" @ok="cancelOptimization" :showCancelButton="true" :modalClasses="['warning']">
         <template slot="title">
@@ -45,7 +46,8 @@
           <div><h4>Warning</h4></div>
         </template>
         <p slot="content">Are you sure you want to cancel optimization for transport network "{{ transportNetwork.name }}"?</p>
-        <template slot="close-button-name">Proceed</template>
+        <template slot="close-button-name">Yes</template>
+        <template slot="cancel-button-name">No</template>
       </Modal>
       <Modal v-if="showOptimizationErrorModal" @cancel="showOptimizationErrorModal = false" @close="showOptimizationErrorModal = false" @ok="showOptimizationErrorModal = false" :showCancelButton="false" :modalClasses="['warning']">
         <template slot="title">
