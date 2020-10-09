@@ -34,6 +34,20 @@ export default {
     showNodeId: {
       type: Boolean,
       default: false
+    },
+    edgeWeights: {
+      type: Object,
+      required: false,
+      default: () => { 
+        return {};
+      }
+    },
+    routes: {
+      type: Array,
+      required: false,
+      default: () => {
+        return [];
+      }
     }
   },
   methods: {
@@ -41,6 +55,7 @@ export default {
       let nodes = this.network.nodes;
       let edges = this.network.edges;
       let data = [];
+      let edgeWeights = this.edgeWeights;
 
       nodes.forEach(node => {
           let nodeName = this.showNodeId?node.name + " (" + node.id + ")":node.name;
@@ -87,10 +102,18 @@ export default {
       });
 
       let links = edges.map(function(edge){
-        return {
+        let attrs = {};
+        if (edgeWeights[edge.source] && edgeWeights[edge.source][edge.target]) {
+          attrs = {
+            lineStyle: {
+              width: edgeWeights[edge.source][edge.target],
+            }
+          }
+        }
+        return {...attrs, ...{
           source: edge.source,
           target: edge.target,
-        }
+        }}
       });
 
       let options = {
@@ -144,6 +167,38 @@ export default {
         animationDelay: function (idx) {
             return idx * 10;
         }
+      });
+
+      this.routes.forEach(route => {
+        console.log(route.name);
+        options.series.push({
+          name: route.name,
+          type: 'graph',
+          coordinateSystem: 'cartesian2d',
+          focusNodeAdjacency: true,
+          data: route.nodes.map(el => {return {...el, ...{itemStyle: {color: 'black'}}}}),
+          links: route.links,
+          edgeSymbol: ['none', 'arrow'],
+          edgeSymbolSize: 10,
+          legendHoverLink: true,
+          lineStyle: {
+            color: '#0eeaea',
+            curveness: 0.2,
+            width:2
+          },
+          itemStyle: {
+            borderWidth: 0,
+            color:'#D06318',
+          },
+          label: {
+              color: '#151C24',
+              fontWeight:'bold',
+          },
+          symbolSize: 10,
+          animationDelay: function (idx) {
+            return idx * 10;
+          }
+        });
       });
 
       return options;
