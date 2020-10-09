@@ -23,14 +23,14 @@
                     <button class="btn neuro" @click="setViewAll" v-bind:class="{active: viewAll}"><span class="material-icons">visibility</span><span>View all</span></button>
                 </div>
                 <div class="graph-view">
-                    <div class="search"><input type="search"></div>
-                    <div class="graph-container"><CityGraph :network="scene.city.network_descriptor" :showNodeId="true"></CityGraph></div>
+                    <div class="search"><input v-model="searchQuery" type="search" placeholder="filter by ROUTE ID ..."></div>
+                    <div class="graph-container"><CityGraph :network="scene.city.network_descriptor" :edgeWeights="edgeWeights" :routes="graphRoutes" :showNodeId="true"></CityGraph></div>
                 </div>
                 <div class="table">
                     <table class="result-details">
                         <thead>
                             <tr>
-                                <th><span>Route ID</span></th>
+                                <th><span>Line ID</span></th>
                                 <th><a><span>𝑓<br>[𝑣𝑒h/h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
                                 <th><a><span>𝐾<br>[𝑝𝑎𝑥/𝑣𝑒h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
                                 <th><a><span>𝐵<br>[𝑣𝑒h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
@@ -40,7 +40,7 @@
                                 <th>&nbsp;</th>
                             </tr>
                         </thead>
-                        <template v-for="(route, index) in resultPerRoute">
+                        <template v-for="(route, index) in resultQuery">
                             <RouteResultCard :route="route" :showInGraphI="routeVisibility[route.route]['showInGraphI']" :showInGraphR="routeVisibility[route.route]['showInGraphR']" @update-visibility="updateVisibility" v-bind:key="index"></RouteResultCard>
                         </template>
                     </table>
@@ -50,7 +50,7 @@
     <footer>
         <div class="container full grid">
             <div class="left-content">
-                <p class="info">300 registered services</p>
+                <p class="info">{{ resultPerRoute.length }} transit lines</p>
             </div>
             <div class="right-content">
                 <button class="btn">
@@ -98,7 +98,7 @@
                             <td><span>Cycle time</span></td>
                         </tr>
                         <tr>
-                            <td><span>𝐶𝑜</span></td>
+                            <td><span>𝐶O</span></td>
                             <td><span>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span></td>
                             <td><span>Cost of operation</span></td>
                         </tr>
@@ -145,6 +145,7 @@ export default {
           showLegendModal: false,
           showDetailLegendModal: false,
           viewAll: false,
+          searchQuery: '',
           network: {
               name: ''
           },
@@ -157,8 +158,21 @@ export default {
                       edges: []
                   }
               }
-          }
+          },
+          edgeWeights: {},
+          graphRoutes: []
       }
+  },
+  computed: {
+    resultQuery() {
+      if(this.searchQuery) {
+        return this.resultPerRoute.filter((item)=>{
+          return this.searchQuery.toLowerCase().split(' ').every(v => item.route.toLowerCase().includes(v))
+        });
+      } else {
+        return this.resultPerRoute;
+      }
+    }
   },
   methods: {
       setData(networkData, sceneData) {
@@ -171,19 +185,88 @@ export default {
             showInGraphR: false
           });
         });
+        this.scene.city.network_descriptor.edges.forEach(el => {
+            if (Object.keys(this.edgeWeights).indexOf(el.source.toString()) < 0) {
+                this.$set(this.edgeWeights, el.source, {});
+            }
+            if (Object.keys(this.edgeWeights[el.source]).indexOf(el.target.toString()) < 0) {
+                this.$set(this.edgeWeights[el.source], el.target, 1);
+            }
+        });
+        this.resultPerRoute.forEach(route => {
+            route.optimizationresultperroutedetail_set.forEach(el => {
+                this.edgeWeights[el.origin_node][el.destination_node] += 4;
+            });
+        });
+      },
+      addOrRemoveGraphRouteObj(route, oldShowInGraphValue, newShowInGraphValue, direction) {
+        let routeName = route.route + '-' + direction;
+        let CurrentRoutePosition = this.graphRoutes.findIndex(el => el.name === routeName);
+
+        if (oldShowInGraphValue && !newShowInGraphValue) {
+            // remove
+            this.graphRoutes.splice(CurrentRoutePosition, 1);
+        } else if (!oldShowInGraphValue && newShowInGraphValue && CurrentRoutePosition == -1) {
+            // add
+            let currentNodes = new Set();
+            let graphRoute = {
+                name: routeName,
+                nodes: [],
+                links: []
+            };
+            route.optimizationresultperroutedetail_set.forEach(el => {
+                if (el.direction === direction) {
+                    if (!currentNodes.has(el.origin_node)) {
+                        let index = this.scene.city.network_descriptor.nodes.findIndex(node => node.id === el.origin_node);
+                        let id =this.scene.city.network_descriptor.nodes[index].id;
+                        let x  = this.scene.city.network_descriptor.nodes[index].x;
+                        let y = this.scene.city.network_descriptor.nodes[index].y;
+                        graphRoute.nodes.push({
+                            name: id,
+                            value: [x, y, id, id]
+                        });
+                        currentNodes.add(el.origin_node);
+                    }
+                    if (!currentNodes.has(el.destination_node)) {
+                        let index = this.scene.city.network_descriptor.nodes.findIndex(node => node.id === el.destination_node);
+                        let id =this.scene.city.network_descriptor.nodes[index].id;
+                        let x  = this.scene.city.network_descriptor.nodes[index].x;
+                        let y = this.scene.city.network_descriptor.nodes[index].y;
+                        graphRoute.nodes.push({
+                            name: id,
+                            value: [x, y, id, id]
+                        });
+                        currentNodes.add(el.destination_node);
+                    }
+                    graphRoute.links.push({
+                        source: el.origin_node.toString(), 
+                        target: el.destination_node.toString()
+                    });
+                }
+            });
+            this.graphRoutes.push(graphRoute);
+        }
       },
       updateVisibility(route, showInGraphI, showInGraphR) {
+        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphI, showInGraphI, 'i');
+        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphR, showInGraphR, 'r');
+
         this.routeVisibility[route.route]['showInGraphI'] = showInGraphI;
         this.routeVisibility[route.route]['showInGraphR'] = showInGraphR;
         if (!showInGraphI || !showInGraphR) {
-            this.viewAll = false;
+          this.viewAll = false;
         }
       },
       setViewAll() {
-          let value = true;
-          if (this.viewAll) {
+        let value = true;
+        if (this.viewAll) {
             value = false;
-          }
+        }
+
+        this.resultPerRoute.forEach(route => {
+            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphI, value, 'i');
+            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphR, value, 'r');
+        });
         Object.keys(this.routeVisibility).forEach(key => {
             this.routeVisibility[key]['showInGraphI'] = value;
             this.routeVisibility[key]['showInGraphR'] = value;
