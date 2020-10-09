@@ -41,13 +41,13 @@
             <div class="table">
                 <ul class="optimizations">
                     <li v-for="optimization in optimizations" v-bind:key="optimization.network_name" 
-                        v-bind:class="{ ready: optimization.status == 'finished',  error: optimization.status == 'error' }">
-                        <div class="icon"><span class="material-icons">{{ getOptimizationIcon(optimization.status) }}</span></div>
+                        v-bind:class="{ ready: optimization.optimization_status == 'finished',  error: optimization.optimization_status == 'error' }">
+                        <div v-html="getOptimizationIcon(optimization.optimization_status)"></div>
                         <div class="name">
                             <h4>{{ optimization.network_name }}</h4>
                             <span class="p-min">{{ optimization.scene_name }} - {{ optimization.city_name }}</span>
                         </div>
-                        <div class="text"><span class="p-min">{{ optimization.status }}</span></div>
+                        <div class="text"><span class="p-min">{{ optimization.optimization_status }}</span></div>
                         <router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id, transportNetworkPublicId: optimization.network_public_id }}" class="btn neuro"><span>View details</span><span class="material-icons">chevron_right</span></router-link>
                         <router-link :to="{ name: 'SceneDetail', params: { cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id }}" class="btn neuro"><span>View scenes</span><span class="material-icons">chevron_right</span></router-link>
                     </li>
@@ -95,17 +95,20 @@ export default {
       getOptimizationIcon(status) {
           let icon = "";
           switch(status) {
-              case "finished":
-                  icon = "check_circle";
-                  break;
-              case "error":
-                  icon = "error";
+              case "queued":
+                  icon = '<div class="icon"><span class="material-icons">schedule</span></div>';
                   break;
               case "processing":
-                  icon = "timelapse";
+                  icon = '<div class="loader">Loading...</div>';
                   break;
-              case "queued":
-                  icon = "schedule";
+              case "finished":
+                  icon = '<div class="icon"><span class="material-icons">check_circle</span></div>';
+                  break;
+              case "error":
+                  icon = '<div class="icon"><span class="material-icons">error</span></div>';
+                  break;
+              default:
+                  icon = '<div class="icon"><span class="material-icons">more_horiz</span></div>';
                   break;
           }
           return icon;
