@@ -193,10 +193,21 @@ export default {
                 this.$set(this.edgeWeights[el.source], el.target, 1);
             }
         });
+        
+        let maxValue = 0;
         this.resultPerRoute.forEach(route => {
             route.optimizationresultperroutedetail_set.forEach(el => {
-                this.edgeWeights[el.origin_node][el.destination_node] += 4;
+                this.edgeWeights[el.origin_node][el.destination_node] += 1;
+                maxValue = Math.max(maxValue, this.edgeWeights[el.origin_node][el.destination_node]);
             });
+        });
+        
+        // normalize data
+        Object.keys(this.edgeWeights).forEach(source => {
+          Object.keys(this.edgeWeights[source]).forEach(dest => {
+            let normalizedValue = Math.max(1, this.edgeWeights[source][dest] / maxValue * 10);
+            this.edgeWeights[source][dest] = normalizedValue;
+          });
         });
       },
       addOrRemoveGraphRouteObj(route, oldShowInGraphValue, newShowInGraphValue, direction) {
