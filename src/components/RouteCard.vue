@@ -14,7 +14,7 @@
         </div>
         <div class="grid min">
             <button class="btn icon" alt="Show" @click="setVisibility" v-bind:class="{active: ((showInGraphI && showInGraphR) || ((showInGraphI && !showInGraphR) || (!showInGraphI && showInGraphR)))}" ><span class="material-icons">{{ showInGraphI && showInGraphR ? "visibility": ((showInGraphI && !showInGraphR) || (!showInGraphI && showInGraphR))? "vignette":"visibility_off" }}</span></button>
-            <button class="btn icon" :alt="collapse?'Open':'Close'" @click="collapse = !collapse"><span class="material-icons">{{ collapse?"arrow_drop_up":"arrow_drop_down" }}</span></button>
+            <button class="btn icon" :alt="collapse?'Close':'Open'" @click="collapse = !collapse"><span class="material-icons">{{ collapse?"arrow_drop_up":"arrow_drop_down" }}</span></button>
         </div>
     </div>
     <div class="linebox-anim" v-bind:class="{open: collapse}">
