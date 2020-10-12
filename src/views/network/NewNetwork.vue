@@ -43,12 +43,12 @@
                 </div>
                 <div class="linebox-container" v-else>
                     <template v-for="(route, index) in resultQuery">
-                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.name]['showInGraphI']" :showInGraphR="routeVisibility[route.name]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" v-bind:key="index"/>
+                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.id]['showInGraphI']" :showInGraphR="routeVisibility[route.id]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" v-bind:key="index"/>
                     </template>
                 </div>
             </div>
             <div class="graph-container">
-                <CityGraph :network="scene.city.network_descriptor" :showNodeId="true"></CityGraph>
+                <CityGraph :network="scene.city.network_descriptor" :edgeWeights="edgeWeights" :routes="graphRoutes" :showNodeId="true"></CityGraph>
             </div>
         </div>
     </section>
@@ -111,7 +111,7 @@
                 <p class="info">{{ network.route_set.length }} transit lines</p>
             </div>
             <div class="right-content">
-                <router-link :to="{ name: 'SceneDetail', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id}}" class="btn">
+                <router-link v-if="scene.city.public_id" :to="{ name: 'SceneDetail', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id}}" class="btn">
                     <span class="material-icons">chevron_left</span>
                     <span>Back</span>
                 </router-link>
@@ -176,12 +176,15 @@ export default {
             name: null,
             transportmode_set: [],
             city: {
+                public_id: '',
                 network_descriptor: {
                     nodes: [],
                     edges: []
                 }
             }
-        }
+        },
+        edgeWeights: {},
+        graphRoutes: []
     }
   },
   computed: {
@@ -199,11 +202,50 @@ export default {
     setData(transportNetworkData, sceneData) {
       this.network = transportNetworkData;
       this.scene = sceneData;
-      this.network.route_set.forEach(el => {
+      this.network.route_set.forEach((el, index) => {
+          el.id = index + 1;
           this.checkerMessages.push(null);
-          this.$set(this.routeVisibility, el.name, {
+          this.$set(this.routeVisibility, el.id, {
             showInGraphI: false,
             showInGraphR: false
+          });
+      });
+      this.setEdgeWeigths();
+    },
+    setEdgeWeigths() {
+      this.scene.city.network_descriptor.edges.forEach(el => {
+        if (Object.keys(this.edgeWeights).indexOf(el.source.toString()) < 0) {
+            this.$set(this.edgeWeights, el.source, {});
+        }
+        if (Object.keys(this.edgeWeights[el.source]).indexOf(el.target.toString()) < 0) {
+            this.$set(this.edgeWeights[el.source], el.target, 1);
+        }
+        
+      });
+
+      let maxValue = 0;
+      this.network.route_set.forEach(route => {
+          if (route.nodes_sequence_i !== '') {
+              let nodes = route.nodes_sequence_i.split(',');
+              for (let i=0;i<nodes.length-1;i++) {
+                  this.edgeWeights[nodes[i]][nodes[i+1]] += 1;
+                  maxValue = Math.max(maxValue, this.edgeWeights[nodes[i]][nodes[i+1]]);
+              }
+          }
+          if (route.nodes_sequence_r !== '') {
+              let nodes = route.nodes_sequence_r.split(',');
+              for (let i=0;i<nodes.length-1;i++) {
+                  this.edgeWeights[nodes[i]][nodes[i+1]] += 1;
+                  maxValue = Math.max(maxValue, this.edgeWeights[nodes[i]][nodes[i+1]]);
+              }
+          }
+      });
+
+      // normalize data
+      Object.keys(this.edgeWeights).forEach(source => {
+          Object.keys(this.edgeWeights[source]).forEach(dest => {
+              let normalizedValue = Math.max(1, this.edgeWeights[source][dest] / maxValue * 10);
+              this.edgeWeights[source][dest] = normalizedValue;
           });
       });
     },
@@ -236,7 +278,6 @@ export default {
                         stops_sequence_r: "Stop sequence R",
                         transport_mode_public_id: "Mode"
                     }
-                    console.log(dictUserFrendlyKey);
                     let key = Object.keys(el)[0];
                     let firstMessage = dictUserFrendlyKey[key] + ": " + el[key];
                     this.$set(this.checkerMessages, index, firstMessage);
@@ -251,22 +292,24 @@ export default {
     },
     createRoutes(routes){
       routes.forEach(route => {
+        route.id = this.network.route_set.length > 0 ? this.network.route_set[this.network.route_set.length - 1] + 1: 1;
         this.network.route_set.push(route);
         this.checkerMessages.push(null);
-        this.routeVisibility[route.name] = {
+        this.$set(this.routeVisibility, route.id, {
             showInGraphI: false,
             showInGraphR: false
-        }
+        });
       });
     },
     deleteRoute(route) {
-      let routeIndex = this.network.route_set.findIndex(el => el.name === route.name);
+      let routeIndex = this.network.route_set.findIndex(el => el.id === route.id);
       this.network.route_set.splice(routeIndex, 1);
       this.checkerMessages.splice(routeIndex, 1);
-      delete this.routeVisibility[route.name];
+      delete this.routeVisibility[route.id];
     },
     addEmptyRoute(){
         let emptyRoute = {
+            id: this.network.route_set.length > 0 ? this.network.route_set[this.network.route_set.length - 1] + 1: 1,
             name: null,
             transport_mode_public_id: null,
             nodes_sequence_i: null,
@@ -277,10 +320,14 @@ export default {
         };
         this.network.route_set.unshift(emptyRoute);
         this.checkerMessages.unshift(null);
+        this.$set(this.routeVisibility, emptyRoute.id, {
+            showInGraphI: false,
+            showInGraphR: false
+        });
     },
     updateVisibility(route, showInGraphI, showInGraphR) {
-        this.routeVisibility[route.name]['showInGraphI'] = showInGraphI;
-        this.routeVisibility[route.name]['showInGraphR'] = showInGraphR;
+        this.routeVisibility[route.id].showInGraphI = showInGraphI;
+        this.routeVisibility[route.id].showInGraphR = showInGraphR;
         if (!showInGraphI || !showInGraphR) {
             this.viewAll = false;
         }
@@ -291,8 +338,8 @@ export default {
             value = false;
         }
         Object.keys(this.routeVisibility).forEach(key => {
-            this.routeVisibility[key]['showInGraphI'] = value;
-            this.routeVisibility[key]['showInGraphR'] = value;
+            this.routeVisibility[key].showInGraphI = value;
+            this.routeVisibility[key].showInGraphR = value;
         });
         this.viewAll = value;
     }
