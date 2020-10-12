@@ -112,7 +112,7 @@ export default {
             emphasis: {
               label: {
                 show: true,
-                formatter: () => edgeWeights[edge.source][edge.target].routesNumber + ' routes'
+                formatter: () => edgeWeights[edge.source][edge.target].routesNumber + ' lines'
               }
             }
           }
