@@ -218,7 +218,7 @@ export default {
                 this.$set(this.edgeWeights, el.source, {});
             }
             if (Object.keys(this.edgeWeights[el.source]).indexOf(el.target.toString()) < 0) {
-                this.$set(this.edgeWeights[el.source], el.target, {value: 1, hasRoutes: false});
+                this.$set(this.edgeWeights[el.source], el.target, {value: 1, routesNumber: 0, hasRoutes: false});
             }
         });
         this.setEdgeWeigths();
@@ -228,6 +228,7 @@ export default {
         Object.keys(this.edgeWeights).forEach(source => {
             Object.keys(this.edgeWeights[source]).forEach(dest => {
                 this.edgeWeights[source][dest].value = 1;
+                this.edgeWeights[source][dest].routesNumber = 0;
                 this.edgeWeights[source][dest].hasRoutes = false;
             });
         });
@@ -241,6 +242,7 @@ export default {
                     for (let i=0;i<nodes.length-1;i++) {
                         if (nodes[i] in this.edgeWeights && nodes[i+1] in this.edgeWeights[nodes[i]]) {
                             this.edgeWeights[nodes[i]][nodes[i+1]].value += 1;
+                            this.edgeWeights[nodes[i]][nodes[i+1]].routesNumber += 1;
                             this.edgeWeights[nodes[i]][nodes[i+1]].hasRoutes = true;
                             maxValue = Math.max(maxValue, this.edgeWeights[nodes[i]][nodes[i+1]].value);
                         }

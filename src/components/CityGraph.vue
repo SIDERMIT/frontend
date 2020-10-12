@@ -108,6 +108,12 @@ export default {
             lineStyle: {
               width: edgeWeights[edge.source][edge.target].value,
               color: edgeWeights[edge.source][edge.target].hasRoutes?'#666666':'#CACECE'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                formatter: () => edgeWeights[edge.source][edge.target].routesNumber + ' routes'
+              }
             }
           }
         }
@@ -151,7 +157,6 @@ export default {
         data: data,
         links: links,
         edgeSymbol:'none',
-        legendHoverLink: false,
         lineStyle: {
             color: '#CACECE',
             width:2,

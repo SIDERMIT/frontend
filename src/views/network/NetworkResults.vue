@@ -193,7 +193,7 @@ export default {
                 this.$set(this.edgeWeights, el.source, {});
             }
             if (Object.keys(this.edgeWeights[el.source]).indexOf(el.target.toString()) < 0) {
-                this.$set(this.edgeWeights[el.source], el.target, {value: 1, hasRoutes: false});
+                this.$set(this.edgeWeights[el.source], el.target, {value: 1, routesNumber: 0, hasRoutes: false});
             }
         });
         
@@ -201,6 +201,7 @@ export default {
         this.resultPerRoute.forEach(route => {
             route.optimizationresultperroutedetail_set.forEach(el => {
                 this.edgeWeights[el.origin_node][el.destination_node].value += 1;
+                this.edgeWeights[el.origin_node][el.destination_node].routesNumber += 1;
                 this.edgeWeights[el.origin_node][el.destination_node].hasRoutes = true;
                 maxValue = Math.max(maxValue, this.edgeWeights[el.origin_node][el.destination_node].value);
             });
