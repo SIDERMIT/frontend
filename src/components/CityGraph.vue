@@ -106,7 +106,8 @@ export default {
         if (edgeWeights[edge.source] && edgeWeights[edge.source][edge.target]) {
           attrs = {
             lineStyle: {
-              width: edgeWeights[edge.source][edge.target],
+              width: edgeWeights[edge.source][edge.target].value,
+              color: edgeWeights[edge.source][edge.target].hasRoutes?'#666666':'#CACECE'
             }
           }
         }
@@ -170,7 +171,6 @@ export default {
       });
 
       this.routes.forEach(route => {
-        console.log(route.name);
         options.series.push({
           name: route.name,
           type: 'graph',

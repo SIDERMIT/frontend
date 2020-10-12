@@ -193,23 +193,24 @@ export default {
                 this.$set(this.edgeWeights, el.source, {});
             }
             if (Object.keys(this.edgeWeights[el.source]).indexOf(el.target.toString()) < 0) {
-                this.$set(this.edgeWeights[el.source], el.target, 1);
+                this.$set(this.edgeWeights[el.source], el.target, {value: 1, hasRoutes: false});
             }
         });
         
         let maxValue = 0;
         this.resultPerRoute.forEach(route => {
             route.optimizationresultperroutedetail_set.forEach(el => {
-                this.edgeWeights[el.origin_node][el.destination_node] += 1;
-                maxValue = Math.max(maxValue, this.edgeWeights[el.origin_node][el.destination_node]);
+                this.edgeWeights[el.origin_node][el.destination_node].value += 1;
+                this.edgeWeights[el.origin_node][el.destination_node].hasRoutes = true;
+                maxValue = Math.max(maxValue, this.edgeWeights[el.origin_node][el.destination_node].value);
             });
         });
         
         // normalize data
         Object.keys(this.edgeWeights).forEach(source => {
           Object.keys(this.edgeWeights[source]).forEach(dest => {
-            let normalizedValue = Math.max(1, this.edgeWeights[source][dest] / maxValue * 10);
-            this.edgeWeights[source][dest] = normalizedValue;
+            let normalizedValue = Math.max(1, this.edgeWeights[source][dest].value / maxValue * 10);
+            this.edgeWeights[source][dest].value = normalizedValue;
           });
         });
       },

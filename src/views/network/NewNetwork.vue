@@ -43,7 +43,7 @@
                 </div>
                 <div class="linebox-container" v-else>
                     <template v-for="(route, index) in resultQuery">
-                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.id]['showInGraphI']" :showInGraphR="routeVisibility[route.id]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" v-bind:key="index"/>
+                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.id]['showInGraphI']" :showInGraphR="routeVisibility[route.id]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" @node-sequence-change="setEdgeWeigths" v-bind:key="index"/>
                     </template>
                 </div>
             </div>
@@ -200,54 +200,63 @@ export default {
   },
   methods: {
     setData(transportNetworkData, sceneData) {
-      this.network = transportNetworkData;
-      this.scene = sceneData;
-      this.network.route_set.forEach((el, index) => {
-          el.id = index + 1;
-          this.checkerMessages.push(null);
-          this.$set(this.routeVisibility, el.id, {
-            showInGraphI: false,
-            showInGraphR: false
-          });
-      });
-      this.setEdgeWeigths();
-    },
-    setEdgeWeigths() {
-      this.scene.city.network_descriptor.edges.forEach(el => {
-        if (Object.keys(this.edgeWeights).indexOf(el.source.toString()) < 0) {
-            this.$set(this.edgeWeights, el.source, {});
-        }
-        if (Object.keys(this.edgeWeights[el.source]).indexOf(el.target.toString()) < 0) {
-            this.$set(this.edgeWeights[el.source], el.target, 1);
+        if (transportNetworkData){
+            this.network = transportNetworkData;
+            this.network.route_set.forEach((el, index) => {
+                el.id = index + 1;
+                this.checkerMessages.push(null);
+                this.$set(this.routeVisibility, el.id, {
+                    showInGraphI: false,
+                    showInGraphR: false
+                });
+            });
         }
         
-      });
+        this.scene = sceneData;
+        this.scene.city.network_descriptor.edges.forEach(el => {
+            if (Object.keys(this.edgeWeights).indexOf(el.source.toString()) < 0) {
+                this.$set(this.edgeWeights, el.source, {});
+            }
+            if (Object.keys(this.edgeWeights[el.source]).indexOf(el.target.toString()) < 0) {
+                this.$set(this.edgeWeights[el.source], el.target, {value: 1, hasRoutes: false});
+            }
+        });
+        this.setEdgeWeigths();
+    },
+    setEdgeWeigths() {
+        // reset data
+        Object.keys(this.edgeWeights).forEach(source => {
+            Object.keys(this.edgeWeights[source]).forEach(dest => {
+                this.edgeWeights[source][dest].value = 1;
+                this.edgeWeights[source][dest].hasRoutes = false;
+            });
+        });
 
-      let maxValue = 0;
-      this.network.route_set.forEach(route => {
-          if (route.nodes_sequence_i !== '') {
-              let nodes = route.nodes_sequence_i.split(',');
-              for (let i=0;i<nodes.length-1;i++) {
-                  this.edgeWeights[nodes[i]][nodes[i+1]] += 1;
-                  maxValue = Math.max(maxValue, this.edgeWeights[nodes[i]][nodes[i+1]]);
-              }
-          }
-          if (route.nodes_sequence_r !== '') {
-              let nodes = route.nodes_sequence_r.split(',');
-              for (let i=0;i<nodes.length-1;i++) {
-                  this.edgeWeights[nodes[i]][nodes[i+1]] += 1;
-                  maxValue = Math.max(maxValue, this.edgeWeights[nodes[i]][nodes[i+1]]);
-              }
-          }
-      });
+        let maxValue = 1;
+        this.network.route_set.forEach(route => {
+            ['nodes_sequence_i', 'nodes_sequence_r'].forEach(attr => {
+            if (route[attr]) {
+                let nodes = route[attr].split(',');
+                if (nodes.length > 1) {
+                    for (let i=0;i<nodes.length-1;i++) {
+                        if (nodes[i] in this.edgeWeights && nodes[i+1] in this.edgeWeights[nodes[i]]) {
+                            this.edgeWeights[nodes[i]][nodes[i+1]].value += 1;
+                            this.edgeWeights[nodes[i]][nodes[i+1]].hasRoutes = true;
+                            maxValue = Math.max(maxValue, this.edgeWeights[nodes[i]][nodes[i+1]].value);
+                        }
+                    }
+                }
+            }
+            });
+        });
 
-      // normalize data
-      Object.keys(this.edgeWeights).forEach(source => {
-          Object.keys(this.edgeWeights[source]).forEach(dest => {
-              let normalizedValue = Math.max(1, this.edgeWeights[source][dest] / maxValue * 10);
-              this.edgeWeights[source][dest] = normalizedValue;
-          });
-      });
+        // normalize data
+        Object.keys(this.edgeWeights).forEach(source => {
+            Object.keys(this.edgeWeights[source]).forEach(dest => {
+                let normalizedValue = Math.max(1, this.edgeWeights[source][dest].value / maxValue * 10);
+                this.edgeWeights[source][dest].value = normalizedValue;
+            });
+        });
     },
     updateTransportNetwork() {
       let request = null;
@@ -300,12 +309,14 @@ export default {
             showInGraphR: false
         });
       });
+      this.setEdgeWeigths();
     },
     deleteRoute(route) {
       let routeIndex = this.network.route_set.findIndex(el => el.id === route.id);
       this.network.route_set.splice(routeIndex, 1);
       this.checkerMessages.splice(routeIndex, 1);
       delete this.routeVisibility[route.id];
+      this.setEdgeWeigths();
     },
     addEmptyRoute(){
         let emptyRoute = {
@@ -353,23 +364,27 @@ export default {
             next(vm => vm.setData(transportNetworkresponse.data, sceneResponse.data));
         }));
     } else {
-        // fill city data
         scenesAPI.getScene(to.params.scenePublicId).then(response => {
-            next(vm => vm.scene = response.data);
+            next(vm => {
+                vm.setData(null, response.data);
+                vm.setEdgeWeigths();
+            });
         });
     }
   },
   beforeRouteUpdate(to, from, next) {
     if (to.params.transportNetworkPublicId) {
-        this.scene = {};
-        transportNetworksAPI.getTransportNetwork(to.params.transportNetworkPublicId).then(response => {
-            this.setData(response.data); 
+        axios.all([
+            transportNetworksAPI.getTransportNetwork(to.params.transportNetworkPublicId),
+            scenesAPI.getScene(to.params.scenePublicId)    
+        ]).then(axios.spread((transportNetworkresponse, sceneResponse) => {
+            this.setData(transportNetworkresponse.data, sceneResponse.data);
             next();
-        });
+        }));
     } else {
-        // fill city data
         scenesAPI.getScene(to.params.scenePublicId).then(response => {
-            this.scene = response.data;
+            this.setData(null, response.data);
+            this.setEdgeWeigths();
             next();
         });
     }
