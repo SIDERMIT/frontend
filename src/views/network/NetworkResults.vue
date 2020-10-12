@@ -185,6 +185,9 @@ export default {
             showInGraphR: false
           });
         });
+        this.setEdgeWeigths();
+      },
+      setEdgeWeigths() {
         this.scene.city.network_descriptor.edges.forEach(el => {
             if (Object.keys(this.edgeWeights).indexOf(el.source.toString()) < 0) {
                 this.$set(this.edgeWeights, el.source, {});
