@@ -120,7 +120,7 @@ export default {
       this.$emit('erase-route', this.route);
     }
   },
-  created() {
+  updated() {
     if (this.route.collapse !== undefined) {
       this.collapse = this.route.collapse;
     }

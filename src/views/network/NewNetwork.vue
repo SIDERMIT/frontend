@@ -43,7 +43,7 @@
                 </div>
                 <div class="linebox-container" v-else>
                     <template v-for="(route, index) in resultQuery">
-                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.id]['showInGraphI']" :showInGraphR="routeVisibility[route.id]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" @node-sequence-change="updateGraph" v-bind:key="index"/>
+                        <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.id]['showInGraphI']" :showInGraphR="routeVisibility[route.id]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" @node-sequence-change="updateGraph" v-bind:key="index"/>
                     </template>
                 </div>
             </div>
@@ -203,7 +203,7 @@ export default {
         if (transportNetworkData){
             this.network = transportNetworkData;
             this.network.route_set.forEach((el, index) => {
-                el.id = index + 1;
+                el.id = this.network.route_set.length - index;
                 this.checkerMessages.push(null);
                 this.$set(this.routeVisibility, el.id, {
                     showInGraphI: false,
@@ -236,19 +236,19 @@ export default {
         let maxValue = 1;
         this.network.route_set.forEach(route => {
             ['nodes_sequence_i', 'nodes_sequence_r'].forEach(attr => {
-            if (route[attr]) {
-                let nodes = route[attr].split(',');
-                if (nodes.length > 1) {
-                    for (let i=0;i<nodes.length-1;i++) {
-                        if (nodes[i] in this.edgeWeights && nodes[i+1] in this.edgeWeights[nodes[i]]) {
-                            this.edgeWeights[nodes[i]][nodes[i+1]].value += 1;
-                            this.edgeWeights[nodes[i]][nodes[i+1]].routesNumber += 1;
-                            this.edgeWeights[nodes[i]][nodes[i+1]].hasRoutes = true;
-                            maxValue = Math.max(maxValue, this.edgeWeights[nodes[i]][nodes[i+1]].value);
+                if (route[attr]) {
+                    let nodes = route[attr].split(',');
+                    if (nodes.length > 1) {
+                        for (let i=0;i<nodes.length-1;i++) {
+                            if (nodes[i] in this.edgeWeights && nodes[i+1] in this.edgeWeights[nodes[i]]) {
+                                this.edgeWeights[nodes[i]][nodes[i+1]].value += 1;
+                                this.edgeWeights[nodes[i]][nodes[i+1]].routesNumber += 1;
+                                this.edgeWeights[nodes[i]][nodes[i+1]].hasRoutes = true;
+                                maxValue = Math.max(maxValue, this.edgeWeights[nodes[i]][nodes[i+1]].value);
+                            }
                         }
                     }
                 }
-            }
             });
         });
 
@@ -348,7 +348,7 @@ export default {
     },
     createRoutes(routes){
       routes.forEach(route => {
-        route.id = this.network.route_set.length > 0 ? this.network.route_set[this.network.route_set.length - 1] + 1: 1;
+        route.id = this.network.route_set.length > 0 ? this.network.route_set[0].id + 1: 1;
         this.network.route_set.push(route);
         this.checkerMessages.push(null);
         this.$set(this.routeVisibility, route.id, {
@@ -367,7 +367,7 @@ export default {
     },
     addEmptyRoute(){
         let emptyRoute = {
-            id: this.network.route_set.length > 0 ? this.network.route_set[this.network.route_set.length - 1] + 1: 1,
+            id: this.network.route_set.length > 0 ? this.network.route_set[0].id + 1: 1,
             name: null,
             transport_mode_public_id: null,
             nodes_sequence_i: null,
