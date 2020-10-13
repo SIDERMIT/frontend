@@ -43,7 +43,7 @@
                 </div>
                 <div class="linebox-container" v-else>
                     <template v-for="(route, index) in resultQuery">
-                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.id]['showInGraphI']" :showInGraphR="routeVisibility[route.id]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" @node-sequence-change="setEdgeWeigths" v-bind:key="index"/>
+                    <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.id]['showInGraphI']" :showInGraphR="routeVisibility[route.id]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" @node-sequence-change="updateGraph" v-bind:key="index"/>
                     </template>
                 </div>
             </div>
@@ -260,6 +260,9 @@ export default {
             });
         });
     },
+    updateGraph() {
+        this.setEdgeWeigths();
+    },
     addOrRemoveGraphRouteObj(route, oldShowInGraphValue, newShowInGraphValue, direction) {
         let CurrentRoutePosition = this.graphRoutes.findIndex(el => el.id === route.id);
         if (oldShowInGraphValue && !newShowInGraphValue) {
@@ -281,7 +284,6 @@ export default {
                     for (let i=0;i<nodes.length-1;i++) {
                         [nodes[i], nodes[i+1]].forEach(nodeId => {
                             if (!currentNodes.has(nodeId)) {
-                                console.log(this.scene.city.network_descriptor.nodes);
                                 let index = this.scene.city.network_descriptor.nodes.findIndex(node => node.id === Number(nodeId));
                                 let id =this.scene.city.network_descriptor.nodes[index].id;
                                 let x  = this.scene.city.network_descriptor.nodes[index].x;
