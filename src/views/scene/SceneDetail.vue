@@ -213,7 +213,8 @@ export default {
     },
     updateTransportNetwork(transportNetworkObj) {
         let index = this.scene.transportnetwork_set.findIndex(el => el.public_id === transportNetworkObj.public_id);
-        this.scene.transportnetwork_set[index] = transportNetworkObj;
+        this.scene.transportnetwork_set[index].optimization_status = transportNetworkObj.optimization_status;
+        this.scene.transportnetwork_set[index].optimization_error_message = transportNetworkObj.optimization_error_message;
     }
   },
   beforeRouteEnter (to, from, next) {
