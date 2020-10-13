@@ -260,6 +260,49 @@ export default {
             });
         });
     },
+    addOrRemoveGraphRouteObj(route, oldShowInGraphValue, newShowInGraphValue, direction) {
+        let CurrentRoutePosition = this.graphRoutes.findIndex(el => el.id === route.id);
+        if (oldShowInGraphValue && !newShowInGraphValue) {
+            // remove
+            this.graphRoutes.splice(CurrentRoutePosition, 1);
+        } else if (!oldShowInGraphValue && newShowInGraphValue && CurrentRoutePosition == -1) {
+            // add
+            let routeName = route.route + '-' + direction;
+            let currentNodes = new Set();
+            let graphRoute = {
+                name: routeName,
+                nodes: [],
+                links: []
+            };
+            let attr = direction === 'i'?'nodes_sequence_i':'nodes_sequence_r';
+            if (route[attr]) {
+                let nodes = route[attr].split(',');
+                if (nodes.length > 1) {
+                    for (let i=0;i<nodes.length-1;i++) {
+                        [nodes[i], nodes[i+1]].forEach(nodeId => {
+                            if (!currentNodes.has(nodeId)) {
+                                console.log(this.scene.city.network_descriptor.nodes);
+                                let index = this.scene.city.network_descriptor.nodes.findIndex(node => node.id === Number(nodeId));
+                                let id =this.scene.city.network_descriptor.nodes[index].id;
+                                let x  = this.scene.city.network_descriptor.nodes[index].x;
+                                let y = this.scene.city.network_descriptor.nodes[index].y;
+                                graphRoute.nodes.push({
+                                    name: id,
+                                    value: [x, y, id, id]
+                                });
+                                currentNodes.add(nodeId);
+                            }
+                        });
+                        graphRoute.links.push({
+                            source: nodes[i].toString(), 
+                            target: nodes[i+1].toString()
+                        });
+                    }
+                }
+            }
+            this.graphRoutes.push(graphRoute);
+        }
+    },
     updateTransportNetwork() {
       let request = null;
       if (!this.network.public_id) {
@@ -339,6 +382,9 @@ export default {
         });
     },
     updateVisibility(route, showInGraphI, showInGraphR) {
+        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphI, showInGraphI, 'i');
+        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphR, showInGraphR, 'r');
+
         this.routeVisibility[route.id].showInGraphI = showInGraphI;
         this.routeVisibility[route.id].showInGraphR = showInGraphR;
         if (!showInGraphI || !showInGraphR) {
@@ -350,6 +396,12 @@ export default {
         if (this.viewAll) {
             value = false;
         }
+
+        this.network.route_set.forEach(route => {
+            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphI, value, 'i');
+            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphR, value, 'r');
+        });
+
         Object.keys(this.routeVisibility).forEach(key => {
             this.routeVisibility[key].showInGraphI = value;
             this.routeVisibility[key].showInGraphR = value;
