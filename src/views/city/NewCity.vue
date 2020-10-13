@@ -62,6 +62,10 @@
                 <div class="left-content">
                 </div>
                 <div class="right-content">
+                    <router-link class="btn" :to="{name: 'Dashboard'}">
+                        <span>Cancel</span>
+                        <span class="material-icons">chevron_left</span>
+                    </router-link>
                     <button class="btn" @click="updateCity">
                         <span>{{ nextButtonName }}</span>
                         <span class="material-icons">chevron_right</span>
