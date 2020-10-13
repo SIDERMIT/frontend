@@ -10,7 +10,7 @@
           <tr v-for="(row, i) in matrixData" v-bind:key="i">
             <th><span>{{ header[i] }}</span></th>
             <td v-for="(col, j) in row" v-bind:key="`${i}-${j}`" >
-              <input type="text" :value="matrixData[i][j]" readonly>
+              <input type="text" :value="matrixData[i][j]" readonly disabled>
             </td>
           </tr>
         </tbody>
