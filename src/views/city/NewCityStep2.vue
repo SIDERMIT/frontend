@@ -38,7 +38,7 @@
                 <div class="flex flex-end" v-if="!enableParameters">
                     <button class="btn"><span class="material-icons">edit</span><span>Edit parameters</span></button>
                 </div>
-                <button class="btn full main" @click="buildMatrix" :disabled="!enableParameters">Render OD matrix</button>
+                <button class="btn full main" @click="buildMatrix" :disabled="!enableParameters">{{ city.demand_matrix===null?'Render':'Update' }} OD matrix</button>
             </div>
             <div class="graph-container"><CityGraph :network="city.network_descriptor"></CityGraph></div>
         </section>
