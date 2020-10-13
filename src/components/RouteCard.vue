@@ -14,10 +14,10 @@
         </div>
         <div class="grid min">
             <button class="btn icon" alt="Show" @click="setVisibility" v-bind:class="{active: ((showInGraphI && showInGraphR) || ((showInGraphI && !showInGraphR) || (!showInGraphI && showInGraphR)))}" ><span class="material-icons">{{ showInGraphI && showInGraphR ? "visibility": ((showInGraphI && !showInGraphR) || (!showInGraphI && showInGraphR))? "vignette":"visibility_off" }}</span></button>
-            <button class="btn icon" :alt="collapse?'Close':'Open'" @click="collapse = !collapse"><span class="material-icons">{{ collapse?"arrow_drop_up":"arrow_drop_down" }}</span></button>
+            <button class="btn icon" :alt="collapse?'Open':'Close'" @click="collapse = !collapse"><span class="material-icons">{{ collapse?"arrow_drop_down":"arrow_drop_up" }}</span></button>
         </div>
     </div>
-    <div class="linebox-anim" v-bind:class="{open: collapse}">
+    <div class="linebox-anim" v-bind:class="{open: !collapse}">
         <div class="linebox-content">
             <div class="table min">
                 <table>
@@ -104,7 +104,7 @@ export default {
   data() {
     return {
         showDeleteConfirmationModal: false,
-        collapse: false,
+        collapse: true,
     }
   },
   methods: {
@@ -117,6 +117,11 @@ export default {
     },
     deleteRow() {
       this.$emit('erase-route', this.route);
+    }
+  },
+  created() {
+    if (this.route.collapse !== undefined) {
+      this.collapse = this.route.collapse;
     }
   }
 }

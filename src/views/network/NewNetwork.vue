@@ -374,7 +374,8 @@ export default {
             nodes_sequence_r: null,
             stops_sequence_i: null,
             stops_sequence_r: null,
-            type: 1
+            type: 1,
+            collapse: false
         };
         this.network.route_set.unshift(emptyRoute);
         this.checkerMessages.unshift(null);
