@@ -9,6 +9,7 @@
         <div class="line-input">
             <h4>Mode</h4>
             <select v-model="route.transport_mode_public_id">
+                <option selected disabled>Choose one</option>
                 <option v-for="transportMode in transportModeSet" v-bind:value="transportMode.public_id" v-bind:key="transportMode.public_id">{{ transportMode.name }}</option>
             </select>
         </div>
