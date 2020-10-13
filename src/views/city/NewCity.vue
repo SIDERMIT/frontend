@@ -43,7 +43,7 @@
             <div class="flex flex-end" v-if="!enableParameters">
                 <button class="btn" @click="showEditParameterModal = true"><span class="material-icons">publish</span><span>Edit parameters</span></button>
             </div>
-            <button class="btn full main" @click="buildGraph" :disabled="!enableParameters" >Build graph</button>
+            <button class="btn full main" @click="buildGraph" :disabled="!enableParameters" >{{ showEditorAndGraph?'Update':'Build' }} graph</button>
         </section>
         <section class="step1-graph-editor" v-if="showEditorAndGraph">
             <h2>Definition of the city by nodes and arcs</h2>
@@ -121,7 +121,7 @@
             <p slot="content" v-html="modalData.message"></p>
             <template slot="close-button-name">{{ modalData.closeButtonName }}</template>
         </Modal>
-        <Modal v-if="showEditParameterModal" @cancel="showEditParameterModal = false" @close="showEditParameterModal = false" @ok="editParameterAction" :showCancelButton="true">
+        <Modal v-if="showEditParameterModal" @cancel="showEditParameterModal = false" @close="showEditParameterModal = false" @ok="editParameterAction" :showCancelButton="true" :modalClasses="['warning']">
             <template slot="title">
                 <div class="icon"><span class="material-icons">warning</span></div>
                 <div><h4>Warning</h4></div>
