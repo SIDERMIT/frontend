@@ -27,9 +27,11 @@
             <td><input v-model="tm.c2" v-bind:class="{ error: (tm.c2 === null || tm.c2 === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
             <td><input v-model="tm.v" v-bind:class="{ error: (tm.v === null || tm.v === '') }" type="text" placeholder="-" :disabled="extras[index].disabled"></td>
             <td>
-              <label class="switch">
+              <label class="switch big">
                 <input v-model="extras[index].bya" type="checkbox" :disabled="extras[index].disabled">
                 <div class="switch-body">
+                    <span class="text-on">Yes</span>
+                    <span class="text-off">No</span>
                 </div>
               </label>
             </td>

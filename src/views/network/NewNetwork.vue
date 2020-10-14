@@ -108,7 +108,7 @@
                     <span class="material-icons">add</span>
                     <span>Add new transit line</span>
                 </button>
-                <p class="info">{{ network.route_set.length }} transit lines</p>
+                <p class="info"><span class="num">{{ network.route_set.length }}</span> transit lines</p>
             </div>
             <div class="right-content">
                 <router-link v-if="scene.city.public_id" :to="{ name: 'SceneDetail', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id}}" class="btn">
