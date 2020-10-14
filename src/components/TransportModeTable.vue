@@ -12,12 +12,12 @@
             <th><span>𝜈<br>[𝑘𝑚/h]</span></th>
             <th><span>B&A<br>Sequential</span></th>
             <th><span>𝑡<br>[𝑠/𝑝𝑎𝑥]</span></th>
-            <th><span>𝑓ini<br>[veh/hr]</span></th>
-            <th><span>𝑓𝑚𝑎𝑥<br>[𝑣𝑒h/h]</span></th>
-            <th><span>𝐾𝑚𝑎𝑥<br>[𝑝𝑎𝑥/𝑣𝑒h]</span></th>
             <th><span>𝜃</span></th>
             <th><span>𝑡𝑎𝑡<br>[𝑚𝑖𝑛]</span></th>
             <th><span>𝐷</span></th>
+            <th><span>𝐾𝑚𝑎𝑥<br>[𝑝𝑎𝑥/𝑣𝑒h]</span></th>
+            <th><span>𝑓𝑚𝑎𝑥<br>[𝑣𝑒h/h]</span></th>
+            <th><span>𝑓ini<br>[veh/hr]</span></th>
           </tr>
           <tr v-for="(tm, index) in rows" v-bind:key="index">
             <td><button v-if="extras[index].disabled" class="btn icon" @click="showDeleteModal(tm.name, index, tm.public_id)" alt="delete"><span class="material-icons">delete</span></button></td>
