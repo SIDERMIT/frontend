@@ -38,7 +38,7 @@
             </div>
         </template>
         <template v-else>
-            <div class="table">
+            <div class="table full">
                 <ul class="optimizations">
                     <li v-for="optimization in optimizations" v-bind:key="optimization.network_name" 
                         v-bind:class="{ ready: optimization.optimization_status == 'finished',  error: optimization.optimization_status == 'error' }">
