@@ -36,7 +36,7 @@
                             <span>Add transit line</span>
                         </button>
                         <button class="btn" @click="showDefaultRouteCreatorModal=true">
-                            <span>Add default transit lines</span>
+                            <span>Add generic transit lines</span>
                             <span class="material-icons">format_list_bulleted</span>
                         </button>
                     </div>
@@ -116,7 +116,7 @@
                     <span>Back</span>
                 </router-link>
                 <button class="btn" @click="showDefaultRouteCreatorModal=true">
-                    <span>Add default transit lines</span>
+                    <span>Add generic transit lines</span>
                     <span class="material-icons">format_list_bulleted</span>
                 </button>
                 <button class="btn" @click="updateTransportNetwork">
