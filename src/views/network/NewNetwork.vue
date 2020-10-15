@@ -264,18 +264,20 @@ export default {
         this.setEdgeWeigths();
     },
     addOrRemoveGraphRouteObj(route, oldShowInGraphValue, newShowInGraphValue, direction) {
-        let CurrentRoutePosition = this.graphRoutes.findIndex(el => el.id === route.id);
+        let CurrentRoutePosition = this.graphRoutes.findIndex(el => el.id === route.id && el.direction === direction);
         if (oldShowInGraphValue && !newShowInGraphValue) {
             // remove
             this.graphRoutes.splice(CurrentRoutePosition, 1);
         } else if (!oldShowInGraphValue && newShowInGraphValue && CurrentRoutePosition == -1) {
             // add
-            let routeName = route.route + '-' + direction;
+            let routeName = route.name + '-' + direction;
             let currentNodes = new Set();
             let graphRoute = {
                 name: routeName,
                 nodes: [],
-                links: []
+                links: [],
+                id: route.id,
+                direction: direction
             };
             let attr = direction === 'i'?'nodes_sequence_i':'nodes_sequence_r';
             if (route[attr]) {
@@ -406,8 +408,8 @@ export default {
         });
 
         Object.keys(this.routeVisibility).forEach(key => {
-            this.routeVisibility[key].showInGraphI = value;
-            this.routeVisibility[key].showInGraphR = value;
+            this.routeVisibility[Number(key)].showInGraphI = value;
+            this.routeVisibility[Number(key)].showInGraphR = value;
         });
         this.viewAll = value;
     }
