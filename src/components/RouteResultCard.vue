@@ -37,7 +37,7 @@
             <tr v-for="(measure, index) in computedRoute.directionI" v-bind:key="index">
               <td><span>{{ measure.origin_node }}</span></td>
               <td><span>{{ measure.destination_node }}</span></td>
-              <td><span>{{ measure.lambda_value }}</span></td>
+              <td><span>{{ measure.lambda_value.toLocaleString() }}</span></td>
             </tr>
           </tbody>
         </table>
@@ -63,7 +63,7 @@
             <tr v-for="(measure, index) in computedRoute.directionR" v-bind:key="index">
               <td><span>{{ measure.origin_node }}</span></td>
               <td><span>{{ measure.destination_node }}</span></td>
-              <td><span>{{ measure.lambda_value }}</span></td>
+              <td><span>{{ measure.lambda_value.toLocaleString() }}</span></td>
             </tr>
           </tbody>
         </table>
