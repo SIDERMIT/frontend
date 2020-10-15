@@ -53,10 +53,10 @@
                 <p class="info">{{ resultPerRoute.length }} transit lines</p>
             </div>
             <div class="right-content">
-                <button class="btn">
+                <router-link :to="{ name: 'SceneDetail', params: { cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" class="btn">
                     <span class="material-icons">chevron_left</span>
                     <span>Back</span>
-                </button>
+                </router-link>
                 <button class="btn">
                     <span>Download data</span>
                     <span class="material-icons">get_app</span>
