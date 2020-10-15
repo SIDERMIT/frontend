@@ -178,11 +178,16 @@ export default {
           this.extras[index].disabled=true;
           this.$emit('new-transportmode', copiedRow);
         }).catch(error => {
+          let message = '';
           let data = error.response.data;
-          let fieldName = Object.getOwnPropertyNames(data)[0]
-          let message = data[fieldName][0];
-          if (message === 'This field is required.') {
-            message = 'Fields can not be empty';
+          if (Array.isArray(data)) {
+            message = data[0];
+          } else {
+            let fieldName = Object.getOwnPropertyNames(data)[0]
+            message = data[fieldName][0];
+            if (message === 'This field is required.') {
+              message = 'Fields can not be empty';
+            }
           }
 
           this.checker.isError = true;
