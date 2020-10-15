@@ -31,6 +31,7 @@
                         <thead>
                             <tr>
                                 <th><span>Line ID</span></th>
+                                <th><a><span>F<br>[𝑣𝑒h/h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
                                 <th><a><span>𝑓<br>[𝑣𝑒h/h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
                                 <th><a><span>𝐾<br>[𝑝𝑎𝑥/𝑣𝑒h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
                                 <th><a><span>𝐵<br>[𝑣𝑒h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
@@ -78,9 +79,14 @@
                             <th><span>Description</span></th>
                         </tr>
                         <tr>
-                            <td><span>𝑓</span></td>
+                            <td><span>F</span></td>
                             <td>[𝑣𝑒h/h]</td>
                             <td><span>frequency</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>𝑓</span></td>
+                            <td>[𝑣𝑒h/h]</td>
+                            <td><span>frequency per line, related with D parameter in transport mode associate to route</span></td>
                         </tr>
                         <tr>
                             <td><span>𝐾</span></td>

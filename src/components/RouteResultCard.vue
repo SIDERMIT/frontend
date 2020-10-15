@@ -3,6 +3,7 @@
     <tr class="main-row">
       <td><span>{{ computedRoute.route }}</span></td>
       <td><span>{{ computedRoute.frequency.toLocaleString() }}</span></td>
+      <td><span>{{ computedRoute.frequency_per_line.toLocaleString() }}</span></td>
       <td><span>{{ computedRoute.k.toLocaleString() }}</span></td>
       <td><span>{{ computedRoute.b.toLocaleString() }}</span></td>
       <td><span>{{ computedRoute.tc.toLocaleString() }}</span></td>
