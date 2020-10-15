@@ -6,20 +6,24 @@ function isObject(val) {
 
 function processObject(errorData) {
   let message = '';
-  for (let key in errorData) {
-    let item = errorData[key];
-    if (Array.isArray(item)){
-      if (key !== 'non_field_errors') {
-        message += `<b>${key}:</b><ul>`;
-      } else {
-        message += `<ul>`;
-      }      
-      errorData[key].forEach(el => {
-          message += `<li>${el}</li>`; 
-      });
-      message += '</ul>'
-    } else if (isObject(item)) {
-      message += processObject(item);
+  if (Array.isArray(errorData)) {
+    message = errorData[0];
+  } else {
+    for (let key in errorData) {
+      let item = errorData[key];
+      if (Array.isArray(item)){
+        if (key !== 'non_field_errors') {
+          message += `<b>${key}:</b><ul>`;
+        } else {
+          message += `<ul>`;
+        }      
+        errorData[key].forEach(el => {
+            message += `<li>${el}</li>`; 
+        });
+        message += '</ul>'
+      } else if (isObject(item)) {
+        message += processObject(item);
+      }
     }
   }
   
