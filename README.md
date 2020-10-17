@@ -47,3 +47,19 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### DockerHub
+
+for DockerHub we need build nginx server:
+
+```
+# build nginx server
+docker build --no-cache -f docker\Dockerfile -t nginx-webapp:latest .
+
+# create tag
+docker tag nginx-webapp:latest sidermit/nginx-webapp:latest
+
+# push to aws repository
+docker push sidermit/nginx-webapp:latest
+```
