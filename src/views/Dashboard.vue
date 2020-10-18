@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <div class="header">          
-        <h1>Dashboard111</h1>
+        <h1>Dashboard</h1>
     </div>
 
     <section class="recent-cities">

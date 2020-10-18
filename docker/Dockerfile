@@ -3,6 +3,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+RUN touch '.env.production' && \
+  echo 'NODE_ENV=production' >> '.env.production' && \
+  echo 'VUE_APP_BASE_URL=http://localhost:8000/backend' >> '.env.production'
 RUN npm run build
 
 FROM nginx:1.17
