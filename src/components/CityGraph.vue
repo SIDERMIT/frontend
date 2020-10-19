@@ -1,5 +1,5 @@
 <template>
-  <v-chart :options="getOptions()" />
+  <v-chart :options="getOptions()" :autoresize="true" />
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
