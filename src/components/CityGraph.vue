@@ -115,8 +115,9 @@ export default {
         if (edgeWeights[edge.source] && edgeWeights[edge.source][edge.target]) {
           attrs = {
             lineStyle: {
-              width: edgeWeights[edge.source][edge.target].value,
-              color: edgeWeights[edge.source][edge.target].hasRoutes?'#666666':'#CACECE'
+              width: edgeWeights[edge.source][edge.target].hasRoutes?edgeWeights[edge.source][edge.target].value:2,
+              color: edgeWeights[edge.source][edge.target].hasRoutes?'#B5BBBF':'#CACECF',
+              type: edgeWeights[edge.source][edge.target].hasRoutes?'solid':'dotted'
             },
             emphasis: {
               label: {
