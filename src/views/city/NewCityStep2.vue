@@ -26,7 +26,7 @@
                             </tr>
                             <tr>
                                 <td><input v-model="city.n" :disabled="true" type="text" placeholder="-"/></td>
-                                <td><input v-model="city.y" :disabled="!enableParameters" v-bind:class="{ error: (city.y === null || city.y === '') && enableParameters }" type="text" placeholder="-"/></td>
+                                <td><input v-model="city.y" :disabled="!enableParameters" v-bind:class="{ error: (city.y === null || city.y === '') && enableParameters }" ref="nInput" type="text" placeholder="-"/></td>
                                 <td><input v-model="city.a" :disabled="!enableParameters" v-bind:class="{ error: (city.a === null || city.a === '') && enableParameters }" type="text" placeholder="-"/></td>
                                 <td><input v-model="city.alpha" :disabled="!enableParameters" v-bind:class="{ error: (city.alpha === null || city.alpha === '') && enableParameters }" type="text" placeholder="-"/></td>
                                 <td><input v-model="city.beta" :disabled="!enableParameters" v-bind:class="{ error: (city.beta === null || city.beta === '') && enableParameters }" type="text" placeholder="-"/></td>
@@ -36,7 +36,7 @@
                 </div>
                 <Checker v-if="parameterValidator.show" :isError="parameterValidator.isError" :message="parameterValidator.message" />
                 <div class="flex flex-end" v-if="!enableParameters">
-                    <button class="btn"><span class="material-icons">edit</span><span>Edit parameters</span></button>
+                    <button class="btn" @click="showEditParameterModal=true"><span class="material-icons">edit</span><span>Edit parameters</span></button>
                 </div>
                 <button class="btn full main" @click="buildMatrix" :disabled="!enableParameters">{{ city.demand_matrix===null?'Render':'Update' }} OD matrix</button>
             </div>
@@ -88,6 +88,14 @@
                 </div>
             </div>
         </footer>
+        <Modal v-if="showEditParameterModal" @cancel="showEditParameterModal = false" @close="showEditParameterModal = false" @ok="editParameterAction" :showCancelButton="true" :modalClasses="['warning']">
+            <template slot="title">
+                <div class="icon"><span class="material-icons">warning</span></div>
+                <div><h4>Warning</h4></div>
+            </template>
+            <p slot="content">Editing demand parameters will delete previous data. Do you want to continue?</p>
+            <template slot="close-button-name">Yes</template>
+        </Modal>
         <Modal v-if="showLegendModal" @close="showLegendModal = false" :showBase="false">
             <template slot="title">
                 <h2>Terminology</h2>
@@ -178,6 +186,7 @@ export default {
         showImportModal: false,
         showWarningModal: false,
         showLegendModal: false,
+        showEditParameterModal: false,
         enableParameters: true,
         parameterValidator: {
             show: false,
@@ -259,13 +268,22 @@ export default {
         });
     },
     importMatrixFile(fileContent) {
+        fileContent.split('\n').forEach((row, i) => {
+            if (i !== 0) {
+                row.split(',').forEach((value, j) => {
+                    if (j !== 0) {
+                        console.log(value);
+                        this.city.demand_matrix[i-1][j-1] = parseFloat(value);
+                    }
+                });
+            }
+        });
+
         this.city.y = null;
         this.city.a = null;
         this.city.alpha = null;
         this.city.beta = null;
-        this.city.demand_matrix = fileContent;
-        this.showImportModal = false
-        this.showEditorAndGraph = true;
+        this.showImportModal = false;
         this.enableParameters = false;
     },
     downloadMatrixData() {
@@ -279,7 +297,15 @@ export default {
         }, header);
         let blob = new Blob([data], {type: "text/plain;charset=utf-8"});
         FileSaver.saveAs(blob, "matrix-data.csv");
-    }
+    },
+    editParameterAction() {
+        this.enableParameters = true;
+        this.city.demand_matrix = null;
+        this.showEditParameterModal = false;
+        this.$nextTick(() => {
+            this.$refs.nInput.focus();
+        });
+    },
   },
   beforeRouteEnter (to, from, next) {
     citiesAPI.getCity(to.params.cityPublicId).then(response => (next(vm => vm.setData(response.data))));
