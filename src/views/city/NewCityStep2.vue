@@ -46,6 +46,7 @@
             <div class="subtitle grid">
                 <h2>OD Matrix</h2>
                 <button class="btn" @click="showImportModal = true"><span class="material-icons">publish</span><span>Import CSV file</span></button>
+                <button class="btn" @click="downloadMatrixData"><span class="material-icons">cloud_download</span><span>Export Matrix data</span></button>
             </div>
             <div class="empty-box" v-if="city.demand_matrix === null">
                 <p>You have not generated your matrix yet, you can import data from csv file.</p>
@@ -162,6 +163,7 @@ import CityGraph from '@/components/CityGraph.vue';
 import citiesAPI from '@/api/cities.api';
 import FileReader from '@/components/FileReader.vue';
 import Checker from '@/components/Checker.vue';
+import FileSaver from 'file-saver';
 
 export default {
   name: 'NewCityStep2',
@@ -265,6 +267,18 @@ export default {
         this.showImportModal = false
         this.showEditorAndGraph = true;
         this.enableParameters = false;
+    },
+    downloadMatrixData() {
+        let header = [''].concat(this.city.demand_matrix_header);
+        let rows = [];
+        this.city.demand_matrix.forEach((row, index) => {
+            rows.push('\n' + [this.city.demand_matrix_header[index]].concat(row.join(',')));
+        });
+        let data = rows.reduce((previous, current) => {
+            return previous += current;
+        }, header);
+        let blob = new Blob([data], {type: "text/plain;charset=utf-8"});
+        FileSaver.saveAs(blob, "matrix-data.csv");
     }
   },
   beforeRouteEnter (to, from, next) {
