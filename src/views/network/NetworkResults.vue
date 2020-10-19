@@ -58,7 +58,7 @@
                     <span class="material-icons">chevron_left</span>
                     <span>Back</span>
                 </router-link>
-                <button class="btn">
+                <button class="btn" @click="downloadData">
                     <span>Download data</span>
                     <span class="material-icons">get_app</span>
                 </button>
@@ -136,6 +136,7 @@ import CityGraph from '@/components/CityGraph.vue';
 import transportNetworksAPI from '@/api/transportNetworks.api';
 import scenesAPI from '@/api/scenes.api';
 import axios from 'axios';
+import FileSaver from 'file-saver';
 
 export default {
   name: 'NetworkResults',
@@ -294,6 +295,21 @@ export default {
             this.routeVisibility[key]['showInGraphR'] = value;
         });
         this.viewAll = value;
+      },
+      downloadData() {
+        let header = ['Line ID', 'F [veh/h]', 'f [veh/h]', 'K [pax/veh]', 'B [veh]', 'tc [min]', 'Co [US$/h-pax]', 'lambda-min', 'direction', 'origin-node', 'destination-node', 'lambda'];
+        let data = this.resultPerRoute.map(row => {
+            let rows = '';
+            let fileRow = [row.route, row.frequency, row.frequency_per_line, row.k, row.b, row.tc, row.co, row.lambda_min];
+            row.optimizationresultperroutedetail_set.forEach(el => {
+                rows += '\n' + [].concat(fileRow, [el.direction, el.origin_node, el.destination_node, el.lambda_value]).join(',');
+            });
+            return rows;
+        }).reduce((previous, current) => {
+            return previous += current;
+        }, header);
+        let blob = new Blob([data], {type: "text/plain;charset=utf-8"});
+        FileSaver.saveAs(blob, "result-data.csv");
       }
   },
   beforeRouteEnter (to, from, next) {
