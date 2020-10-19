@@ -569,8 +569,8 @@ table th a:hover:before {content: ''; position: absolute; width: 100%; height: 1
 .title.grid.full {grid-template-columns: 1fr auto;}
 
 .result-details {overflow: auto;}
-.result-details > thead > tr,.result-details > tbody > tr {display: grid; grid-template-columns: repeat(8, 1fr);}
-.result-details > tbody, .result-details > thead {display: block; width: 100%; background: var(--white);}
+.result-details > thead > tr,.result-details > tbody > tr {display: grid; grid-template-columns: repeat(9, 1fr);}
+.result-details > tbody, .result-details > thead {display: block; width: 100%; background: var(--white); border-top-left-radius: 10px; border-top-right-radius: 10px; overflow: hidden;}
 .result-details > thead > tr th {display: flex; justify-content: center; align-items: center;}
 .result-details td,.result-details th {min-width: 60px;}
 
