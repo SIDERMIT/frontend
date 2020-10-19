@@ -48,6 +48,11 @@ export default {
       default: () => {
         return [];
       }
+    },
+    disableInteractions: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   methods: {
@@ -77,6 +82,10 @@ export default {
             name: nodeName,
             value: [node.x, node.y, node.name, node.id],
           };
+
+          if (this.disableInteractions) {
+            delete nodeAttributes.emphasis;
+          }
 
           if (node.type == 'cbd') {
             nodeAttributes.itemStyle = {
@@ -153,7 +162,7 @@ export default {
         name: 'serie1',
         type: 'graph',
         coordinateSystem: 'cartesian2d',
-        focusNodeAdjacency: true,
+        focusNodeAdjacency: !this.disableInteractions,
         data: data,
         links: links,
         edgeSymbol:'none',
