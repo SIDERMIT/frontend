@@ -31,13 +31,13 @@
                         </tr>
                         <tr>
                             <th colspan="1"><span>I</span></th>
-                            <td colspan="4"><input type="text" placeholder="-" v-model="route.nodes_sequence_i" :disabled="route.type==3" v-on:change="$emit('node-sequence-change')"></td>
+                            <td colspan="4"><input type="text" placeholder="-" v-model="route.nodes_sequence_i" :disabled="route.type==3" v-on:change="$emit('node-sequence-change', route)"></td>
                             <td colspan="4"><input type="text" placeholder="-" v-model="route.stops_sequence_i" :disabled="route.type==3"></td>
                             <td colspan="1"><button class="btn icon flat" :alt="showInGraphI?'Hide':'Show'" v-bind:class="{active: showInGraphI}" @click="$emit('update-visibility', route, !showInGraphI, showInGraphR)"><span class="material-icons">{{ showInGraphI?"visibility":"visibility_off"}}</span></button></td>
                         </tr>
                         <tr>
                             <th colspan="1"><span>R</span></th>
-                            <td colspan="4"><input type="text" placeholder="-" v-model="route.nodes_sequence_r" :disabled="route.type==3" v-on:change="$emit('node-sequence-change')"></td>
+                            <td colspan="4"><input type="text" placeholder="-" v-model="route.nodes_sequence_r" :disabled="route.type==3" v-on:change="$emit('node-sequence-change', route)"></td>
                             <td colspan="4"><input type="text" placeholder="-" v-model="route.stops_sequence_r" :disabled="route.type==3"></td>
                             <td colspan="1"><button class="btn icon flat" :alt="showInGraphR?'Hide':'Show'" v-bind:class="{active: showInGraphR}" @click="$emit('update-visibility', route, showInGraphI, !showInGraphR)"><span class="material-icons">{{ showInGraphR?"visibility":"visibility_off"}}</span></button></td>
                         </tr>

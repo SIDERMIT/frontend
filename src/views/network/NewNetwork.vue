@@ -43,7 +43,7 @@
                 </div>
                 <div class="linebox-container" v-else>
                     <template v-for="(route, index) in resultQuery">
-                        <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.id]['showInGraphI']" :showInGraphR="routeVisibility[route.id]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" @node-sequence-change="updateGraph" v-bind:key="index"/>
+                        <RouteCard :route="route" :transportModeSet="scene.transportmode_set" :showInGraphI="routeVisibility[route.id]['showInGraphI']" :showInGraphR="routeVisibility[route.id]['showInGraphR']" :checkerMessage="checkerMessages[index]" @update-visibility="updateVisibility" @erase-route="deleteRoute" @node-sequence-change="nodeSequenceChange" v-bind:key="index"/>
                     </template>
                 </div>
             </div>
@@ -260,8 +260,17 @@ export default {
             });
         });
     },
-    updateGraph() {
+    nodeSequenceChange(route) {
         this.setEdgeWeigths();
+        
+        if (this.routeVisibility[route.id].showInGraphI){
+            this.addOrRemoveGraphRouteObj(route, true, false, 'i');
+            this.addOrRemoveGraphRouteObj(route, false, true, 'i');
+        }
+        if (this.routeVisibility[route.id].showInGraphR) {
+            this.addOrRemoveGraphRouteObj(route, true, false, 'r');
+            this.addOrRemoveGraphRouteObj(route, false, true, 'r');
+        }
     },
     addOrRemoveGraphRouteObj(route, oldShowInGraphValue, newShowInGraphValue, direction) {
         let CurrentRoutePosition = this.graphRoutes.findIndex(el => el.id === route.id && el.direction === direction);
