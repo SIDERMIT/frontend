@@ -62,6 +62,11 @@ export default {
       let data = [];
       let edgeWeights = this.edgeWeights;
 
+      let disableInteractions = this.disableInteractions;
+      if (this.routes.length) {
+          disableInteractions = true;
+      }
+
       nodes.forEach(node => {
           let nodeName = this.showNodeId?node.name + " (" + node.id + ")":node.name;
           let nodeAttributes = {
@@ -83,7 +88,7 @@ export default {
             value: [node.x, node.y, node.name, node.id],
           };
 
-          if (this.disableInteractions) {
+          if (disableInteractions) {
             delete nodeAttributes.emphasis;
           }
 
@@ -163,7 +168,8 @@ export default {
         name: 'serie1',
         type: 'graph',
         coordinateSystem: 'cartesian2d',
-        focusNodeAdjacency: !this.disableInteractions,
+        focusNodeAdjacency: !disableInteractions,
+        hoverAnimation: !disableInteractions,
         data: data,
         links: links,
         edgeSymbol:'none',
@@ -191,25 +197,35 @@ export default {
           type: 'graph',
           coordinateSystem: 'cartesian2d',
           focusNodeAdjacency: true,
-          data: route.nodes.map(el => {return {...el, ...{itemStyle: {color: 'black'}}}}),
+          data: route.nodes.map(el => {
+            return {...el, ...{itemStyle: {label: {}}}}
+          }),
           links: route.links,
           edgeSymbol: ['none', 'arrow'],
           edgeSymbolSize: 10,
-          legendHoverLink: true,
+          legendHoverLink: false,
+          hoverAnimation: false,
           lineStyle: {
-            color: '#0eeaea',
+            color: '#0072D5',
             curveness: 0.2,
-            width:2
+            width: 4,
+            opacity: 1
           },
           itemStyle: {
-            borderWidth: 0,
-            color:'#D06318',
+            borderWidth: 2,
+            borderColor: '#0072D5',
+            color:'rgba(255,255,255,0)',
+            emphasis: {
+              label: {
+                show: false
+              }
+            }
           },
           label: {
               color: '#151C24',
-              fontWeight:'bold',
+              fontWeight:'bold'
           },
-          symbolSize: 10,
+          symbolSize: 16,
           animationDelay: function (idx) {
             return idx * 10;
           }
