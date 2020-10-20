@@ -360,8 +360,8 @@ export default {
     createRoutes(routes){
       routes.forEach(route => {
         route.id = this.network.route_set.length > 0 ? this.network.route_set[0].id + 1: 1;
-        this.network.route_set.push(route);
-        this.checkerMessages.push(null);
+        this.network.route_set.unshift(route);
+        this.checkerMessages.unshift(null);
         this.$set(this.routeVisibility, route.id, {
             showInGraphI: false,
             showInGraphR: false
