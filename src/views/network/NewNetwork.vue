@@ -373,6 +373,9 @@ export default {
       let routeIndex = this.network.route_set.findIndex(el => el.id === route.id);
       this.network.route_set.splice(routeIndex, 1);
       this.checkerMessages.splice(routeIndex, 1);
+
+      this.addOrRemoveGraphRouteObj(route, true, false, 'i');
+      this.addOrRemoveGraphRouteObj(route, true, false, 'r');
       delete this.routeVisibility[route.id];
       this.setEdgeWeigths();
     },
