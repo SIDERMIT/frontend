@@ -124,6 +124,11 @@ export default {
     if (this.route.collapse !== undefined) {
       this.collapse = this.route.collapse;
     }
+  },
+  created() {
+    if (this.route.collapse !== undefined) {
+      this.collapse = this.route.collapse;
+    }
   }
 }
 </script>
