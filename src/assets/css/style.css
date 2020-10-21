@@ -418,12 +418,13 @@ background: rgba(93, 78, 57, 0.5);
 }
 .modal.warning .modal-title {text-align: center; color: var(--link2); padding: 30px; padding-bottom: 0px;}
 .modal .modal-title {padding: 30px; padding-bottom: 0;}
-.modal.warning .modal-title .icon {margin-bottom: 10px;}
+.modal.warning .modal-title .icon {margin-bottom: 10px; color: var(--link2);}
 .modal.warning .modal-title .icon .material-icons {font-size: 48px;}
 .modal.warning .modal-title h4 {font-weight: 600; color: var(--link2); text-transform: uppercase; font-size: 24px; text-align: center; margin-bottom: 0px;}
 .modal-content {padding: 30px; padding-top: 10px; margin-bottom: 0; overflow: auto;}
 .modal-base {background-color: var(--bg-dark); padding: 10px; display: grid; grid-auto-flow: column; grid-gap: 20px; justify-content: center; padding: 20px;}
-.modal-lines .modal-content {height: 350px;}
+.modal.modal-lines {height: 100%;}
+.modal-lines .modal-content {height: 100%;}
 .modal-lines .modal-base {justify-content: stretch; width: 100%; grid-template-columns: 1fr auto;}
 .btn.solo {width: 160px; padding: 15px; font-weight: 600; text-transform: uppercase;}
 .btn.red {background-color: var(--link2);}
@@ -512,7 +513,6 @@ background: rgba(93, 78, 57, 0.5);
     grid-template-columns: 1fr auto;
     grid-gap: 20px;
     align-items: center;
-    min-width: 730px;
 }
 .default-line-row select {
     padding: 10px;
