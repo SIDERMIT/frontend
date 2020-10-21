@@ -157,10 +157,12 @@
                 <p>Above code indicates that there's movement of people from <br />CBD to CBD of 1 person, from CBD to SC1 of 2.23 people<br /> and so on</p>
             </template>
 
-            <template slot="base">                    
+            <template slot="base">      
                 <div class="left-content">
-                    <div class="checker dark">
-                        <div class="grid checker-body error"><span class="material-icons icon">warning</span><span class="text">Error long text on line 63525362768327872</span></div>
+                    <div class="checker dark" v-if="importErrorMessage">
+                        <div class="grid checker-body error">
+                            <span class="material-icons icon">warning</span><span class="text">{{ importErrorMessage }}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="right-contet">
@@ -196,6 +198,7 @@ export default {
         showLegendModal: false,
         showEditParameterModal: false,
         enableParameters: true,
+        importErrorMessage: null,
         parameterValidator: {
             show: false,
             message: '',
@@ -281,15 +284,11 @@ export default {
             this.city.alpha = null;
             this.city.beta = null;
 
+            this.importErrorMessage = null;
             this.enableParameters = false;
             this.showImportModal = false;
         }).catch(error => {
-            let message = error.response.data.detail;
-            this.parameterValidator.message = message;
-            this.parameterValidator.show = true;
-            this.parameterValidator.isError = true;
-
-            this.showImportModal = false;
+            this.importErrorMessage = error.response.data.detail;
         });
     },
     downloadMatrixData() {

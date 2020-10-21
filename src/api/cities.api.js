@@ -12,7 +12,7 @@ const duplicateCity = (publicId) => httpClient.post(`${END_POINT}${publicId}/dup
 const getPajekFile = (n,p,l,g) => httpClient.get(`${END_POINT}build_graph_file_from_parameters/`, {params:{n,p,l,g}});
 const getGraphFromPajekFile = (graph) => httpClient.get(`${END_POINT}network_data_from_pajek_file/`, {params:{graph}});
 const getMatrixData = (publicId, y, a, alpha, beta) => httpClient.get(`${END_POINT}${publicId}/build_matrix_data/`, {params:{y, a, alpha, beta}});
-const getMatrixFromFile = (publicId, content) => httpClient.get(`${END_POINT}${publicId}/build_matrix_from_file/`, {params:{content}});
+const getMatrixFromFile = (publicId, content) => httpClient.post(`${END_POINT}${publicId}/build_matrix_from_file/`, {content});
 
 const getRecentOptimizations = () => httpClient.get(`${BASE_END_POINT}/recent_optimizations`, {});
 
