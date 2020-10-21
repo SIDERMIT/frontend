@@ -153,9 +153,8 @@
             </template>
             <template slot="content">
                 <p>The file must have this setup:</p>
-                <code>*nodes n_of_nodes</code>
-                <p>Then, after each row must have the next fields, separate by space:</p>
-                <code>[id] [name] [x] [y] [type] [zone_id] [width]</code>
+                <code>,CBD,SC1,P1,...<br />CBD,1,2.23,...</code>
+                <p>Above code indicates that there's movement of people from <br />CBD to CBD of 1 person, from CBD to SC1 of 2.23 people<br /> and so on</p>
             </template>
 
             <template slot="base">                    
