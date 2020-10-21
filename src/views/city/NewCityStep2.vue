@@ -171,10 +171,12 @@ import CityGraph from '@/components/CityGraph.vue';
 import citiesAPI from '@/api/cities.api';
 import FileReader from '@/components/FileReader.vue';
 import Checker from '@/components/Checker.vue';
+import errorMessageMixin from '@/mixins/errorMessageMixin.js';
 import FileSaver from 'file-saver';
 
 export default {
   name: 'NewCityStep2',
+  mixins: [errorMessageMixin],
   components: {
     Modal,
     FileReader,
@@ -231,16 +233,7 @@ export default {
         .then(response => {
             this.$router.push({name: 'CityDetail', params: {cityPublicId: response.data.public_id}})
         }).catch(error => {
-            let data = error.response.data;
-            let message = '<b>Please correct the following error(s):</b><br /><br />';
-            for (let key in data) {
-                message += `<b>${key}:</b><ul>`;
-                data[key].forEach(el => {
-                   message += `<li>${el}</li>`; 
-                });
-                message += '</ul>'
-            }
-            this.modalData.message = message;
+            this.modalData.message = this.getErrorMessage(error.response.data);
             this.modalData.showCancelButton = false
             this.modalData.closeButtonName = 'OK'
             this.showWarningModal = true;
@@ -253,7 +246,7 @@ export default {
         let beta = this.city.beta;
 
         // create matrix file from parameters
-        citiesAPI.getMatrixFile(this.city.public_id, y, a, alpha, beta)
+        citiesAPI.getMatrixData(this.city.public_id, y, a, alpha, beta)
         .then(response => {
             this.city.demand_matrix = response.data.demand_matrix;
             this.city.demand_matrix_header = response.data.demand_matrix_header;
@@ -268,23 +261,30 @@ export default {
         });
     },
     importMatrixFile(fileContent) {
-        fileContent.split('\n').forEach((row, i) => {
-            if (i !== 0) {
-                row.split(',').forEach((value, j) => {
-                    if (j !== 0) {
-                        console.log(value);
-                        this.city.demand_matrix[i-1][j-1] = parseFloat(value);
-                    }
-                });
-            }
-        });
+        citiesAPI.getMatrixFromFile(this.city.public_id, fileContent)
+        .then(response => {
+            this.city.demand_matrix = response.data.demand_matrix;
+            this.city.demand_matrix_header = response.data.demand_matrix_header;
 
-        this.city.y = null;
-        this.city.a = null;
-        this.city.alpha = null;
-        this.city.beta = null;
-        this.showImportModal = false;
-        this.enableParameters = false;
+            this.parameterValidator.message = 'Matrix correctly defined';
+            this.parameterValidator.show = true;
+            this.parameterValidator.isError = false;
+            
+            this.city.y = null;
+            this.city.a = null;
+            this.city.alpha = null;
+            this.city.beta = null;
+
+            this.enableParameters = false;
+            this.showImportModal = false;
+        }).catch(error => {
+            let message = error.response.data.detail;
+            this.parameterValidator.message = message;
+            this.parameterValidator.show = true;
+            this.parameterValidator.isError = true;
+
+            this.showImportModal = false;
+        });
     },
     downloadMatrixData() {
         let header = [''].concat(this.city.demand_matrix_header);
