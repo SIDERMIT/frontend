@@ -147,7 +147,7 @@
             <p slot="content" v-html="modalData.message"></p>
             <template slot="close-button-name">{{ modalData.closeButtonName }}</template>
         </Modal>
-        <Modal v-if="showImportModal" @close="showImportModal = false">
+        <Modal v-if="showImportModal" @close="showImportModal = false" :modalClasses="['full-base']">
             <template slot="title">
                 <h2>Import demand matrix file</h2>
             </template>
@@ -158,7 +158,14 @@
             </template>
 
             <template slot="base">                    
-                <FileReader @load="importMatrixFile($event)"></FileReader>
+                <div class="left-content">
+                    <div class="checker dark">
+                        <div class="grid checker-body error"><span class="material-icons icon">warning</span><span class="text">Error long text on line 63525362768327872</span></div>
+                    </div>
+                </div>
+                <div class="right-contet">
+                    <FileReader @load="importMatrixFile($event)"></FileReader>
+                </div>
             </template>
         </Modal>
     </div>
