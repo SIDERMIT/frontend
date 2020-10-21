@@ -289,14 +289,21 @@ export default {
     downloadMatrixData() {
         let header = [''].concat(this.city.demand_matrix_header);
         let rows = [];
-        this.city.demand_matrix.forEach((row, index) => {
-            rows.push('\n' + [this.city.demand_matrix_header[index]].concat(row.join(',')));
-        });
-        let data = rows.reduce((previous, current) => {
-            return previous += current;
-        }, header);
-        let blob = new Blob([data], {type: "text/plain;charset=utf-8"});
-        FileSaver.saveAs(blob, "matrix-data.csv");
+        if (this.city.demand_matrix) {
+            this.city.demand_matrix.forEach((row, index) => {
+                rows.push('\n' + [this.city.demand_matrix_header[index]].concat(row.join(',')));
+            });
+            let data = rows.reduce((previous, current) => {
+                return previous += current;
+            }, header);
+            let blob = new Blob([data], {type: "text/plain;charset=utf-8"});
+            FileSaver.saveAs(blob, "matrix-data.csv");
+        } else {
+            this.modalData.message = "Matrix data does not exist";
+            this.modalData.showCancelButton = false
+            this.modalData.closeButtonName = 'OK'
+            this.showWarningModal = true;
+        }
     },
     editParameterAction() {
         this.enableParameters = true;
