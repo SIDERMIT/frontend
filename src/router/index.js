@@ -49,7 +49,7 @@ Vue.use(VueRouter)
         meta: {
           breadcrumb() {
             return {
-              label: this.$route.params.cityPublicId,
+              label: 'City' //this.$route.params.cityPublicId,
             }
           }
         },
@@ -81,7 +81,7 @@ Vue.use(VueRouter)
             meta: {
               breadcrumb() {
                 return {
-                  label: this.$route.params.scenePublicId
+                  label: 'Scene' //this.$route.params.scenePublicId
                 }
               }
             },
@@ -121,7 +121,7 @@ Vue.use(VueRouter)
                 meta: {
                   breadcrumb() {
                     return {
-                      label: this.$route.params.transportNetworkPublicId
+                      label: 'Transport network' //this.$route.params.transportNetworkPublicId
                     }
                   }
                 },
