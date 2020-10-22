@@ -45,12 +45,12 @@
         <section>
             <div class="subtitle grid">
                 <h2>OD Matrix</h2>
-                <button class="btn" @click="showImportModal = true"><span class="material-icons">publish</span><span>Import CSV file</span></button>
+                <button class="btn" @click="showImportModal = true;importErrorMessage=null"><span class="material-icons">publish</span><span>Import CSV file</span></button>
                 <button class="btn" @click="downloadMatrixData"><span class="material-icons">cloud_download</span><span>Export Matrix data</span></button>
             </div>
             <div class="empty-box" v-if="city.demand_matrix === null">
                 <p>You have not generated your matrix yet, you can import data from csv file.</p>
-                <button class="btn" @click="showImportModal = true">
+                <button class="btn" @click="showImportModal = true;importErrorMessage=null">
                     <span class="material-icons">publish</span>
                     <span>Import CSV file</span>
                 </button>
