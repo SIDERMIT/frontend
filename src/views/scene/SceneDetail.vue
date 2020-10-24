@@ -88,7 +88,7 @@
                     <span>Edit scene</span>
                 </router-link>
                 <router-link class="btn" v-if="scene.city.public_id !== null" :to="{ name: 'GlobalResults', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" >
-                    <span>View global results</span>
+                    <span>View all scene results</span>
                     <span class="material-icons">chevron_right</span>
                 </router-link>
                 <router-link v-if="scene.city.public_id !== null" :to="{ name: 'NewNetwork', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" class="btn">
