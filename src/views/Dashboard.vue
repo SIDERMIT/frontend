@@ -48,6 +48,7 @@
                             <span class="p-min">{{ optimization.scene_name }} - {{ optimization.city_name }}</span>
                         </div>
                         <div class="text"><span class="p-min">{{ optimization.optimization_status }}</span></div>
+                        <router-link v-if="optimization.optimization_status === 'finished'" :to="{ name: 'NetworkResults', params: {cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id, transportNetworkPublicId: optimization.network_public_id }}" class="btn neuro"><span>View results</span><span class="material-icons">chevron_right</span></router-link>
                         <router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id, transportNetworkPublicId: optimization.network_public_id }}" class="btn neuro"><span>View details</span><span class="material-icons">chevron_right</span></router-link>
                         <router-link :to="{ name: 'SceneDetail', params: { cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id }}" class="btn neuro"><span>View scenes</span><span class="material-icons">chevron_right</span></router-link>
                     </li>
