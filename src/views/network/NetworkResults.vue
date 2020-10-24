@@ -206,12 +206,14 @@ export default {
         
         let maxValue = 0;
         this.resultPerRoute.forEach(route => {
-            route.optimizationresultperroutedetail_set.forEach(el => {
-                this.edgeWeights[el.origin_node][el.destination_node].value += 1;
-                this.edgeWeights[el.origin_node][el.destination_node].routesNumber += 1;
-                this.edgeWeights[el.origin_node][el.destination_node].hasRoutes = true;
-                maxValue = Math.max(maxValue, this.edgeWeights[el.origin_node][el.destination_node].value);
-            });
+            if (route.frequency_per_line > 1/24) {
+                route.optimizationresultperroutedetail_set.forEach(el => {
+                    this.edgeWeights[el.origin_node][el.destination_node].value += 1;
+                    this.edgeWeights[el.origin_node][el.destination_node].routesNumber += 1;
+                    this.edgeWeights[el.origin_node][el.destination_node].hasRoutes = true;
+                    maxValue = Math.max(maxValue, this.edgeWeights[el.origin_node][el.destination_node].value);
+                });
+            }
         });
         
         // normalize data
