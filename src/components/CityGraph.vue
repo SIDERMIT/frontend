@@ -127,7 +127,11 @@ export default {
             emphasis: {
               label: {
                 show: true,
-                formatter: () => edgeWeights[edge.source][edge.target].routesNumber + ' lines'
+                formatter: () => edgeWeights[edge.source][edge.target].routesNumber + ' lines',
+                color: 'black'
+              },
+              lineStyle: {
+                color: edgeWeights[edge.source][edge.target].hasRoutes?'#B5BBBF':'#CACECF',
               }
             }
           }
