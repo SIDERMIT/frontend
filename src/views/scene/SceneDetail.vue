@@ -29,10 +29,10 @@
                                 <th><span>𝑝𝑤<br>[𝑈𝑆$/h]</span></th>
                                 <th><span>𝑝𝑎<br>[𝑈𝑆$/h]</span></th>
                                 <th><span>𝑝𝑡<br>[𝐸𝐼𝑉]</span></th>
-                                <th><span>𝑠𝑝𝑣<br>[𝑈𝑆$/h]</span></th>
-                                <th><span>𝑠𝑝𝑤<br>[𝑈𝑆$/h]</span></th>
-                                <th><span>𝑠𝑝𝑎<br>[𝑈𝑆$/h]</span></th>
-                                <th><span>𝑠𝑝𝑡<br>[𝐸𝐼𝑉]</span></th>
+                                <th><span>social<br>𝑝𝑣<br>[𝑈𝑆$/h]</span></th>
+                                <th><span>social<br>𝑝𝑤<br>[𝑈𝑆$/h]</span></th>
+                                <th><span>social<br>𝑝𝑎<br>[𝑈𝑆$/h]</span></th>
+                                <th><span>social<br>𝑝𝑡<br>[𝐸𝐼𝑉]</span></th>
                             </tr>
                             <tr>
                                 <td><input type="text" :value="scene.passenger.va" disabled></td>

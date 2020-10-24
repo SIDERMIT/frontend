@@ -39,22 +39,22 @@
                                 <td><span>Pure transfer penalty</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝑠𝑝𝑣</span></td>
+                                <td><span>social 𝑝𝑣</span></td>
                                 <td>[𝑈𝑆$/h]</td>
                                 <td><span>Subjective value of in- vehicle time savings</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝑠𝑝𝑤</span></td>
+                                <td><span>social 𝑝𝑤</span></td>
                                 <td>[𝑈𝑆$/h]</td>
                                 <td><span>Subjective value of waiting time savings</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝑠𝑝𝑎</span></td>
+                                <td><span>𝑠ocial 𝑝𝑎</span></td>
                                 <td>[𝑈𝑆$/h]</td>
                                 <td><span>Subjective value of access time savings</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝑠𝑝𝑡</span></td>
+                                <td><span>social 𝑝𝑡</span></td>
                                 <td>[𝐸𝐼𝑉]</td>
                                 <td><span>Subjective pure transfer penalty</span></td>
                             </tr>

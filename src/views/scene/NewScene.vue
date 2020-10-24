@@ -26,10 +26,10 @@
                                 <th><span>𝑝𝑤<br>[𝑈𝑆$/h]</span></th>
                                 <th><span>𝑝𝑎<br>[𝑈𝑆$/h]</span></th>
                                 <th><span>𝑝𝑡<br>[𝐸𝐼𝑉]</span></th>
-                                <th><span>𝑠𝑝𝑣<br>[𝑈𝑆$/h]</span></th>
-                                <th><span>𝑠𝑝𝑤<br>[𝑈𝑆$/h]</span></th>
-                                <th><span>𝑠𝑝𝑎<br>[𝑈𝑆$/h]</span></th>
-                                <th><span>𝑠𝑝𝑡<br>[𝐸𝐼𝑉]</span></th>
+                                <th><span>𝑠ocial<br>𝑝𝑣<br>[𝑈𝑆$/h]</span></th>
+                                <th><span>𝑠ocial<br>𝑝𝑤<br>[𝑈𝑆$/h]</span></th>
+                                <th><span>𝑠ocial<br>𝑝𝑎<br>[𝑈𝑆$/h]</span></th>
+                                <th><span>𝑠ocial<br>𝑝𝑡<br>[𝐸𝐼𝑉]</span></th>
                             </tr>
                             <tr>
                                 <td><input v-model="scene.passenger.va" v-bind:class="{ error: (scene.passenger.va === null || scene.passenger.va === '') }" type="text" placeholder="-"></td>
