@@ -19,22 +19,22 @@
                                 <td><span>Walking speed</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝑝𝑣</span></td>
+                                <td><span>subjective 𝑝𝑣</span></td>
                                 <td>[𝑈𝑆$/h]</td>
                                 <td><span>Value of in-vehicle time savings</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝑝𝑤</span></td>
+                                <td><span>subjective 𝑝𝑤</span></td>
                                 <td>[𝑈𝑆$/h]</td>
                                 <td><span>Value of waiting time savings</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝑝𝑎</span></td>
+                                <td><span>subjective 𝑝𝑎</span></td>
                                 <td>[𝑈𝑆$/h]</td>
                                 <td><span>Value of access time savings</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝑝𝑡</span></td>
+                                <td><span>subjective 𝑝𝑡</span></td>
                                 <td>[𝐸𝐼𝑉]</td>
                                 <td><span>Pure transfer penalty</span></td>
                             </tr>
