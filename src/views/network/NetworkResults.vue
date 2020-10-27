@@ -30,14 +30,14 @@
                     <table class="result-details">
                         <thead>
                             <tr>
-                                <th><span>Line ID</span></th>
-                                <th><a><span>F<br>[𝑣𝑒h/h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                                <th><a><span>𝑓<br>[𝑣𝑒h/h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                                <th><a><span>𝐾<br>[𝑝𝑎𝑥/𝑣𝑒h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                                <th><a><span>𝐵<br>[𝑣𝑒h]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                                <th><a><span>𝑡𝑐<br>[𝑚𝑖𝑛]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                                <th><a><span>𝐶𝑜<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                                <th><a><span>𝜆𝑚𝑖𝑛</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
+                                <th><a @click="sort('route')"><span>Line ID</span><span v-if="currentSort==='route'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                                <th><a @click="sort('frequency')"><span>F<br>[𝑣𝑒h/h]</span><span v-if="currentSort==='frequency'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                                <th><a @click="sort('frequency_per_line')"><span>𝑓<br>[𝑣𝑒h/h]</span><span v-if="currentSort==='frequency_per_line'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                                <th><a @click="sort('k')"><span>𝐾<br>[𝑝𝑎𝑥/𝑣𝑒h]</span><span v-if="currentSort==='k'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                                <th><a @click="sort('b')"><span>𝐵<br>[𝑣𝑒h]</span><span v-if="currentSort==='b'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                                <th><a @click="sort('tc')"><span>𝑡𝑐<br>[𝑚𝑖𝑛]</span><span v-if="currentSort==='tc'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                                <th><a @click="sort('co')"><span>𝐶𝑜<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span v-if="currentSort==='co'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                                <th><a @click="sort('lambda_min')"><span>𝜆𝑚𝑖𝑛</span><span v-if="currentSort==='lambda_min'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
                                 <th>&nbsp;</th>
                             </tr>
                         </thead>
@@ -54,7 +54,7 @@
                 <p class="info">{{ resultPerRoute.length }} transit lines</p>
             </div>
             <div class="right-content">
-                <router-link :to="{ name: 'SceneDetail', params: { cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" class="btn">
+                <router-link v-if="scene.city.public_id" :to="{ name: 'SceneDetail', params: { cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" class="btn">
                     <span class="material-icons">chevron_left</span>
                     <span>Back</span>
                 </router-link>
@@ -153,6 +153,8 @@ export default {
           showDetailLegendModal: false,
           viewAll: false,
           searchQuery: '',
+          currentSort: 'route',
+          currentSortDir: 'asc',
           network: {
               name: ''
           },
@@ -173,11 +175,23 @@ export default {
   computed: {
     resultQuery() {
       if(this.searchQuery) {
-        return this.resultPerRoute.filter((item)=>{
-          return this.searchQuery.toLowerCase().split(' ').every(v => item.route.toLowerCase().includes(v))
+        return this.resultPerRoute.slice().filter((item)=>{
+          return this.searchQuery.toLowerCase().split(' ').every(v => item.route.toLowerCase().includes(v)).sort((a, b) => {
+            let modifier = 1;
+            if(this.currentSortDir === 'desc') modifier = -1;
+            if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+            if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+            return 0;
+          });
         });
       } else {
-        return this.resultPerRoute;
+        return this.resultPerRoute.slice().sort((a, b) => {
+            let modifier = 1;
+            if(this.currentSortDir === 'desc') modifier = -1;
+            if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+            if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+            return 0;
+        });
       }
     }
   },
@@ -193,6 +207,13 @@ export default {
           });
         });
         this.setEdgeWeigths();
+      },
+      sort:function(s) {
+          //if s == current sort, reverse
+          if(s === this.currentSort) {
+            this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+          }
+          this.currentSort = s;
       },
       setEdgeWeigths() {
         this.scene.city.network_descriptor.edges.forEach(el => {

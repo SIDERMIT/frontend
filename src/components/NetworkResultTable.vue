@@ -13,23 +13,23 @@
             <tbody>
                 <tr>
                     <th v-if="showNetworkName"><span>Network</span></th>
-                    <th v-if="showCostValues"><a><span>𝑉𝑅𝐶<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                    <th v-if="showCostValues"><a><span>𝐶𝑂<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                    <th v-if="showCostValues"><a><span>𝐶𝐼<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                    <th v-if="showCostValues"><a><span>𝐶𝑈<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                    <th v-if="showUserValues"><a><span>𝑡v<br>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                    <th v-if="showUserValues"><a><span>𝑡w<br>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                    <th v-if="showUserValues"><a><span>𝑡a<br>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                    <th v-if="showUserValues"><a><span>𝑇<br>[𝑡𝑟𝑎𝑛𝑠/𝑝𝑎𝑥]</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
+                    <th v-if="showCostValues"><a @click="sort('optimizationresult|vrc')"><span>𝑉𝑅𝐶<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span v-if="currentSort==='optimizationresult|vrc'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                    <th v-if="showCostValues"><a @click="sort('optimizationresult|co')"><span>𝐶𝑂<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span v-if="currentSort==='optimizationresult|co'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                    <th v-if="showCostValues"><a @click="sort('optimizationresult|ci')"><span>𝐶𝐼<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span v-if="currentSort==='optimizationresult|ci'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                    <th v-if="showCostValues"><a @click="sort('optimizationresult|cu')"><span>𝐶𝑈<br>[𝑈𝑆$/h − 𝑝𝑎𝑥]</span><span v-if="currentSort==='optimizationresult|cu'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                    <th v-if="showUserValues"><a @click="sort('optimizationresult|tv')"><span>𝑡v<br>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span><span v-if="currentSort==='optimizationresult|tv'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                    <th v-if="showUserValues"><a @click="sort('optimizationresult|tw')"><span>𝑡w<br>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span><span v-if="currentSort==='optimizationresult|tw'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                    <th v-if="showUserValues"><a @click="sort('optimizationresult|ta')"><span>𝑡a<br>[𝑚𝑖𝑛/𝑝𝑎𝑥]</span><span v-if="currentSort==='optimizationresult|ta'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                    <th v-if="showUserValues"><a @click="sort('optimizationresult|t')"><span>𝑇<br>[𝑡𝑟𝑎𝑛𝑠/𝑝𝑎𝑥]</span><span v-if="currentSort==='optimizationresult|t'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
                     <template  v-if="rows.length > 0 && showModeValues">
                         <template v-for="(optResultPerMode, index) in rows[0].optimizationresultpermode_set">
-                            <th v-bind:key="index"><a><span>𝐵<br>{{ optResultPerMode.transport_mode }}</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                            <th v-bind:key="index+1000"><a><span>𝐾<br>{{ optResultPerMode.transport_mode }}</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
-                            <th v-bind:key="index+2000"><a><span>𝑙<br>{{ optResultPerMode.transport_mode }}</span><span class="btn-filter-column material-icons">unfold_more</span></a></th>
+                            <th v-bind:key="index"><a @click="sort('optimizationresultpermode_set|' + index + '|b')"><span>𝐵<br>{{ optResultPerMode.transport_mode }}</span><span v-if="currentSort==='optimizationresultpermode_set|' + index + '|b'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                            <th v-bind:key="index+1000"><a @click="sort('optimizationresultpermode_set|' + index + '|k')"><span>𝐾<br>{{ optResultPerMode.transport_mode }}</span><span v-if="currentSort==='optimizationresultpermode_set|' + index + '|k'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
+                            <th v-bind:key="index+2000"><a @click="sort('optimizationresultpermode_set|' + index + '|l')"><span>𝑙<br>{{ optResultPerMode.transport_mode }}</span><span v-if="currentSort==='optimizationresultpermode_set|' + index + '|l'" class="btn-filter-column material-icons">{{currentSortDir==='asc'?'expand_more':'expand_less'}}</span></a></th>
                         </template>
                     </template>
                 </tr>
-                <tr v-for="(row, index) in rows" v-bind:key="index">
+                <tr v-for="(row, index) in sortedRows" v-bind:key="index">
                     <td v-if="showNetworkName"><router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: cityPublicId, scenePublicId: scenePublicId, transportNetworkPublicId: row.public_id }}" alt="Detail">{{ row.name }}</router-link></td>
                     <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.vrc.toLocaleString() }}</span></td>
                     <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.co.toLocaleString() }}</span></td>
@@ -79,10 +79,35 @@ export default {
   },
   data() {
     return {
+        currentSort: 'name',
+        currentSortDir: 'asc',
         showCostValues: true,
         showUserValues: true,
         showModeValues: true,
     }
+  },
+  computed: {
+    sortedRows() {
+      return this.rows.slice().sort((a, b) => {
+        let modifier = 1;
+        if(this.currentSortDir === 'desc') modifier = -1;
+        let aValue = this.currentSort.split('|').reduce((acc, currentValue) => acc[currentValue], a);
+        let bValue = this.currentSort.split('|').reduce((acc, currentValue) => acc[currentValue], b);
+
+        if(aValue < bValue) return -1 * modifier;
+        if(aValue > bValue) return 1 * modifier;
+        return 0;
+      });
+    }
+  },
+  methods: {
+    sort:function(s) {
+      //if s == current sort, reverse
+      if(s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+      }
+      this.currentSort = s;
+    },
   }
 }
 </script>
