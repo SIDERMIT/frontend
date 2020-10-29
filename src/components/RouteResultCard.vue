@@ -1,7 +1,7 @@
 <template>
   <tbody class="collapse-row" v-bind:class="{active: !collapse}">
     <tr class="main-row">
-      <td><span>{{ computedRoute.route }}</span></td>
+      <td><span :data-name="computedRoute.route" class="tooltip">{{ computedRoute.route }}</span></td>
       <td><span>{{ computedRoute.frequency.toLocaleString() }}</span></td>
       <td><span>{{ computedRoute.frequency_per_line.toLocaleString() }}</span></td>
       <td><span>{{ computedRoute.k.toLocaleString() }}</span></td>
