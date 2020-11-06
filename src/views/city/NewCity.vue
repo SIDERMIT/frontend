@@ -29,12 +29,22 @@
                             <th><span>𝑃[𝑘𝑚]</span></th>
                             <th><span>𝐿[𝑘𝑚]</span></th>
                             <th><span>𝑔</span></th>
+                            <th><span>𝜂</span></th>
+                            <th><span>𝜂 zone</span></th>
+                            <th><span>angles</span></th>
+                            <th><span>Gi</span></th>
+                            <th><span>Hi</span></th>
                         </tr>
                         <tr>
                             <td><input v-model="newCity.n" :disabled="!enableParameters" v-bind:class="{ error: (newCity.n === null || newCity.n === '') && enableParameters }" type="text" ref="nInput" placeholder="-" /></td>
                             <td><input v-model="newCity.p" :disabled="!enableParameters" v-bind:class="{ error: (newCity.p === null || newCity.p === '') && enableParameters }" type="text"  placeholder="-"/></td>
                             <td><input v-model="newCity.l" :disabled="!enableParameters" v-bind:class="{ error: (newCity.l === null || newCity.l === '') && enableParameters }" type="text"  placeholder="-"/></td>
                             <td><input v-model="newCity.g" :disabled="!enableParameters" v-bind:class="{ error: (newCity.g === null || newCity.g === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.etha" :disabled="!enableParameters" v-bind:class="{ error: (newCity.etha === null || newCity.etha === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.etha_zone" :disabled="!enableParameters" v-bind:class="{ error: (newCity.etha_zone === null || newCity.etha_zone === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.angles" :disabled="!enableParameters" v-bind:class="{ error: (newCity.angles === null || newCity.angles === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.gi" :disabled="!enableParameters" v-bind:class="{ error: (newCity.gi === null || newCity.gi === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.hi" :disabled="!enableParameters" v-bind:class="{ error: (newCity.hi === null || newCity.hi === '') && enableParameters }" type="text"  placeholder="-"/></td>
                         </tr>
                     </tbody>
                 </table>
@@ -110,7 +120,27 @@
                             <tr>
                                 <td><span>𝜂</span></td>
                                 <td>&nbsp;</td>
-                                <td><span>Eccentricity of the CBD</span></td>
+                                <td><span>CBD eccentricity ratio, value in range [0-1]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝜂 zone</span></td>
+                                <td>&nbsp;</td>
+                                <td><span>CBD eccentricity direction zone</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>angles</span></td>
+                                <td>List of construction angles of the zones. You must specify an angle for each zone. For instance: 30,90,320</td>
+                                <td><span>Angle in degrees with range [0°,360°] measured from x+ axis counterclockwise</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>Gi</span></td>
+                                <td>List with asymmetry ratio for each zone with values >=0. For instance: 10,24,45</td>
+                                <td><span>Asymmetry parameter of distance from subcenters to (0,0) of Cartesian plane</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>Hi</span></td>
+                                <td>List with asymmetry ratio for each zone with values >=0. For instance: 5,15,16</td>
+                                <td><span>Asymmetry parameter of distance from peripheries to (0,0) of Cartesian plane</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -202,6 +232,11 @@ export default {
               p: null,
               l: null,
               g: null,
+              etha: null,
+              etha_zone: null,
+              angles: null,
+              gi: null,
+              hi: null,
               graph: null,
               network_descriptor: {
                   nodes: [],
@@ -216,9 +251,14 @@ export default {
           let p = this.newCity.p;
           let l = this.newCity.l;
           let g = this.newCity.g;
+          let etha = this.newCity.etha;
+          let etha_zone = this.newCity.etha_zone;
+          let angles = this.newCity.angles;
+          let gi = this.newCity.gi;
+          let hi = this.newCity.hi;
 
           // create graph file from parameters
-          citiesAPI.getPajekFile(n, p, l, g)
+          citiesAPI.getPajekFile(n, p, l, g, etha, etha_zone, angles, gi, hi)
           .then(response => {
             this.newCity.graph = response.data.pajek;
             this.newCity.network_descriptor = response.data.network;
@@ -236,9 +276,23 @@ export default {
       updateCity() {
         let request = null;
         if (this.isNew) {
-            request = citiesAPI.createCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.newCity.graph);
+            request = citiesAPI.createCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.newCity.etha, 
+            this.newCity.etha_zone, this.newCity.angles, this.newCity.gi, this.newCity.hi, this.newCity.graph);
         } else {
-            let data = {name: this.newCity.name, n: this.newCity.n, p: this.newCity.p, l: this.newCity.l, g: this.newCity.g, graph: this.newCity.graph, step: 'step1'}
+            let data = {
+                name: this.newCity.name, 
+                n: this.newCity.n, 
+                p: this.newCity.p, 
+                l: this.newCity.l, 
+                g: this.newCity.g, 
+                etha: this.newCity.etha,
+                etha_zone: this.newCity.etha_zone,
+                angles :this.newCity.angles,
+                gi :this.newCity.gi,
+                hi :this.newCity.hi,
+                graph: this.newCity.graph, 
+                step: 'step1'
+            };
             request = citiesAPI.updateCity(this.newCity.public_id, data);
         }
         
@@ -262,6 +316,11 @@ export default {
             this.newCity.p = response.data.p;
             this.newCity.l = response.data.l;
             this.newCity.g = response.data.g;
+            this.newCity.etha = response.data.etha;
+            this.newCity.etha_zone = response.data.etha_zone;
+            this.newCity.angles = response.data.angles;
+            this.newCity.gi = response.data.gi;
+            this.newCity.hi = response.data.hi;
             this.newCity.graph = fileContent;
             this.newCity.network_descriptor = response.data.network;
             this.showImportModal = false
@@ -279,6 +338,11 @@ export default {
             this.newCity.p = response.data.p;
             this.newCity.l = response.data.l;
             this.newCity.g = response.data.g;
+            this.newCity.etha = response.data.etha;
+            this.newCity.etha_zone = response.data.etha_zone;
+            this.newCity.angles = response.data.angles;
+            this.newCity.gi = response.data.gi;
+            this.newCity.hi = response.data.hi;
             this.enableParameters = false;
             this.newCity.network_descriptor = response.data.network;
             
