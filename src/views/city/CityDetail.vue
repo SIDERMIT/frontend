@@ -21,12 +21,22 @@
                                 <th><span>𝑃[𝑘𝑚]</span></th>
                                 <th><span>𝐿[𝑘𝑚]</span></th>
                                 <th><span>𝑔</span></th>
+                                <th><span>𝜂</span></th>
+                                <th><span>𝜂 zone</span></th>
+                                <th><span>angles</span></th>
+                                <th><span>Gi</span></th>
+                                <th><span>Hi</span></th>
                             </tr>
                             <tr>
                                 <td><span>{{ city.n ? city.n : '-' }}</span></td>
                                 <td><span>{{ city.p ? city.p : '-'  }}</span></td>
                                 <td><span>{{ city.l ? city.l : '-'  }}</span></td>
                                 <td><span>{{ city.g ? city.g : '-'  }}</span></td>
+                                <td><span>{{ city.etha ? city.etha : '-'  }}</span></td>
+                                <td><span>{{ city.etha_zone ? city.etha_zone : '-'  }}</span></td>
+                                <td><span>{{ city.angles ? city.angles : '-'  }}</span></td>
+                                <td><span>{{ city.gi ? city.gi : '-'  }}</span></td>
+                                <td><span>{{ city.hi ? city.hi : '-'  }}</span></td>
                             </tr>
                         </tbody>
                     </table>
