@@ -94,9 +94,8 @@ export default {
 
           if (node.type == 'cbd') {
             nodeAttributes.itemStyle = {
-                color: '#fff',
-                borderWidth: 2,
-                borderColor:'#CACECE',
+                color: '#2A3C4D',
+                borderWidth: 0,
             }
           } else if (node.type == 'periphery') {
             nodeAttributes.itemStyle = {
