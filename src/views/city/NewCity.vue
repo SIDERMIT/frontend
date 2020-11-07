@@ -32,8 +32,8 @@
                             <th><span>𝜂</span></th>
                             <th><span>𝜂 zone</span></th>
                             <th><span>angles</span></th>
-                            <th><span>Gi</span></th>
-                            <th><span>Hi</span></th>
+                            <th><span>G<sub>i</sub></span></th>
+                            <th><span>H<sub>i</sub></span></th>
                         </tr>
                         <tr>
                             <td><input v-model="newCity.n" :disabled="!enableParameters" v-bind:class="{ error: (newCity.n === null || newCity.n === '') && enableParameters }" type="text" ref="nInput" placeholder="-" /></td>
@@ -133,12 +133,12 @@
                                 <td><span>Angle in degrees with range [0°,360°] measured from x+ axis counterclockwise</span></td>
                             </tr>
                             <tr>
-                                <td><span>Gi</span></td>
+                                <td><span>G<sub>i</sub></span></td>
                                 <td>List with asymmetry ratio for each zone with values >=0. For instance: 10,24,45</td>
                                 <td><span>Asymmetry parameter of distance from subcenters to (0,0) of Cartesian plane</span></td>
                             </tr>
                             <tr>
-                                <td><span>Hi</span></td>
+                                <td><span>H<sub>i</sub></span></td>
                                 <td>List with asymmetry ratio for each zone with values >=0. For instance: 5,15,16</td>
                                 <td><span>Asymmetry parameter of distance from peripheries to (0,0) of Cartesian plane</span></td>
                             </tr>

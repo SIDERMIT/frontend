@@ -24,8 +24,8 @@
                                 <th><span>𝜂</span></th>
                                 <th><span>𝜂 zone</span></th>
                                 <th><span>angles</span></th>
-                                <th><span>Gi</span></th>
-                                <th><span>Hi</span></th>
+                                <th><span>G<sub>i</sub></span></th>
+                                <th><span>H<sub>i</sub></span></th>
                             </tr>
                             <tr>
                                 <td><span>{{ city.n ? city.n : '-' }}</span></td>
