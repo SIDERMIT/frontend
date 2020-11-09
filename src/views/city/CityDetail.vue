@@ -10,17 +10,36 @@
             </div>
             <div>
                 <h2>City parameters</h2>
-                <div class="table">
-                    <div class="table-title">
-                        <h4>Simetric city's parameters</h4>
-                    </div>
+                <div class="table multi">
                     <table class="fixed">
+                        <thead>
+                            <tr>
+                                <th colspan="4"><h4>Symmetric city parameters</h4></th>
+                            </tr> 
+                        </thead>
                         <tbody>
                             <tr>
                                 <th><span>𝑛</span></th>
                                 <th><span>𝑃[𝑘𝑚]</span></th>
                                 <th><span>𝐿[𝑘𝑚]</span></th>
                                 <th><span>𝑔</span></th>
+                            </tr>
+                            <tr>
+                                <td><span>{{ city.n ? city.n : '-' }}</span></td>
+                                <td><span>{{ city.p ? city.p : '-'  }}</span></td>
+                                <td><span>{{ city.l ? city.l : '-'  }}</span></td>
+                                <td><span>{{ city.g ? city.g : '-'  }}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="fixed">
+                        <thead>
+                            <tr>
+                                <th colspan="5"><h4>Asymmetric city parameters</h4></th>
+                            </tr> 
+                        </thead>
+                        <tbody>
+                            <tr>
                                 <th><span>𝜂</span></th>
                                 <th><span>𝜂 zone</span></th>
                                 <th><span>angles</span></th>
@@ -28,10 +47,6 @@
                                 <th><span>H<sub>i</sub></span></th>
                             </tr>
                             <tr>
-                                <td><span>{{ city.n ? city.n : '-' }}</span></td>
-                                <td><span>{{ city.p ? city.p : '-'  }}</span></td>
-                                <td><span>{{ city.l ? city.l : '-'  }}</span></td>
-                                <td><span>{{ city.g ? city.g : '-'  }}</span></td>
                                 <td><span>{{ city.etha ? city.etha : '-'  }}</span></td>
                                 <td><span>{{ city.etha_zone ? city.etha_zone : '-'  }}</span></td>
                                 <td><span>{{ city.angles ? city.angles : '-'  }}</span></td>

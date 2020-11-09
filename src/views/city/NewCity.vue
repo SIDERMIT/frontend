@@ -22,7 +22,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th colspan="4"><h4>Simetric city's parameters (optional)</h4></th>
+                            <th colspan="4"><h4>Symmetric city parameters</h4></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,7 +43,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th colspan="5"><h4>ASimetric city's parameters</h4></th>
+                            <th colspan="5"><h4>Asymmetric city parameters (optional)</h4></th>
                         </tr> 
                     </thead>
                     <tbody>
