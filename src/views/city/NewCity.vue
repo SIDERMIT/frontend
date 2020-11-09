@@ -190,11 +190,11 @@ export default {
           let p = this.newCity.p;
           let l = this.newCity.l;
           let g = this.newCity.g;
-          let etha = this.newCity.etha;
-          let etha_zone = this.newCity.etha_zone;
-          let angles = this.newCity.angles;
-          let gi = this.newCity.gi;
-          let hi = this.newCity.hi;
+          let etha = this.newCity.etha === ''? null:this.newCity.etha;
+          let etha_zone = this.newCity.etha_zone === ''? null:this.newCity.etha_zone;
+          let angles = this.newCity.angles === ''? null:this.newCity.angles;
+          let gi = this.newCity.gi === ''? null:this.newCity.gi;
+          let hi = this.newCity.hi === ''? null:this.newCity.hi;
 
           // create graph file from parameters
           citiesAPI.getPajekFile(n, p, l, g, etha, etha_zone, angles, gi, hi)
@@ -204,19 +204,24 @@ export default {
             this.showEditorAndGraph = true;
             this.parameterValidator.message = 'Table correctly defined';
             this.parameterValidator.show = true;
-            this.parameterValidator.icon = 'check';
+            this.parameterValidator.isError = false;
           }).catch(error => {
               let message = error.response.data.detail;
               this.parameterValidator.message = message;
               this.parameterValidator.show = true;
-              this.parameterValidator.icon = 'warning';
+              this.parameterValidator.isError = true;
           });
       },
       updateCity() {
         let request = null;
+        let etha = this.newCity.etha === ''? null:this.newCity.etha;
+        let etha_zone = this.newCity.etha_zone === ''? null:this.newCity.etha_zone;
+        let angles = this.newCity.angles === ''? null:this.newCity.angles;
+        let gi = this.newCity.gi === ''? null:this.newCity.gi;
+        let hi = this.newCity.hi === ''? null:this.newCity.hi;
+        
         if (this.isNew) {
-            request = citiesAPI.createCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, this.newCity.etha, 
-            this.newCity.etha_zone, this.newCity.angles, this.newCity.gi, this.newCity.hi, this.newCity.graph);
+            request = citiesAPI.createCity(this.newCity.name, this.newCity.n, this.newCity.p, this.newCity.l, this.newCity.g, etha, etha_zone, angles, gi, hi, this.newCity.graph);
         } else {
             let data = {
                 name: this.newCity.name, 
@@ -224,11 +229,11 @@ export default {
                 p: this.newCity.p, 
                 l: this.newCity.l, 
                 g: this.newCity.g, 
-                etha: this.newCity.etha,
-                etha_zone: this.newCity.etha_zone,
-                angles :this.newCity.angles,
-                gi :this.newCity.gi,
-                hi :this.newCity.hi,
+                etha: etha,
+                etha_zone: etha_zone,
+                angles: angles,
+                gi: gi,
+                hi: hi,
                 graph: this.newCity.graph, 
                 step: 'step1'
             };
