@@ -23,6 +23,7 @@
                     <thead>
                         <tr>
                             <th colspan="4"><h4>Symmetric city parameters</h4></th>
+                            <th colspan="5"><h4>Asymmetric city parameters (optional)</h4></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,23 +32,6 @@
                             <th><span>𝑃[𝑘𝑚]</span></th>
                             <th><span>𝐿[𝑘𝑚]</span></th>
                             <th><span>𝑔</span></th>
-                        </tr>
-                        <tr>
-                            <td><input v-model="newCity.n" :disabled="!enableParameters" v-bind:class="{ error: (newCity.n === null || newCity.n === '') && enableParameters }" type="text" ref="nInput" placeholder="-" /></td>
-                            <td><input v-model="newCity.p" :disabled="!enableParameters" v-bind:class="{ error: (newCity.p === null || newCity.p === '') && enableParameters }" type="text"  placeholder="-"/></td>
-                            <td><input v-model="newCity.l" :disabled="!enableParameters" v-bind:class="{ error: (newCity.l === null || newCity.l === '') && enableParameters }" type="text"  placeholder="-"/></td>
-                            <td><input v-model="newCity.g" :disabled="!enableParameters" v-bind:class="{ error: (newCity.g === null || newCity.g === '') && enableParameters }" type="text"  placeholder="-"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th colspan="5"><h4>Asymmetric city parameters (optional)</h4></th>
-                        </tr> 
-                    </thead>
-                    <tbody>
-                        <tr>
                             <th><span>𝜂</span></th>
                             <th><span>𝜂 zone</span></th>
                             <th><span>angles</span></th>
@@ -55,6 +39,10 @@
                             <th><span>H<sub>i</sub></span></th>
                         </tr>
                         <tr>
+                            <td><input v-model="newCity.n" :disabled="!enableParameters" v-bind:class="{ error: (newCity.n === null || newCity.n === '') && enableParameters }" type="text" ref="nInput" placeholder="-" /></td>
+                            <td><input v-model="newCity.p" :disabled="!enableParameters" v-bind:class="{ error: (newCity.p === null || newCity.p === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.l" :disabled="!enableParameters" v-bind:class="{ error: (newCity.l === null || newCity.l === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.g" :disabled="!enableParameters" v-bind:class="{ error: (newCity.g === null || newCity.g === '') && enableParameters }" type="text"  placeholder="-"/></td>
                             <td><input v-model="newCity.etha" :disabled="!enableParameters" v-bind:class="{ error: (newCity.etha === null || newCity.etha === '') && enableParameters }" type="text"  placeholder="-"/></td>
                             <td><input v-model="newCity.etha_zone" :disabled="!enableParameters" v-bind:class="{ error: (newCity.etha_zone === null || newCity.etha_zone === '') && enableParameters }" type="text"  placeholder="-"/></td>
                             <td><input v-model="newCity.angles" :disabled="!enableParameters" v-bind:class="{ error: (newCity.angles === null || newCity.angles === '') && enableParameters }" type="text"  placeholder="-"/></td>
