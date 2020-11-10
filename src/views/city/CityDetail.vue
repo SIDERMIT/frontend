@@ -9,7 +9,10 @@
                 <CityGraph :network="city.network_descriptor"></CityGraph>
             </div>
             <div>
-                <h2>City parameters</h2>
+                <div class="grid title">
+                    <h2>City parameters</h2>
+                    <a class="icon-link"><span class="material-icons">help</span></a>
+                </div>
                 <div class="table multi">
                     <table>
                         <thead>
