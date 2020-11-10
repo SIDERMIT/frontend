@@ -11,7 +11,7 @@
             <div>
                 <div class="grid title">
                     <h2>City parameters</h2>
-                    <a class="icon-link"><span class="material-icons">help</span></a>
+                    <a class="icon-link" @click="showGraphLegendModal=true"><span class="material-icons">help</span></a>
                 </div>
                 <div class="table multi">
                     <table>
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </footer>
-        <GraphParametersLegend :show="showGraphLegendModal" @close="showLegendModal=false"></GraphParametersLegend>
+        <GraphParametersLegend :show="showGraphLegendModal" @close="showGraphLegendModal=false"></GraphParametersLegend>
         <Modal v-if="showMatrixModal" @close="showMatrixModal = false" :showBase="false">
             <template slot="title">
                 <div><h2>OD Matrix</h2></div>
