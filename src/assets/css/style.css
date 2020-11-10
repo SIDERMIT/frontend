@@ -366,7 +366,7 @@ text-align: center;
 /** ============== ADD NEW CITY ============== **/
 
 .def-box {margin-bottom: 40px;}
-.step1-definition {max-width: 610px; margin-bottom: 60px;}
+.step1-definition {max-width: 780px; margin-bottom: 60px;}
 .input-name {grid-template-columns: auto 1fr; margin-bottom: 60px; align-items: center; grid-gap: 20px; max-width: 600px;}
 .input-name h2 {margin: 0;}
 .input-name input {text-align: left;}
