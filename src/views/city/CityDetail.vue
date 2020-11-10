@@ -93,6 +93,7 @@
                 </div>
             </div>
         </footer>
+        <GraphParametersLegend :show="showGraphLegendModal" @close="showLegendModal=false"></GraphParametersLegend>
         <Modal v-if="showMatrixModal" @close="showMatrixModal = false" :showBase="false">
             <template slot="title">
                 <div><h2>OD Matrix</h2></div>
@@ -136,10 +137,11 @@
 <script>
 import citiesAPI from '@/api/cities.api';
 import scenesAPI from '@/api/scenes.api';
-import dateMixin from '@/mixins/dateMixin.js'
-import CityGraph from '@/components/CityGraph'
-import CityDemand from '@/components/CityDemand'
-import Modal from '@/components/Modal.vue'
+import dateMixin from '@/mixins/dateMixin.js';
+import CityGraph from '@/components/CityGraph';
+import CityDemand from '@/components/CityDemand';
+import GraphParametersLegend from '@/components/GraphParametersLegend.vue';
+import Modal from '@/components/Modal.vue';
 
 export default {
   name: 'CityDetail',
@@ -147,11 +149,13 @@ export default {
   components: {
     Modal,
     CityGraph,
-    CityDemand
+    CityDemand,
+    GraphParametersLegend
   },
   data() {
     return {
       showMatrixModal: false,
+      showGraphLegendModal: false,
       modalData: {
         title: '',
         showModal: false,
