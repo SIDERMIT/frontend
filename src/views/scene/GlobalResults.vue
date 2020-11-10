@@ -76,10 +76,10 @@ export default {
                 }
                 return previous.concat([current.b, current.k, current.l]);
             }, []);
-            return ['\n', row.name, row.optimizationresult.vrc, row.optimizationresult.co, row.optimizationresult.ci, row.optimizationresult.cu, 
+            return [row.name, row.optimizationresult.vrc, row.optimizationresult.co, row.optimizationresult.ci, row.optimizationresult.cu, 
             row.optimizationresult.tv, row.optimizationresult.tw, row.optimizationresult.ta, row.optimizationresult.t].concat(modes);
         }).reduce((previous, current) => {
-            return previous += current.join(',');
+            return previous += '\n' + current.join(',');
         }, header);
         let blob = new Blob([data], {type: "text/plain;charset=utf-8"});
         FileSaver.saveAs(blob, "result-data.csv");
