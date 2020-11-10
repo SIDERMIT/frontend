@@ -1,7 +1,7 @@
 <template>
-    <li v-bind:key="transportNetwork.public_id" v-bind:class="[state.liClass]">
-      <div v-html="state.icon"></div>
-      <div class="network-list-name">
+    <li v-bind:key="transportNetwork.public_id">
+      <div v-bind:class="[state.liClass]" v-html="state.icon"></div>
+      <div v-bind:class="[state.liClass]" class="network-list-name">
         <h4>{{ transportNetwork.name }}</h4>
         <p><b>{{ transportNetwork.route_set.length }} routes</b></p>
       </div>
