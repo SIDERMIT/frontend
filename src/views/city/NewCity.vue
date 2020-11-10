@@ -45,9 +45,9 @@
                             <td><input v-model="newCity.g" :disabled="!enableParameters" v-bind:class="{ error: (newCity.g === null || newCity.g === '') && enableParameters }" type="text"  placeholder="-"/></td>
                             <td><input v-model="newCity.etha" :disabled="!enableParameters" v-bind:class="{ error: (newCity.etha === null || newCity.etha === '') && enableParameters }" type="text"  placeholder="-"/></td>
                             <td><input v-model="newCity.etha_zone" :disabled="!enableParameters" v-bind:class="{ error: (newCity.etha_zone === null || newCity.etha_zone === '') && enableParameters }" type="text"  placeholder="-"/></td>
-                            <td class="input-sz-xxx"><input v-model="newCity.angles" :disabled="!enableParameters" v-bind:class="{ error: (newCity.angles === null || newCity.angles === '') && enableParameters }" type="text"  placeholder="-"/></td>
-                            <td class="input-sz-xxx"><input v-model="newCity.gi" :disabled="!enableParameters" v-bind:class="{ error: (newCity.gi === null || newCity.gi === '') && enableParameters }" type="text"  placeholder="-"/></td>
-                            <td class="input-sz-xxx"><input v-model="newCity.hi" :disabled="!enableParameters" v-bind:class="{ error: (newCity.hi === null || newCity.hi === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.angles" :disabled="!enableParameters" v-bind:class="{ error: (newCity.angles === null || newCity.angles === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.gi" :disabled="!enableParameters" v-bind:class="{ error: (newCity.gi === null || newCity.gi === '') && enableParameters }" type="text"  placeholder="-"/></td>
+                            <td><input v-model="newCity.hi" :disabled="!enableParameters" v-bind:class="{ error: (newCity.hi === null || newCity.hi === '') && enableParameters }" type="text"  placeholder="-"/></td>
                         </tr>
                     </tbody>
                 </table>
