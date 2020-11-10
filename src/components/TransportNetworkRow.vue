@@ -11,7 +11,7 @@
       <button class="btn neuro" v-html="state.buttonName" @click="action">
       </button>
       <div class="grid min">
-        <router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: cityPublicId, scenePublicId: scenePublicId, transportNetworkPublicId: transportNetwork.public_id }}" class="btn icon" tag="button" alt="Edit"><span class="material-icons">edit</span></router-link>
+        <router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: cityPublicId, scenePublicId: scenePublicId, transportNetworkPublicId: transportNetwork.public_id }}" class="btn icon" tag="button" alt="Edit" :disabled="[null, 'error'].indexOf(transportNetwork.optimization_status)<0"><span class="material-icons">edit</span></router-link>
         <button class="btn icon" alt="Duplicate" @click="showConfirmDuplicateModal=true"><span class="material-icons">file_copy</span></button>
         <button class="btn icon" alt="Delete" @click="showConfirmDeleteModal = true"><span class="material-icons">delete</span></button>
       </div>
