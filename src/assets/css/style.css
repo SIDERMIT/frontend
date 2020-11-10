@@ -366,7 +366,7 @@ text-align: center;
 /** ============== ADD NEW CITY ============== **/
 
 .def-box {margin-bottom: 40px;}
-.step1-definition {max-width: 780px; margin-bottom: 60px;}
+.step1-definition {margin-bottom: 60px;}
 .input-name {grid-template-columns: auto 1fr; margin-bottom: 60px; align-items: center; grid-gap: 20px; max-width: 600px;}
 .input-name h2 {margin: 0;}
 .input-name input {text-align: left;}
@@ -447,6 +447,9 @@ background: rgba(93, 78, 57, 0.5);
     font-size: 14px;
     font-weight: 600;
 }
+.table.multi table {table-layout: auto;}
+.table.multi table th,.table.multi table td {min-width: 0;}
+.table.multi table .input-sz-xxx {min-width: 150px;}
 
 /** ============== CITY DETAILS ============== **/
 
@@ -572,7 +575,6 @@ th {position: relative;}
 table th a {color: white; display: block;}
 table th a:hover:before {content: ''; position: absolute; width: 100%; height: 100%; left: 0; top: 0; background-color: rgba(255,255,255,0.05);}
 .btn-filter-column {position: absolute; top: 0; right: 0; background: transparent; color: white; font-size: 14px;}
-
 
 /** ============== NETWORK RESULTS ============== **/
 
