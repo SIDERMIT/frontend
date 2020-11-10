@@ -433,7 +433,7 @@ background: rgba(93, 78, 57, 0.5);
 .definitions {display: grid; grid-gap: 20px; grid-auto-flow: column; grid-template-columns: minmax(100px, 8fr) 4fr;}
 .definitions .graph-container {grid-column: 2;}
 .table.multi thead th {padding: 10px 10px 0;}
-.table h4 {
+.table.multi h4 {
     color: white;
     white-space: nowrap;
     overflow: hidden;
