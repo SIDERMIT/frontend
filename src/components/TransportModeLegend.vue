@@ -44,16 +44,6 @@
                                 <td><span>Boarding and alighting time</span></td>
                             </tr>
                             <tr>
-                                <td><span>𝑓𝑚𝑎𝑥</span></td>
-                                <td>[𝑣𝑒h/h]</td>
-                                <td><span>Maximum frequency</span></td>
-                            </tr>
-                            <tr>
-                                <td><span>𝐾𝑚𝑎𝑥</span></td>
-                                <td>[𝑝𝑎𝑥/𝑣𝑒h]</td>
-                                <td><span>Maximum vehicle size</span></td>
-                            </tr>
-                            <tr>
                                 <td><span>𝜃</span></td>
                                 <td>&nbsp;</td>
                                 <td><span>Regularity arrivals</span></td>
@@ -67,6 +57,21 @@
                                 <td><span>𝐷</span></td>
                                 <td>&nbsp;</td>
                                 <td><span>Parallel lines</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝐾𝑚𝑎𝑥</span></td>
+                                <td>[𝑝𝑎𝑥/𝑣𝑒h]</td>
+                                <td><span>Maximum vehicle size</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝑓𝑚𝑎𝑥</span></td>
+                                <td>[𝑣𝑒h/h]</td>
+                                <td><span>Maximum frequency</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>𝑓ini</span></td>
+                                <td>[𝑣𝑒h/h]</td>
+                                <td><span>initial frequency of transport mode</span></td>
                             </tr>
                         </tbody>
                     </table>
