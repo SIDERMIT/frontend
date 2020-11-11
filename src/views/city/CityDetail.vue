@@ -38,7 +38,7 @@
                                 <td><span>{{ city.p ? city.p : '-'  }}</span></td>
                                 <td><span>{{ city.l ? city.l : '-'  }}</span></td>
                                 <td><span>{{ city.g ? city.g : '-'  }}</span></td>
-                                <td><span>{{ city.etha ? city.etha : '-'  }}</span></td>
+                                <td><span>{{ city.etha !== null ? city.etha : '-'  }}</span></td>
                                 <td><span>{{ city.etha_zone ? city.etha_zone : '-'  }}</span></td>
                                 <td><span>{{ city.angles ? city.angles : '-'  }}</span></td>
                                 <td><span>{{ city.gi ? city.gi : '-'  }}</span></td>
