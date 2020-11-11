@@ -30,7 +30,7 @@
                     </template>
                 </tr>
                 <tr v-for="(row, index) in sortedRows" v-bind:key="index">
-                    <td v-if="showNetworkName"><router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: cityPublicId, scenePublicId: scenePublicId, transportNetworkPublicId: row.public_id }}" alt="Detail">{{ row.name }}</router-link></td>
+                    <td v-if="showNetworkName"><router-link :to="{ name: 'NetworkResults', params: { cityPublicId: cityPublicId, scenePublicId: scenePublicId, transportNetworkPublicId: row.public_id }}" alt="Detail">{{ row.name }}</router-link></td>
                     <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.vrc.toLocaleString() }}</span></td>
                     <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.co.toLocaleString() }}</span></td>
                     <td v-if="showCostValues"><span v-if="row.optimizationresult">{{ row.optimizationresult.ci.toLocaleString() }}</span></td>
