@@ -23,7 +23,7 @@
                     <button class="btn neuro" @click="setViewAll" v-bind:class="{active: viewAll}"><span class="material-icons">visibility</span><span>View all</span></button>
                 </div>
                 <div class="graph-view">
-                    <div class="search"><input v-model="searchQuery" type="search" placeholder="filter by ROUTE ID ..."></div>
+                    <div class="search"><input v-model="searchQuery" type="search" placeholder="filter by Line ID ..."></div>
                     <div class="graph-container"><CityGraph :network="scene.city.network_descriptor" :edgeWeights="edgeWeights" :routes="graphRoutes" :showNodeId="true"></CityGraph></div>
                 </div>
                 <div class="table">
