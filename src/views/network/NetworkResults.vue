@@ -176,21 +176,21 @@ export default {
     resultQuery() {
       if(this.searchQuery) {
         return this.resultPerRoute.slice().filter((item)=>{
-          return this.searchQuery.toLowerCase().split(' ').every(v => item.route.toLowerCase().includes(v)).sort((a, b) => {
-            let modifier = 1;
-            if(this.currentSortDir === 'desc') modifier = -1;
-            if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-            if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-            return 0;
-          });
+          return this.searchQuery.toLowerCase().split(' ').every(v => item.route.toLowerCase().includes(v));
+        }).sort((a, b) => {
+          let modifier = 1;
+          if(this.currentSortDir === 'desc') modifier = -1;
+          if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+          if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+          return 0;
         });
       } else {
         return this.resultPerRoute.slice().sort((a, b) => {
-            let modifier = 1;
-            if(this.currentSortDir === 'desc') modifier = -1;
-            if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-            if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-            return 0;
+          let modifier = 1;
+          if(this.currentSortDir === 'desc') modifier = -1;
+          if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+          if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+          return 0;
         });
       }
     }
