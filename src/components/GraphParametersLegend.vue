@@ -46,17 +46,17 @@
                         </tr>
                         <tr>
                             <td><span>angles</span></td>
-                            <td>List of construction angles of the zones. You must specify an angle for each zone. For instance: 30,90,320</td>
+                            <td>vector of construction angles of the zones (one component for zone). For instance: x<sub>1</sub>,....,x<sub>n</sub></td>
                             <td><span>Angle in degrees with range [0°,360°] measured from x+ axis counterclockwise</span></td>
                         </tr>
                         <tr>
                             <td><span>G<sub>i</sub></span></td>
-                            <td>List with asymmetry ratio for each zone with values >=0. For instance: 10,24,45</td>
+                            <td>List with asymmetry ratio for each zone with values >=0. For instance: 1,0.5,1.5</td>
                             <td><span>Asymmetry parameter of distance from subcenters to (0,0) of Cartesian plane</span></td>
                         </tr>
                         <tr>
                             <td><span>H<sub>i</sub></span></td>
-                            <td>List with asymmetry ratio for each zone with values >=0. For instance: 5,15,16</td>
+                            <td>List with asymmetry ratio for each zone with values >=0. For instance: 2,0.5,1.3</td>
                             <td><span>Asymmetry parameter of distance from peripheries to (0,0) of Cartesian plane</span></td>
                         </tr>
                     </tbody>
