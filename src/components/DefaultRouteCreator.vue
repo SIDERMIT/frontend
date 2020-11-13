@@ -25,7 +25,7 @@
                         <div class="zones" v-if="['Diametral', 'Tangential'].includes(defaultRoute.type)">
                             <h4>Zone jumps</h4>
                             <div class="counter">
-                                <input v-model="defaultRoute.zoneJumps" type="number" class="number" placeholder="0">
+                                <input v-model.number="defaultRoute.zoneJumps" type="number" class="number" placeholder="0">
                                 <button class="num plus" @click="defaultRoute.zoneJumps += 1"><span class="material-icons">arrow_drop_up</span></button>
                                 <button class="num less" @click="defaultRoute.zoneJumps -= 1"><span class="material-icons">arrow_drop_down</span></button>
                             </div>
