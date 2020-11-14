@@ -19,7 +19,7 @@
                 <p class="info">{{ rows.length }} processed networks, {{ rowsWithError }} networks with errors</p>
             </div>
             <div class="right-content">
-                <router-link v-if="scene.public_id !== null" class="btn" :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id } }">
+                <router-link v-if="scene.public_id" class="btn" :to="{ name: 'SceneDetail', params: { scenePublicId: scene.public_id } }">
                     <span class="material-icons">chevron_left</span>
                     <span>Back</span>
                 </router-link>
@@ -51,7 +51,10 @@ export default {
         showLegendModal: false,
         scene: {
             name: '',
-            public_id: null
+            public_id: null,
+            city: {
+                public_id: null
+            }
         },
         rows: [],
         rowsWithError: 0
