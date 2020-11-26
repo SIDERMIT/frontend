@@ -264,12 +264,12 @@ export default {
         this.setEdgeWeigths();
         
         if (this.routeVisibility[route.id].showInGraphI){
-            this.addOrRemoveGraphRouteObj(route, true, false, 'i');
-            this.addOrRemoveGraphRouteObj(route, false, true, 'i');
+            this.addOrRemoveGraphRouteObj(route, true, false, 'direction_1');
+            this.addOrRemoveGraphRouteObj(route, false, true, 'direction_1');
         }
         if (this.routeVisibility[route.id].showInGraphR) {
-            this.addOrRemoveGraphRouteObj(route, true, false, 'r');
-            this.addOrRemoveGraphRouteObj(route, false, true, 'r');
+            this.addOrRemoveGraphRouteObj(route, true, false, 'direction_2');
+            this.addOrRemoveGraphRouteObj(route, false, true, 'direction_2');
         }
     },
     addOrRemoveGraphRouteObj(route, oldShowInGraphValue, newShowInGraphValue, direction) {
@@ -288,7 +288,7 @@ export default {
                 id: route.id,
                 direction: direction
             };
-            let attr = direction === 'i'?'nodes_sequence_i':'nodes_sequence_r';
+            let attr = direction === 'direction_1'?'nodes_sequence_i':'nodes_sequence_r';
             if (route[attr]) {
                 let nodes = route[attr].split(',');
                 if (nodes.length > 1) {
@@ -374,8 +374,8 @@ export default {
       this.network.route_set.splice(routeIndex, 1);
       this.checkerMessages.splice(routeIndex, 1);
 
-      this.addOrRemoveGraphRouteObj(route, true, false, 'i');
-      this.addOrRemoveGraphRouteObj(route, true, false, 'r');
+      this.addOrRemoveGraphRouteObj(route, true, false, 'direction_1');
+      this.addOrRemoveGraphRouteObj(route, true, false, 'direction_2');
       delete this.routeVisibility[route.id];
       this.setEdgeWeigths();
     },
@@ -399,8 +399,8 @@ export default {
         });
     },
     updateVisibility(route, showInGraphI, showInGraphR) {
-        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphI, showInGraphI, 'i');
-        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphR, showInGraphR, 'r');
+        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphI, showInGraphI, 'direction_1');
+        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphR, showInGraphR, 'direction_2');
 
         this.routeVisibility[route.id].showInGraphI = showInGraphI;
         this.routeVisibility[route.id].showInGraphR = showInGraphR;
@@ -415,8 +415,8 @@ export default {
         }
 
         this.network.route_set.forEach(route => {
-            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphI, value, 'i');
-            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphR, value, 'r');
+            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphI, value, 'direction_1');
+            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.id].showInGraphR, value, 'direction_2');
         });
 
         Object.keys(this.routeVisibility).forEach(key => {

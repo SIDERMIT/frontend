@@ -102,9 +102,9 @@ export default {
       let directionI = [];
       let directionR = [];
       this.route.optimizationresultperroutedetail_set.forEach((el) => {
-        if (el.direction === 'i') {
+        if (el.direction === 'direction_1') {
           directionI.push(el);
-        } else if (el.direction === 'r') {
+        } else if (el.direction === 'direction_2') {
           directionR.push(el);
         }
       });
