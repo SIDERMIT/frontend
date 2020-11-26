@@ -294,8 +294,8 @@ export default {
         }
       },
       updateVisibility(route, showInGraphI, showInGraphR) {
-        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphI, showInGraphI, 'i');
-        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphR, showInGraphR, 'r');
+        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphI, showInGraphI, 'direction_1');
+        this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphR, showInGraphR, 'direction_2');
 
         this.routeVisibility[route.route]['showInGraphI'] = showInGraphI;
         this.routeVisibility[route.route]['showInGraphR'] = showInGraphR;
@@ -310,8 +310,8 @@ export default {
         }
 
         this.resultPerRoute.forEach(route => {
-            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphI, value, 'i');
-            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphR, value, 'r');
+            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphI, value, 'direction_1');
+            this.addOrRemoveGraphRouteObj(route, this.routeVisibility[route.route].showInGraphR, value, 'direction_2');
         });
         Object.keys(this.routeVisibility).forEach(key => {
             this.routeVisibility[key]['showInGraphI'] = value;
