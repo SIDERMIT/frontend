@@ -107,6 +107,10 @@
                 <button class="btn" @click="addEmptyRoute">
                     <span class="material-icons">add</span>
                     <span>Add new transit line</span>
+                </button>                
+                <button class="btn" @click="showDefaultRouteCreatorModal=true">
+                    <span>Add generic transit lines</span>
+                    <span class="material-icons">format_list_bulleted</span>
                 </button>
                 <p class="info"><span class="num">{{ network.route_set.length }}</span> transit lines</p>
             </div>
@@ -115,10 +119,6 @@
                     <span class="material-icons">chevron_left</span>
                     <span>Back</span>
                 </router-link>
-                <button class="btn" @click="showDefaultRouteCreatorModal=true">
-                    <span>Add generic transit lines</span>
-                    <span class="material-icons">format_list_bulleted</span>
-                </button>
                 <button class="btn" @click="updateTransportNetwork">
                     <span>Save Network</span>
                     <span class="material-icons">chevron_right</span>
