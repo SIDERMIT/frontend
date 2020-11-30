@@ -324,13 +324,8 @@ export default {
         request = transportNetworksAPI.updateTransportNetwork(this.network.public_id, this.network.name, this.network.route_set);
       }
 
-      request.then(response => {
-          let viewName = 'NetworkDetail';
-          if (this.$router.currentRoute.name !== viewName) {
-            this.$router.push({name: viewName, params: {transportNetworkPublicId: response.data.public_id}})
-          } else {
-            this.$router.push({name: 'SceneDetail', params: {cityPublicId: this.scene.city.public_id, scenePublicId: this.scene.public_id}})
-          }
+      request.then(() => {
+        this.$router.push({name: 'SceneDetail', params: {cityPublicId: this.scene.city.public_id, scenePublicId: this.scene.public_id}})
       }).catch((error) => {
         if (Object.prototype.hasOwnProperty.call(error.response.data, 'route_set')) {
             error.response.data.route_set.forEach((el, index) => {
