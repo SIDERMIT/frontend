@@ -46,7 +46,7 @@
                         </tr>
                         <tr>
                             <td><span>angles</span></td>
-                            <td>vector of construction angles of the zones (one component for zone). For instance: x<sub>1</sub>,....,x<sub>n</sub></td>
+                            <td>vector of construction angles of the zones (one component per zone). For instance: x<sub>1</sub>,....,x<sub>n</sub></td>
                             <td><span>Angle in degrees with range [0°,360°] measured from x+ axis counterclockwise</span></td>
                         </tr>
                         <tr>
