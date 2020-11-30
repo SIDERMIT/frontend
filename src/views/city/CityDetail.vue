@@ -99,7 +99,7 @@
         <GraphParametersLegend :show="showGraphLegendModal" @close="showGraphLegendModal=false"></GraphParametersLegend>
         <Modal v-if="showMatrixModal" @close="showMatrixModal = false" :showBase="false">
             <template slot="title">
-                <div><h2>OD Matrix</h2></div>
+                <div><h2>OD Matrix (Pax/h)</h2></div>
             </template>
             <template slot="content">
                 <div class="parameters-container">

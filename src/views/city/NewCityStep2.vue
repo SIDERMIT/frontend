@@ -44,7 +44,7 @@
         </section>
         <section>
             <div class="subtitle grid">
-                <h2>OD Matrix</h2>
+                <h2>OD Matrix (Pax/h)</h2>
                 <button class="btn" @click="showImportModal = true;importErrorMessage=null"><span class="material-icons">publish</span><span>Import CSV file</span></button>
                 <button class="btn" @click="downloadMatrixData"><span class="material-icons">cloud_download</span><span>Export Matrix data</span></button>
             </div>
