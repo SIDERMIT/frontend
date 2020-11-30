@@ -34,7 +34,7 @@
         <h2>Last optimizations</h2>
         <template v-if="optimizations.length == 0">
             <div class="empty-box">
-                <p>You have no optimization finished yet. Start its process from network list in a city scene.</p>
+                <p>You have no optimization finished yet. Start its process from network list in a city scenario.</p>
             </div>
         </template>
         <template v-else>
@@ -50,7 +50,7 @@
                         <div class="text"><span class="p-min">{{ optimization.optimization_status }}</span></div>
                         <router-link v-if="optimization.optimization_status === 'finished'" :to="{ name: 'NetworkResults', params: {cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id, transportNetworkPublicId: optimization.network_public_id }}" class="btn neuro"><span>View results</span><span class="material-icons">chevron_right</span></router-link>
                         <router-link :to="{ name: 'NetworkDetail', params: { cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id, transportNetworkPublicId: optimization.network_public_id }}" class="btn neuro"><span>View details</span><span class="material-icons">chevron_right</span></router-link>
-                        <router-link :to="{ name: 'SceneDetail', params: { cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id }}" class="btn neuro"><span>View scenes</span><span class="material-icons">chevron_right</span></router-link>
+                        <router-link :to="{ name: 'SceneDetail', params: { cityPublicId: optimization.city_public_id, scenePublicId: optimization.scene_public_id }}" class="btn neuro"><span>View scenario</span><span class="material-icons">chevron_right</span></router-link>
                     </li>
                 </ul>
             </div>

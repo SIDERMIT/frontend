@@ -85,10 +85,10 @@
             <div class="right-content">
                 <router-link class="btn" v-if="scene.city.public_id !== null" :to="{ name: 'EditScene', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" >
                     <span class="material-icons">edit</span>
-                    <span>Edit scene</span>
+                    <span>Edit scenario</span>
                 </router-link>
                 <router-link class="btn" v-if="scene.city.public_id !== null" :to="{ name: 'GlobalResults', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" >
-                    <span>View all scene results</span>
+                    <span>View all scenario results</span>
                     <span class="material-icons">chevron_right</span>
                 </router-link>
                 <router-link v-if="scene.city.public_id !== null" :to="{ name: 'NewNetwork', params: {cityPublicId: scene.city.public_id, scenePublicId: scene.public_id }}" class="btn">

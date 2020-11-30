@@ -51,7 +51,7 @@
             </div>
         </section>
         <section>
-            <h2>Scenes</h2>
+            <h2>Scenarios</h2>
             <div class="subtitle"><h4>Transport modes and users settings for the city</h4></div>
             <template v-if="city.scene_set.length == 0">
                 <div class="empty-box">

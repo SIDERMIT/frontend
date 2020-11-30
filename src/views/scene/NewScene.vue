@@ -1,12 +1,12 @@
 <template>
   <div class="NewScene">
     <div class="header">          
-        <h1>Add new scene</h1>
+        <h1>Add new scenario</h1>
     </div>
     <section class="definitions">
         <div>
             <div class="def-box">
-                <h2>Name your scene</h2>
+                <h2>Name your scenario</h2>
                 <input v-model="scene.name" v-bind:class="{ error: (scene.name === null || scene.name === '') }"  type="text" placeholder="Can't be empty" class="text-left"/>
             </div>
             <div>
