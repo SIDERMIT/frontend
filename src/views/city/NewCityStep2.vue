@@ -10,7 +10,7 @@
                 </div>
                 <div class="subtitle">
                     <div class="grid center">
-                        <h4>Enter parameters (pick hour model)</h4>
+                        <h4>Enter parameters (peak hour model)</h4>
                         <a class="icon-link" @click="showLegendModal = true"><span class="material-icons">help</span></a>
                     </div>
                 </div>
