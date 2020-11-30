@@ -2,7 +2,7 @@
     <div class="CityDetail">
         <div class="header">
             <h1>{{ city.name }}</h1>
-            <span class="p-min">Created at {{ getLocalDate(city.created_at) }}</span>
+            <span class="p-min">Created {{ getLocalDate(city.created_at) }}</span>
         </div>
         <section class="city-details">
             <div class="graph-container">

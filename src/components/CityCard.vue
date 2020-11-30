@@ -3,7 +3,7 @@
       <div class="grid top-info">
           <div>
               <h3>{{ city.name }}</h3>
-              <span class="p-min">Created at {{ getLocalDate(city.created_at) }}</span>
+              <span class="p-min">Created {{ getLocalDate(city.created_at) }}</span>
           </div>
           <div class="grid min">
               <router-link :to="{ name: 'EditCity', params: { cityPublicId: city.public_id }}" class="btn icon" tag="button" alt="Edit"><span class="material-icons">edit</span></router-link>

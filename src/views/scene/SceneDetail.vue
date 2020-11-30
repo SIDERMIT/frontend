@@ -2,7 +2,7 @@
   <div class="SceneDetail">
     <div class="header">          
         <h1>{{ scene.name }}</h1>
-        <span class="p-min">Created at {{ getLocalDate(scene.created_at) }}</span>
+        <span class="p-min">Created {{ getLocalDate(scene.created_at) }}</span>
     </div>
     <section class="city-details">
         <div class="graph-container">
