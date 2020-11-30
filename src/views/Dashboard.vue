@@ -121,9 +121,12 @@ export default {
         }
       },
       eraseCityList() {
-        citiesAPI.getAllCities(3).then(response => {
-            this.cities = response.data;
-        });
+        axios.all([
+            citiesAPI.getAllCities(3),
+            citiesAPI.getRecentOptimizations()
+        ]).then(axios.spread( (citiesResponse, optimizationsResponse) => {
+            this.setData(citiesResponse.data, optimizationsResponse.data);
+        }));
       }
   },
   beforeRouteEnter (to, from, next) {
